@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wishlis.Domain", "Wishlis.Domain\Wishlis.Domain.csproj", "{7C86DF6E-E181-4744-B1B3-AB843B600E6C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wishlis.Service", "Wishlis.Service\Wishlis.Service.csproj", "{97BB8DDC-1D42-4835-B67C-5B9664AC2576}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wishlis.WebApp", "Wishlis.WebApp\Wishlis.WebApp.csproj", "{9F6DD282-B749-4C2F-8EA9-B7AAC8DF2CD3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7C86DF6E-E181-4744-B1B3-AB843B600E6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C86DF6E-E181-4744-B1B3-AB843B600E6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C86DF6E-E181-4744-B1B3-AB843B600E6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C86DF6E-E181-4744-B1B3-AB843B600E6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97BB8DDC-1D42-4835-B67C-5B9664AC2576}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97BB8DDC-1D42-4835-B67C-5B9664AC2576}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97BB8DDC-1D42-4835-B67C-5B9664AC2576}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97BB8DDC-1D42-4835-B67C-5B9664AC2576}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F6DD282-B749-4C2F-8EA9-B7AAC8DF2CD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F6DD282-B749-4C2F-8EA9-B7AAC8DF2CD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F6DD282-B749-4C2F-8EA9-B7AAC8DF2CD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F6DD282-B749-4C2F-8EA9-B7AAC8DF2CD3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
