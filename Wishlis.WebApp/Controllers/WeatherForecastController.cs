@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Wishlis.WebApp.Controllers;
 
-[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase

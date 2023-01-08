@@ -132,5 +132,8 @@
       }
     }
   },
-  "defaultProject": "Wishlis.WebApp"
+  "defaultProject": "Wishlis.WebApp",
+  "cli": {
+    "analytics": false
+  }
 }
