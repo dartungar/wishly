@@ -3,5 +3,5 @@
 public class DbOptions
 {
     public static string SectionName = "DbOptions";
-    public string ConnectionString { get; set; }
+    public string ConnectionString { get; set; } = string.Empty;
 }

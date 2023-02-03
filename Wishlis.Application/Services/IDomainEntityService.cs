@@ -2,10 +2,10 @@
 
 namespace Wishlis.Application.Services;
 
-public interface IDomainEntityService<TEntity, TDto> where TEntity: IDomainEntity
+public interface IDomainEntityService<TEntity> where TEntity: IDomainEntity
 {
-    public Task<TDto> Get(int id);
-    public Task<IEnumerable<TDto>> Get();
-    public Task Insert(TDto dto);
+    public Task<TEntity> Get(int id);
+    public Task<IEnumerable<TEntity>> Get();
+    public Task Insert(TEntity entity);
     public Task Delete(int id);
 }
