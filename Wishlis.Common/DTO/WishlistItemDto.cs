@@ -6,6 +6,6 @@ public record WishlistItemDto(
     string Name,
     decimal Cost,
     int Currency, 
-    int ExternalUrl,
+    string ExternalUrl,
     bool IsJointPurchase) 
     : IDto;

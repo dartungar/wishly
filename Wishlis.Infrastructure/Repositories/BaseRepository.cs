@@ -9,8 +9,8 @@ namespace Wishlis.Infrastructure.Repositories;
 public class BaseRepository<T> : IEntityRepository<T> where T: class, IDomainEntity
 {
     protected readonly NpgsqlConnection Connection;
-    
-    public BaseRepository(IOptions<DbOptions> options)
+
+    protected BaseRepository(IOptions<DbOptions> options)
     {
         Connection = new NpgsqlConnection(options.Value.ConnectionString);
     }
@@ -28,6 +28,11 @@ public class BaseRepository<T> : IEntityRepository<T> where T: class, IDomainEnt
     public virtual async Task<int> AddAsync(T entity)
     {
         return await Connection.InsertAsync(entity);
+    }
+
+    public virtual async Task<bool> UpdateAsync(T entity)
+    {
+        return await Connection.UpdateAsync(entity);
     }
 
     public virtual async Task<int> DeleteAsync(T entity)

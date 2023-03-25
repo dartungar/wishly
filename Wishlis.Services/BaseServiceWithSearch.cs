@@ -2,7 +2,7 @@
 using Wishlis.Domain;
 using Wishlis.Domain.Repositories;
 
-namespace Wishlis.Application.Services;
+namespace Wishlis.Application;
 
 public class BaseServiceWithSearch<TEntity, TDto> : BaseService<TEntity, TDto> where TEntity : class, IDomainEntity
 {
@@ -15,6 +15,6 @@ public class BaseServiceWithSearch<TEntity, TDto> : BaseService<TEntity, TDto> w
     public async Task<IEnumerable<TDto>> Search(string query)
     {
         var entities = await _repository.FindAsync(query);
-        return _mapper.Map<IEnumerable<TDto>>(entities);
+        return Mapper.Map<IEnumerable<TDto>>(entities);
     }
 }

@@ -9,6 +9,6 @@ public class WishlistItem : IDomainEntity
     public string Name { get; protected set; }
     public string ExternalUrl { get; protected set; }
     public decimal Cost { get; protected set; }
-    public Currency Currency { get; protected set; }
+    public int Currency { get; protected set; }
     public bool IsJointPurchase { get; set; }
 }

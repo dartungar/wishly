@@ -3,7 +3,7 @@ using Common.DTO;
 using Wishlis.Domain;
 using Wishlis.Domain.Repositories;
 
-namespace Wishlis.Application.Services;
+namespace Wishlis.Application.WishlistItems;
 
 public class WishlistItemService : BaseService<WishlistItem, WishlistItemDto>
 {

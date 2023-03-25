@@ -1,34 +1,31 @@
 ﻿using Common.DTO;
-using Microsoft.Extensions.Options;
 using Moq;
-using Wishlis.Application.Services;
+using Wishlis.Application.Users;
 using Wishlis.Domain;
-using Wishlis.Infrastructure;
 using Wishlis.Infrastructure.Repositories;
+using Wishlis.Tests.Fixtures;
 
 namespace Wishlis.Tests.Fixtures;
 
-public static class UserServiceFixtures
+public class UserServiceFixture : IDisposable
 {
-    public static Mock<UserService> UserService()
+    DbFixture _dbFixture;
+    public UserService UserService { get; }
+
+    public UserServiceFixture()
     {
-        var dbOptions = new DbOptions()
-            { ConnectionString = "Server=127.0.0.1;Port=5432;Database=wishlis;User Id=admin;Password=admin;" };
-        var mockOptions = new Mock<IOptions<DbOptions>>();
-        mockOptions.Setup(o => o.Value).Returns(dbOptions);
+        _dbFixture = new DbFixture();
         var mapper = MappingFixtures.GetMapper();
-        var repo = new UserRepository(mockOptions.Object);
-        return new Mock<UserService>(repo, mapper);
+        var repo = new UserRepository(_dbFixture.DbOptions);
+        UserService = new UserService(repo, mapper);
     }
 
-
-    
     public static UserDto GetUserDto()
     {
         return new UserDto(
             Id: 9999,
             Name: "TestUser",
-            PublicId: "test_test_test",
+            PublicId: "test_test",
             DateOfBirth: new DateTime(1991, 11, 7));
     }
     
@@ -65,5 +62,9 @@ public static class UserServiceFixtures
                 dateOfBirth: new DateTime(1894, 6, 25)
             )
         };
+    }
+
+    public void Dispose()
+    {
     }
 }

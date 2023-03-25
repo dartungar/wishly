@@ -17,8 +17,8 @@ public class UserRepository : BaseRepository<User>, IUserRepository
             SELECT 
                 id as Id,
                 name as Name,
-                publicid as PublicId,
-                dateofbirth as DateOfBirth
+                public_id as PublicId,
+                date_of_birth as DateOfBirth
             FROM users
             ");
     }
@@ -29,8 +29,8 @@ public class UserRepository : BaseRepository<User>, IUserRepository
             SELECT 
                 id as Id,
                 name as Name,
-                publicid as PublicId,
-                dateofbirth as DateOfBirth
+                public_id as PublicId,
+                date_of_birth as DateOfBirth
             FROM users
             WHERE id = {id}
             ");
@@ -40,9 +40,19 @@ public class UserRepository : BaseRepository<User>, IUserRepository
     {
         return await Connection.ExecuteAsync(@$"
             INSERT INTO users
-            (name, publicid, dateofbirth)
+            (name, public_id, date_of_birth)
             VALUES ('{entity.Name}', '{entity.PublicId}', '{entity.DateOfBirth:yyyy-MM-dd}')
             ");
+    }
+    
+    public override async Task<bool> UpdateAsync(User entity)
+    {
+        await Connection.ExecuteAsync(@$"
+            UPDATE users
+            SET name = '{entity.Name}', public_id = '{entity.PublicId}', date_of_birth = '{entity.DateOfBirth:yyyy-MM-dd}'
+            WHERE id = {entity.Id}");
+
+        return true;
     }
     
     public override async Task<int> DeleteAsync(User entity)
@@ -67,8 +77,8 @@ public class UserRepository : BaseRepository<User>, IUserRepository
             SELECT
                 id as Id,
                 name as Name,
-                publicid as PublicId,
-                dateofbirth as DateOfBirth
+                public_id as PublicId,
+                date_of_birth as DateOfBirth
             FROM users u 
             JOIN {nameof(UserExternalId)} ueid 
                        ON u.id = ueid.{nameof(UserExternalId.ExternalId)}");
@@ -81,17 +91,17 @@ public class UserRepository : BaseRepository<User>, IUserRepository
             SELECT
                 id as Id,
                 name as Name,
-                publicid as PublicId,
-                dateofbirth as DateOfBirth
+                public_id as PublicId,
+                date_of_birth as DateOfBirth
             FROM users
                      WHERE name LIKE '%{searchQuery}%'
             UNION
             SELECT
                 id as Id,
                 name as Name,
-                publicid as PublicId,
-                dateofbirth as DateOfBirth
+                public_id as PublicId,
+                date_of_birth as DateOfBirth
             FROM users
-                     WHERE publicid LIKE '%{searchQuery}%'");
+            WHERE public_id LIKE '%{searchQuery}%'");
     }
 }

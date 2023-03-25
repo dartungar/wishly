@@ -1,20 +1,24 @@
 using System.Reflection;
 using Common.Mappings;
-using NLog;
-using NLog.Web;
-using Wishlis.Application.Services;
+using Microsoft.OpenApi.Models;
+using Serilog;
+using Wishlis.Application.Users;
+using Wishlis.Application.WishlistItems;
 using Wishlis.Domain.Repositories;
 using Wishlis.Infrastructure;
-using Wishlis.Infrastructure.Logging;
+using Wishlis.Infrastructure.Db;
 using Wishlis.Infrastructure.Repositories;
 
 var CORS_POLICY_NAME = "WishlisCorsPolicy";
 
-var logger = WishlisLogger.GetLogger();
-logger.Debug("Starting application...");
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Debug()
+    .WriteTo.File("logs.txt")
+    .CreateLogger();
 
 try
 {
+    Log.Information("Starting WishLis WebApp...");
     var builder = WebApplication.CreateBuilder(args);
 
     // Add services to the container.
@@ -27,7 +31,7 @@ try
     
     
     builder.Logging.ClearProviders();
-    builder.Host.UseNLog();
+    builder.Logging.AddSerilog();
 
     builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(DefaultMappingProfile)));
 
@@ -45,6 +49,18 @@ try
     
     builder.Services.AddControllersWithViews();
     
+    builder.Services.AddSwaggerGen(options =>
+    {
+        options.SwaggerDoc("v1", new OpenApiInfo
+        {
+            Version = "v1",
+            Title = "WishLis API",
+        });
+    });
+
+    
+    
+    // INITIALIZE
     
     var app = builder.Build();
 
@@ -58,6 +74,14 @@ try
     
         // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         app.UseHsts();
+        
+        // swagger
+        app.UseSwagger();
+        app.UseSwaggerUI(options =>
+        {
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+            options.RoutePrefix = string.Empty;
+        });
     }
 
     app.UseHttpsRedirection();
@@ -80,10 +104,10 @@ try
 }
 catch(Exception e)
 {
-    logger.Error(e, "Stopped application because of exception");
+    Log.Fatal(e, "Stopped application because of exception");
 }
 finally
 {
-    LogManager.Shutdown();
+    Log.CloseAndFlush();
 }
 

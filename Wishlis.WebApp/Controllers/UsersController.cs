@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Common.DTO;
 using Microsoft.AspNetCore.Mvc;
-using Wishlis.Application.Services;
+using Wishlis.Application.Users;
 
 namespace Wishlis.WebApp.Controllers;
 

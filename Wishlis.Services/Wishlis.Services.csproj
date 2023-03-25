@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>Wishlis.Services</AssemblyName>
+        <RootNamespace>Wishlis.Services</RootNamespace>
+        <Company>dartungar</Company>
+        <Product>Wishlis</Product>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Wishlis.Common\Wishlis.Common.csproj" />
+      <ProjectReference Include="..\Wishlis.Domain\Wishlis.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="11.5.1" />
+    </ItemGroup>
+
+</Project>

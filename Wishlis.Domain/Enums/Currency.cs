@@ -1,8 +1,8 @@
 ﻿namespace Wishlis.Domain;
 
-public enum Currency
+public static class Currency
 {
-    USD = 840,
-    EUR = 978,
-    RUB = 643,
+    public static int Usd = 840;
+    public static int Eur = 978;
+    public static int Rub = 643;
 }

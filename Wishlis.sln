@@ -2,17 +2,23 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wishlis.Domain", "Wishlis.Domain\Wishlis.Domain.csproj", "{7C86DF6E-E181-4744-B1B3-AB843B600E6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wishlis.Application", "Wishlis.Application\Wishlis.Application.csproj", "{97BB8DDC-1D42-4835-B67C-5B9664AC2576}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wishlis.Services", "Wishlis.Services\Wishlis.Services.csproj", "{97BB8DDC-1D42-4835-B67C-5B9664AC2576}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wishlis.Infrastructure", "Wishlis.Infrastructure\Wishlis.Infrastructure.csproj", "{F08AFB68-DA8C-46E2-A1D8-0DD8C4E2D4F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wishlis.Tests", "Wishlis.Tests\Wishlis.Tests.csproj", "{D4C721DF-7D93-483F-85C4-EBEFC09B7D88}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wishlis.Tests.Integration", "Wishlis.Tests.Integration\Wishlis.Tests.Integration.csproj", "{D4C721DF-7D93-483F-85C4-EBEFC09B7D88}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wishlis.Console", "Wishlis.Console\Wishlis.Console.csproj", "{0B228941-4512-4B75-BAA2-DCD50C93657A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wishlis.WebApp", "Wishlis.WebApp\Wishlis.WebApp.csproj", "{18CD3FEE-4980-4BA5-B75D-316113268BCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{9E04CA6A-6C73-4BF8-95B0-2AB79D405834}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wishlis.Common", "Wishlis.Common\Wishlis.Common.csproj", "{9E04CA6A-6C73-4BF8-95B0-2AB79D405834}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3270CD39-6959-460E-AEF7-7441E2CB897D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wishlis.Tests.Unit", "Wishlis.Tests.Unit\Wishlis.Tests.Unit.csproj", "{86CA35AD-C0C7-40BC-A0BF-D86CDCBBBDF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wishlis.Tests.Fixtures", "Wishlis.Tests.Fixtures\Wishlis.Tests.Fixtures.csproj", "{62756F29-E8E6-485F-9F55-3C582BBFD800}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,5 +54,18 @@ Global
 		{9E04CA6A-6C73-4BF8-95B0-2AB79D405834}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E04CA6A-6C73-4BF8-95B0-2AB79D405834}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E04CA6A-6C73-4BF8-95B0-2AB79D405834}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86CA35AD-C0C7-40BC-A0BF-D86CDCBBBDF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86CA35AD-C0C7-40BC-A0BF-D86CDCBBBDF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86CA35AD-C0C7-40BC-A0BF-D86CDCBBBDF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86CA35AD-C0C7-40BC-A0BF-D86CDCBBBDF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62756F29-E8E6-485F-9F55-3C582BBFD800}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62756F29-E8E6-485F-9F55-3C582BBFD800}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62756F29-E8E6-485F-9F55-3C582BBFD800}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62756F29-E8E6-485F-9F55-3C582BBFD800}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D4C721DF-7D93-483F-85C4-EBEFC09B7D88} = {3270CD39-6959-460E-AEF7-7441E2CB897D}
+		{86CA35AD-C0C7-40BC-A0BF-D86CDCBBBDF5} = {3270CD39-6959-460E-AEF7-7441E2CB897D}
+		{62756F29-E8E6-485F-9F55-3C582BBFD800} = {3270CD39-6959-460E-AEF7-7441E2CB897D}
 	EndGlobalSection
 EndGlobal
