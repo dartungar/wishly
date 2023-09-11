@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Wishlis.Domain;
 
-namespace Wishlis.Application.Users;
+namespace Wishlis.Services.Users;
 
 public class UserValidator : AbstractValidator<User>
 {

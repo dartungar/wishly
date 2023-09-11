@@ -48,7 +48,7 @@ public class WishlistItemRepository : BaseRepository<WishlistItem>, IWishlistIte
             VALUES (
                     {entity.UserId}, 
                     '{entity.Name}', 
-                    '{entity.ExternalUrl}', 
+                    '{entity.Url}', 
                     {entity.Cost}, 
                     '{entity.Currency}', 
                     {entity.IsJointPurchase})");
@@ -61,7 +61,7 @@ public class WishlistItemRepository : BaseRepository<WishlistItem>, IWishlistIte
             SET 
                 user_id = {entity.UserId}, 
                 name = '{entity.Name}', 
-                external_url = '{entity.ExternalUrl}', 
+                external_url = '{entity.Url}', 
                 cost = {entity.Cost}, 
                 currency = {entity.Currency}, 
                 is_joint_purchase = {entity.IsJointPurchase}

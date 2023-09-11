@@ -4,13 +4,15 @@ using Common.Exceptions;
 using Wishlis.Domain;
 using Wishlis.Domain.Repositories;
 
-namespace Wishlis.Application.Users;
+namespace Wishlis.Services.Users;
 
 public class UserService : BaseServiceWithSearch<User, UserDto>
 {
+    private readonly IUserRepository _repo;
     private readonly UserValidator _validator;
     public UserService(IUserRepository repo, IMapper mapper) : base(repo, mapper)
     {
+        _repo = repo;
         _validator = new UserValidator();
     }
 
@@ -39,8 +41,6 @@ public class UserService : BaseServiceWithSearch<User, UserDto>
         ThrowIfInvalid(entity);
         return base.Update(entity);
     }
-
-
 
     private void ThrowIfInvalid(User entity)
     {

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Wishlis.Domain;
 
-namespace Wishlis.Application.WishlistItems;
+namespace Wishlis.Services.WishlistItems;
 
 public class WishlistItemValidator : AbstractValidator<WishlistItem>
 {

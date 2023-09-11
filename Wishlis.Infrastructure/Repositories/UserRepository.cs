@@ -104,4 +104,27 @@ public class UserRepository : BaseRepository<User>, IUserRepository
             FROM users
             WHERE public_id LIKE '%{searchQuery}%'");
     }
+
+    public async Task<User> GetByExternalId(string externalId)
+    {
+        return await Connection.QueryFirstAsync<User>(@$"
+            SELECT
+                id as Id,
+                name as Name,
+                public_id as PublicId,
+                date_of_birth as DateOfBirth
+            FROM users u 
+            JOIN user_external_id ueid 
+                       ON u.id = ueid.user_id
+            WHERE ueid.user_id = {externalId}");
+        
+    }
+
+    public async Task CreateExternalId(int userId, string externalId)
+    {
+        await Connection.ExecuteAsync(@$"
+            INSERT INTO user_external_id
+            (user_id, external_id)
+            VALUES ({userId}, {externalId})");
+    }
 }

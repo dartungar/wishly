@@ -1,7 +1,7 @@
 using Common.DTO;
-using Wishlis.Application.Users;
 using Wishlis.Domain;
 using Wishlis.Infrastructure.Repositories;
+using Wishlis.Services.Users;
 
 namespace Wishlis.Tests.Integration;
 

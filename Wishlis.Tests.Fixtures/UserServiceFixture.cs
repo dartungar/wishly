@@ -1,8 +1,8 @@
 ﻿using Common.DTO;
 using Moq;
-using Wishlis.Application.Users;
 using Wishlis.Domain;
 using Wishlis.Infrastructure.Repositories;
+using Wishlis.Services.Users;
 using Wishlis.Tests.Fixtures;
 
 namespace Wishlis.Tests.Fixtures;

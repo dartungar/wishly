@@ -1,0 +1,17 @@
+<nav class="navbar navbar-expand-lg">
+  <a class="navbar-brand" href="#">WishLis</a>
+  <ul class="navbar-nav mr-2">
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/my-list" routerLinkActive="active" *ngIf="authorized | async">My List</a></li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/favorite-users" routerLinkActive="active"  *ngIf="authorized | async">Favorite Users</a></li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/settings" routerLinkActive="active"  *ngIf="authorized | async">Settings</a></li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/sign-in" routerLinkActive="active"  *ngIf="!(authorized | async)">Sign In</a></li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/sign-up" routerLinkActive="active"  *ngIf="!(authorized | async)">Sign Up</a></li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="/sign-out" routerLinkActive="active" *ngIf="authorized | async" >Sign Out</a></li>
+  </ul>
+</nav>

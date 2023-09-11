@@ -1,6 +1,6 @@
 ﻿using Wishlis.Domain;
 
-namespace Wishlis.Application;
+namespace Wishlis.Services;
 
 public interface IDomainEntityService<TEntity> where TEntity: IDomainEntity
 {

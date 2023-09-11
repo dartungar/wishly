@@ -1,9 +1,9 @@
 ﻿
 using AutoMapper;
 using Common.DTO;
-using Wishlis.Application.WishlistItems;
 using Wishlis.Infrastructure;
 using Wishlis.Infrastructure.Repositories;
+using Wishlis.Services.WishlistItems;
 
 namespace Wishlis.Tests.Integration;
 

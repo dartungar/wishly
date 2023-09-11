@@ -2,7 +2,7 @@
 using Wishlis.Domain;
 using Wishlis.Domain.Repositories;
 
-namespace Wishlis.Application;
+namespace Wishlis.Services;
 
 public class BaseService<TEntity, TDto> : IDomainEntityService<TEntity> where TEntity: class, IDomainEntity
 {

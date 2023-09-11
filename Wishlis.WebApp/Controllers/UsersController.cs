@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Common.DTO;
 using Microsoft.AspNetCore.Mvc;
-using Wishlis.Application.Users;
+using Wishlis.Services.Users;
 
 namespace Wishlis.WebApp.Controllers;
 
@@ -21,9 +21,9 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IEnumerable<UserDto>> Get()
+    public async Task<ActionResult<IEnumerable<UserDto>>> Get()
     {
         var entities = await _service.Get();
-        return _mapper.Map<IEnumerable<UserDto>>(entities);
+        return Ok(_mapper.Map<IEnumerable<UserDto>>(entities));
     }
 }

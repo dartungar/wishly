@@ -5,18 +5,21 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { HomeComponent } from './shared/home/home.component';
+import { NavBarComponent } from './shared/nav-bar/nav-bar.component';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
+import {MyListComponent} from "./users/my-list/my-list.component";
+import {SettingsComponent} from "./users/settings/settings.component";
+import {LoginComponent} from "./auth/login/login.component";
+import {FavoriteUsersComponent} from "./users/favorite-users/favorite-users.component";
+import {AuthGuard} from "./auth/auth.guard";
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent
+    NavBarComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -24,8 +27,13 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'my-list', component: MyListComponent, canActivate: [AuthGuard] },
+      { path: 'favorite-users', component: FavoriteUsersComponent, canActivate: [AuthGuard] },
+      { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
+      { path: 'sign-out', component: LoginComponent, canActivate: [AuthGuard] },
+      { path: 'sign-in', component: LoginComponent },
+      { path: 'sign-up', component: LoginComponent },
+      { path: '**', component: NotFoundComponent},
     ])
   ],
   providers: [],

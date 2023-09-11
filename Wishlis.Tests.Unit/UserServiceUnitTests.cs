@@ -1,7 +1,7 @@
 ﻿using Common.DTO;
 using Common.Exceptions;
-using Wishlis.Application.Users;
 using Wishlis.Domain;
+using Wishlis.Services.Users;
 using Wishlis.Tests.Fixtures;
 
 namespace Wishlis.Tests.Unit;

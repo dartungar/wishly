@@ -2,12 +2,12 @@ using System.Reflection;
 using Common.Mappings;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using Wishlis.Application.Users;
-using Wishlis.Application.WishlistItems;
 using Wishlis.Domain.Repositories;
 using Wishlis.Infrastructure;
 using Wishlis.Infrastructure.Db;
 using Wishlis.Infrastructure.Repositories;
+using Wishlis.Services.Users;
+using Wishlis.Services.WishlistItems;
 
 var CORS_POLICY_NAME = "WishlisCorsPolicy";
 
@@ -33,7 +33,7 @@ try
     builder.Logging.ClearProviders();
     builder.Logging.AddSerilog();
 
-    builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(DefaultMappingProfile)));
+    //builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(DefaultMappingProfile)));
 
     builder.Services.Configure<DbOptions>(builder.Configuration.GetSection(DbOptions.SectionName));
 
@@ -44,6 +44,8 @@ try
     // application repositories
     builder.Services.AddScoped<IUserRepository, UserRepository>();
     builder.Services.AddScoped<IWishlistItemRepository, WishlistItemRepository>();
+
+    builder.Services.AddAutoMapper(typeof(DefaultMappingProfile));
 
     builder.Services.AddSingleton<DbInitializer>();
     
