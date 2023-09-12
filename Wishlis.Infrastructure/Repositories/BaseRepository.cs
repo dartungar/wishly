@@ -1,48 +1,43 @@
-﻿using Dapper.Contrib.Extensions;
-using Microsoft.Extensions.Options;
-using Npgsql;
-using Wishlis.Domain;
+﻿using Wishlis.Domain;
 using Wishlis.Domain.Repositories;
 
 namespace Wishlis.Infrastructure.Repositories;
 
 public class BaseRepository<T> : IEntityRepository<T> where T: class, IDomainEntity
 {
-    protected readonly NpgsqlConnection Connection;
+    protected readonly WishlistContext _context;
 
-    protected BaseRepository(IOptions<DbOptions> options)
+    protected BaseRepository(WishlistContext context)
     {
-        Connection = new NpgsqlConnection(options.Value.ConnectionString);
+        _context = context;
     }
 
     public virtual async Task<T> GetAsync(int id)
     {
-        return await Connection.GetAsync<T>(id);
+        return await _context.FindAsync<T>(id);
     }
 
-    public virtual async Task<IEnumerable<T>> GetAsync()
+    public virtual async Task AddAsync(T entity)
     {
-        return await Connection.GetAllAsync<T>();
+        await _context.AddAsync<T>(entity);
+        await _context.SaveChangesAsync();
     }
 
-    public virtual async Task<int> AddAsync(T entity)
+    public virtual async Task UpdateAsync(T entity)
     {
-        return await Connection.InsertAsync(entity);
+        var e = await _context.FindAsync<T>(entity);
+        if (e == null)
+            throw new InvalidOperationException($"Entity {typeof(T).Name} with ID {entity.Id} not found");
+        _context.Entry(e).CurrentValues.SetValues(entity);
+        await _context.SaveChangesAsync();
     }
 
-    public virtual async Task<bool> UpdateAsync(T entity)
+    public virtual async Task DeleteAsync(T entity)
     {
-        return await Connection.UpdateAsync(entity);
-    }
-
-    public virtual async Task<int> DeleteAsync(T entity)
-    {
-        var success = await Connection.DeleteAsync(entity);
-        return success ? 1 : 0;
-    }
-
-    public virtual Task<int> DeleteAsync(int id)
-    {
-        throw new NotImplementedException();
+        var e = await _context.FindAsync<T>(entity);
+        if (e == null)
+            throw new InvalidOperationException($"Entity {typeof(T).Name} with ID {entity.Id} not found");
+        _context.Remove(e);
+        await _context.SaveChangesAsync();
     }
 }

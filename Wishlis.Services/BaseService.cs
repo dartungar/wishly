@@ -19,21 +19,17 @@ public class BaseService<TEntity, TDto> : IDomainEntityService<TEntity> where TE
     {
         return await Repository.GetAsync(id);
     }
-
-    public virtual async Task<IEnumerable<TEntity>> Get()
-    {
-        return await Repository.GetAsync();
-    }
     
-    public virtual async Task<int> Insert(TDto dto)
+    
+    public virtual async Task Insert(TDto dto)
     {
         var entity = Mapper.Map<TDto, TEntity>(dto);
-        return await Insert(entity);
+        await Insert(entity);
     }
     
-    public virtual async Task<int> Insert(TEntity entity)
+    public virtual async Task Insert(TEntity entity)
     {
-        return await Repository.AddAsync(entity);
+        await Repository.AddAsync(entity);
     }
     
     public virtual async Task Update(TDto dto)
@@ -49,6 +45,7 @@ public class BaseService<TEntity, TDto> : IDomainEntityService<TEntity> where TE
 
     public virtual async Task Delete(int id)
     {
-        await Repository.DeleteAsync(id);
+        var entity = await Get(id);
+        await Repository.DeleteAsync(entity);
     }
 }

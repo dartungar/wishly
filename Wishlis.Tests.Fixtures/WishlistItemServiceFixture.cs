@@ -14,8 +14,8 @@ public class WishlistItemServiceFixture
     {
         var dbFixture = new DbFixture();
         var mapper = MappingFixtures.GetMapper();
-        var repo = new WishlistItemRepository(dbFixture.DbOptions);
-        WishlistItemService = new WishlistItemService(repo, mapper);
+        //var repo = new WishlistItemRepository(dbFixture.DbOptions);
+        //WishlistItemService = new WishlistItemService(repo, mapper);
     }
     
     public static WishlistItemDto GetWishlistItemDto()

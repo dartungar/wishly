@@ -16,14 +16,14 @@ public class UserService : BaseServiceWithSearch<User, UserDto>
         _validator = new UserValidator();
     }
 
-    public override Task<int> Insert(UserDto dto)
+    public override Task Insert(UserDto dto)
     {
         var user = Mapper.Map<User>(dto);
         ThrowIfInvalid(user);
         return base.Insert(dto);
     }
     
-    public override Task<int> Insert(User entity)
+    public override Task Insert(User entity)
     {
         ThrowIfInvalid(entity);
         return base.Insert(entity);

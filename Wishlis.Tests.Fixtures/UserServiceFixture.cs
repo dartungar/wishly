@@ -16,8 +16,8 @@ public class UserServiceFixture : IDisposable
     {
         _dbFixture = new DbFixture();
         var mapper = MappingFixtures.GetMapper();
-        var repo = new UserRepository(_dbFixture.DbOptions);
-        UserService = new UserService(repo, mapper);
+        //var repo = new UserRepository(_dbFixture.DbOptions);
+        //UserService = new UserService(repo, mapper);
     }
 
     public static UserDto GetUserDto()

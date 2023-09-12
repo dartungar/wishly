@@ -66,27 +66,27 @@ public class UserServiceIntegrationTests : IDisposable
         deletedUser.Should().BeEmpty();
     }
 
-    private UserService CreateUserService()
-    {
-        var dbFixture = new DbFixture();
-        var mapper = MappingFixtures.GetMapper();
-        var repo = new UserRepository(dbFixture.DbOptions);
-        return new UserService(repo, mapper);
-    }
+    // private UserService CreateUserService()
+    // {
+    //     var dbFixture = new DbFixture();
+    //     var mapper = MappingFixtures.GetMapper();
+    //     //var repo = new UserRepository(dbFixture.DbOptions);
+    //     //return new UserService(repo, mapper);
+    // }
     
-    private async Task DeleteTestUser()
-    {
-        var service = CreateUserService();
-        var test_user = service.Search(UserServiceFixture.GetUserDto().PublicId).Result.FirstOrDefault();
-        if (test_user != null)
-        {
-            await service.Delete(test_user.Id);
-        }
-    }
+    // private async Task DeleteTestUser()
+    // {
+    //     var service = CreateUserService();
+    //     var test_user = service.Search(UserServiceFixture.GetUserDto().PublicId).Result.FirstOrDefault();
+    //     if (test_user != null)
+    //     {
+    //         await service.Delete(test_user.Id);
+    //     }
+    // }
 
-    public async void Dispose()
-    {
-        await DeleteTestUser();
-    }
+    // public async void Dispose()
+    // {
+    //     await DeleteTestUser();
+    // }
 }
 

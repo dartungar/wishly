@@ -20,16 +20,5 @@ public class AuthService
     
     
     // 
-    public async Task<User> GetUserByExternalId(string externalId)
-    {
-        return await _userRepository.GetByExternalId(externalId);
-    }
-    
-    // TODO: methods for Google, Facebook, Vk, and Telegram
-    public async Task<int> CreateWithExternalId(UserDto dto, string externalId)
-    {
-        var userId = await _userService.Insert(dto);
-        await _userRepository.CreateExternalId(userId, externalId);
-        return userId;
-    }
+
 }

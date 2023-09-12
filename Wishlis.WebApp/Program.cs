@@ -1,10 +1,9 @@
-using System.Reflection;
 using Common.Mappings;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Wishlis.Domain.Repositories;
 using Wishlis.Infrastructure;
-using Wishlis.Infrastructure.Db;
 using Wishlis.Infrastructure.Repositories;
 using Wishlis.Services.Users;
 using Wishlis.Services.WishlistItems;
@@ -33,9 +32,9 @@ try
     builder.Logging.ClearProviders();
     builder.Logging.AddSerilog();
 
-    //builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(DefaultMappingProfile)));
+    builder.Services.AddDbContext<WishlistContext>(options =>
+        options.UseNpgsql(builder.Configuration.GetConnectionString("DbOptions")));
 
-    builder.Services.Configure<DbOptions>(builder.Configuration.GetSection(DbOptions.SectionName));
 
     // application services
     builder.Services.AddTransient<UserService>();
@@ -46,8 +45,6 @@ try
     builder.Services.AddScoped<IWishlistItemRepository, WishlistItemRepository>();
 
     builder.Services.AddAutoMapper(typeof(DefaultMappingProfile));
-
-    builder.Services.AddSingleton<DbInitializer>();
     
     builder.Services.AddControllersWithViews();
     
@@ -65,9 +62,15 @@ try
     // INITIALIZE
     
     var app = builder.Build();
-
-    var dbInitializer = app.Services.GetRequiredService<DbInitializer>();
-    dbInitializer.InitDb();
+    
+    // DB
+    // using (var scope = app.Services.CreateScope())
+    // {
+    //     var services = scope.ServiceProvider;
+    //
+    //     var context = services.GetRequiredService<WishlistContext>();
+    //     context.Database.EnsureCreated();
+    // }
 
     // Configure the HTTP request pipeline.
     if (!app.Environment.IsDevelopment())

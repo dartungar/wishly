@@ -13,6 +13,9 @@ import {SettingsComponent} from "./users/settings/settings.component";
 import {LoginComponent} from "./auth/login/login.component";
 import {FavoriteUsersComponent} from "./users/favorite-users/favorite-users.component";
 import {AuthGuard} from "./auth/auth.guard";
+import {AuthModule} from "./auth/auth.module";
+import {UsersModule} from "./users/users.module";
+import {WishlistItemsModule} from "./wishlist-items/wishlist-items.module";
 
 @NgModule({
   declarations: [
@@ -25,6 +28,9 @@ import {AuthGuard} from "./auth/auth.guard";
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    AuthModule,
+    UsersModule,
+    WishlistItemsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'my-list', component: MyListComponent, canActivate: [AuthGuard] },

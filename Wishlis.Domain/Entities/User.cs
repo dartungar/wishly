@@ -5,17 +5,19 @@ namespace Wishlis.Domain;
 
 public class User : IDomainEntity
 {
-    [Column("id")]
     public int Id { get; protected set; }
     
-    [Column("name")]
     public string Name { get; protected set; }
     
-    [Column("public_id")]
     public string PublicId { get; protected set; }
     
-    [Column("date_of_birth")]
     public DateTime DateOfBirth { get; protected set; }
+    
+    public virtual UserSettings Settings { get; set; }
+    
+    public virtual ICollection<WishlistItem> Items { get; set; }
+    
+    public virtual ICollection<User> FavoriteUsers { get; set; }
 
     protected User() { }
 

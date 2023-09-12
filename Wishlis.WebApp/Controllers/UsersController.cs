@@ -21,9 +21,9 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<UserDto>>> Get()
+    public async Task<ActionResult<IEnumerable<UserDto>>> Get(int id)
     {
-        var entities = await _service.Get();
+        var entities = await _service.Get(id);
         return Ok(_mapper.Map<IEnumerable<UserDto>>(entities));
     }
 }
