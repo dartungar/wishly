@@ -1,0 +1,6 @@
+@Wishlis.Api_HostAddress = http://localhost:5121
+
+GET {{Wishlis.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
