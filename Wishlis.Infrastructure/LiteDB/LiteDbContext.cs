@@ -15,7 +15,7 @@ public class LiteDbContext : ILiteDbContext
     
     public LiteDbContext(IOptions<LiteDbOptions> options)
     {
-        Database = new LiteDatabaseAsync(options.Value.DatabaseLocation);
+        Database = new LiteDatabaseAsync($"filename={options.Value.DatabaseLocation};connection=shared");
     }
 }
 

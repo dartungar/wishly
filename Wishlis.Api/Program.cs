@@ -1,3 +1,5 @@
+using Wishlis.Application.Mappers;
+using Wishlis.Application.Services;
 using Wishlis.Domain.Repositories;
 using Wishlis.Infrastructure.LiteDB;
 
@@ -9,14 +11,23 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
+// services
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddTransient<IPersonService, PersonService>();
+builder.Services.AddTransient<IWishlistItemService, WishlistItemService>();
+
+
+// infrastructure
 builder.Services.Configure<LiteDbOptions>(builder.Configuration.GetSection(nameof(LiteDbOptions)));
 builder.Services.AddScoped<ILiteDbContext, LiteDbContext>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IWishlistItemRepository, WishlistItemRepository>();
 
+
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -24,5 +35,5 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.MapControllers();
 app.Run();
