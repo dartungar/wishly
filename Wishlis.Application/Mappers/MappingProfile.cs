@@ -8,7 +8,7 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<PersonDto, PersonDto>().ReverseMap();
+        CreateMap<PersonDto, Person>().ReverseMap();
         CreateMap<WishlistItemDto, WishlistItem>().ReverseMap();
     }
 }

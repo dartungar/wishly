@@ -18,7 +18,7 @@ public class PersonRepository : IPersonRepository
     public async Task<int> Create(Person person)
     {
         var inserted = await Persons.InsertAsync(person);
-        return BsonMapper.Global.Deserialize<Person>(inserted).Id;
+        return BsonMapper.Global.Deserialize<int>(inserted);
     }
 
     public Task Update(Person person)

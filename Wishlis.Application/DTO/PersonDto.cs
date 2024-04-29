@@ -1,3 +1,3 @@
 ﻿namespace Wishlis.Application.DTO;
 
-public record PersonDto(int? Id, string Name, DateOnly Birthday);
+public record PersonDto(int? Id, string Name, DateOnly? Birthday);
