@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Wishlis.Application.DTO;
 using Wishlis.Application.Services;
-using Wishlis.Domain.Entities;
 
 namespace Wishlis.Api.Controllers;
 
-[Route("api/[controller]")]
+[ApiVersion(1)]
+[Route("v{version:apiVersion}/[controller]")]
 [ApiController]
 public class WishlistItemsController : ControllerBase
 {
@@ -19,14 +19,30 @@ public class WishlistItemsController : ControllerBase
         _wishlistItemService = wishlistItemService;
     }
 
+    /// <summary>
+    /// Create a new wishlist item.
+    /// </summary>
+    /// <param name="model">Wishlist item's data.</param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesDefaultResponseType]
     public async Task<IActionResult> Create(WishlistItemDto model)
     {
         await _wishlistItemService.Create(model);
         return Created();
     }
     
+    /// <summary>
+    /// Update an existing wishlist item.
+    /// </summary>
+    /// <param name="id">Item ID.</param>
+    /// <param name="model">Item's updated data.</param>
+    /// <returns></returns>
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesDefaultResponseType]
     public async Task<IActionResult> Update(int id, WishlistItemDto model)
     {
         if (id != model.Id)
@@ -35,6 +51,11 @@ public class WishlistItemsController : ControllerBase
         return Ok();
     }
     
+    /// <summary>
+    /// Delete a wishlist item.
+    /// </summary>
+    /// <param name="id">Item's ID.</param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

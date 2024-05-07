@@ -10,5 +10,6 @@ public interface IWishlistItemRepository
     
     public Task Delete(int id);
 
+    public Task<IEnumerable<WishlistItem>> Get();
     public Task<IEnumerable<WishlistItem>> GetByPersonId(int personId);
 }

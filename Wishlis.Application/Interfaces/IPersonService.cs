@@ -7,5 +7,6 @@ public interface IPersonService
     Task<int> CreatePerson(PersonDto model);
     Task UpdatePerson(PersonDto model);
     Task<PersonDto> GetById(int id);
+    Task<IEnumerable<PersonDto>> GetFavoritePersons(int ownerPersonId);
     Task AddPersonToFavorites(int favoritePersonId, int ownerPersonId);
 }
