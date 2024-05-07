@@ -7,6 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Asp.Versioning.Http" Version="8.1.0" />
+        <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
+        <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.2.5" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 
@@ -20,5 +23,9 @@
       <ProjectReference Include="..\Wishlis.Application\Wishlis.Application.csproj" />
       <ProjectReference Include="..\Wishlis.Infrastructure\Wishlis.Infrastructure.csproj" />
     </ItemGroup>
+
+    <PropertyGroup>
+        <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
+    </PropertyGroup>
 
 </Project>

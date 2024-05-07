@@ -32,6 +32,12 @@ public class PersonService : IPersonService
         return _mapper.Map<PersonDto>(person);
     }
 
+    public async Task<IEnumerable<PersonDto>> GetFavoritePersons(int ownerPersonId)
+    {
+        var favoritePersons = await _personRepository.GetFavoritePersons(ownerPersonId);
+        return _mapper.Map<IEnumerable<PersonDto>>(favoritePersons);
+    }
+
     public async Task AddPersonToFavorites(int favoritePersonId, int ownerPersonId)
     {
         await _personRepository.AddPersonToFavorites(favoritePersonId, ownerPersonId);

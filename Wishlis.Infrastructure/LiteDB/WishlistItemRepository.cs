@@ -31,6 +31,11 @@ public class WishlistItemRepository : IWishlistItemRepository
         await WishlistItems.DeleteAsync(id);
     }
 
+    public async Task<IEnumerable<WishlistItem>> Get()
+    {
+        return await WishlistItems.FindAllAsync();
+    }
+
     public async Task<IEnumerable<WishlistItem>> GetByPersonId(int personId)
     {
         return await WishlistItems.Query().Where(x => x.PersonId == personId).ToEnumerableAsync();
