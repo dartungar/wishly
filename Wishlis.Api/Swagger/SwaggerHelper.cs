@@ -1,4 +1,5 @@
-﻿using Asp.Versioning;
+﻿using System.Reflection;
+using Asp.Versioning;
 using Asp.Versioning.Conventions;
 
 namespace Wishlis.Api.Swagger;
@@ -23,7 +24,11 @@ public static class SwaggerHelper
                 setup.SubstituteApiVersionInUrl = true;
             });
 
-        services.AddSwaggerGen();
+        services.AddSwaggerGen(options =>
+        {
+            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+        });
         services.ConfigureOptions<NamedSwaggerGenOptions>();
     }
 }
