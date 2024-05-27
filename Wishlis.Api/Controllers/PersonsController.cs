@@ -1,25 +1,32 @@
 using Asp.Versioning;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Wishlis.Application.DTO;
+using Wishlis.Application.Messages;
 using Wishlis.Application.Services;
 
 namespace Wishlis.Api.Controllers;
 
+/// <summary>
+/// 
+/// </summary>
 [ApiVersion(1)]
 [Route("v{version:apiVersion}/[controller]")]
 [ApiController]
 public class PersonsController : ControllerBase
 {
     private readonly ILogger<PersonsController> _logger;
+    private readonly IBus _bus;
     private readonly IPersonService _personService;
     private readonly IWishlistItemService _wishlistItemService;
 
     public PersonsController(ILogger<PersonsController> logger, IPersonService personService,
-        IWishlistItemService wishlistItemService)
+        IWishlistItemService wishlistItemService, IBus bus)
     {
         _logger = logger;
         _personService = personService;
         _wishlistItemService = wishlistItemService;
+        _bus = bus;
     }
 
     /// <summary>
@@ -42,6 +49,17 @@ public class PersonsController : ControllerBase
     public async Task<ActionResult<int>> CreatePerson(PersonDto model)
     {
         return await _personService.CreatePerson(model);
+    }
+    
+    /// <summary>
+    /// Create a new person.
+    /// </summary>
+    /// <param name="model">The person's data.</param>
+    [HttpPost("with-messaging")]
+    public async Task<IActionResult> CreatePersonWithMessaging(PersonDto model)
+    {
+         await _bus.Publish(new CreatePersonMessage(model.Name, model.Birthday));
+         return Ok();
     }
 
     /// <summary>

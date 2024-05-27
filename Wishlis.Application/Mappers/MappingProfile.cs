@@ -11,6 +11,6 @@ public class MappingProfile : Profile
     {
         CreateMap<PersonDto, Person>().ReverseMap();
         CreateMap<WishlistItemDto, WishlistItem>().ReverseMap();
-        CreateMap<CreatePersonMessage, PersonDto>();
+        CreateMap<CreatePersonMessage, PersonDto>().ReverseMap();
     }
 }

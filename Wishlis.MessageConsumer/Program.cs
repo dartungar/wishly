@@ -10,7 +10,6 @@ using Wishlis.Domain.Repositories;
 using Wishlis.Infrastructure.LiteDB;
 using Wishlis.MessageConsumer;
 
-const string AWSconfigSection = "AWS";
 var builder = Host.CreateApplicationBuilder(args);
 var config = Configuration.Create();
 

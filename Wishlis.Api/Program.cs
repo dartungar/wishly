@@ -1,6 +1,7 @@
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
 using Asp.Versioning.Conventions;
+using MassTransit;
 using Microsoft.AspNetCore.OData;
 using Microsoft.OData.ModelBuilder;
 using Microsoft.OpenApi.Models;
@@ -29,6 +30,15 @@ builder.Services.Configure<LiteDbOptions>(builder.Configuration.GetSection(nameo
 builder.Services.AddScoped<ILiteDbContext, LiteDbContext>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IWishlistItemRepository, WishlistItemRepository>();
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumers(typeof(Program).Assembly);
+    
+    x.UsingAmazonSqs((context, cfg) =>
+    {
+        cfg.Host("us-east-1", _ => {});
+    });
+});
 
 // odata
 var modelBuilder = new ODataConventionModelBuilder();
