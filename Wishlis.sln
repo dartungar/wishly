@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wishlis.Infrastructure", "W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wishlis.Api", "Wishlis.Api\Wishlis.Api.csproj", "{18D6E4DA-C211-4397-945B-28D76B1CD258}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wishlis.WebApp", "Wishlis.WebApp\Wishlis.WebApp.csproj", "{1990B685-D5F9-4094-A805-9ADF70695103}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{18D6E4DA-C211-4397-945B-28D76B1CD258}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18D6E4DA-C211-4397-945B-28D76B1CD258}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18D6E4DA-C211-4397-945B-28D76B1CD258}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1990B685-D5F9-4094-A805-9ADF70695103}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1990B685-D5F9-4094-A805-9ADF70695103}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1990B685-D5F9-4094-A805-9ADF70695103}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1990B685-D5F9-4094-A805-9ADF70695103}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
