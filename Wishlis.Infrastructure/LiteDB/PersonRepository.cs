@@ -1,7 +1,7 @@
 ﻿using LiteDB;
 using LiteDB.Async;
 using Wishlis.Domain.Entities;
-using Wishlis.Domain.Repositories;
+using Wishlis.Domain.Interfaces;
 
 namespace Wishlis.Infrastructure.LiteDB;
 
@@ -15,15 +15,9 @@ public class PersonRepository : IPersonRepository
         _dbContext = dbContext;
     }
     
-    public async Task<int> Create(Person person)
+    public Task Save(Person person)
     {
-        var inserted = await Persons.InsertAsync(person);
-        return BsonMapper.Global.Deserialize<int>(inserted);
-    }
-
-    public Task Update(Person person)
-    {
-        return Persons.UpdateAsync(person);
+        return Persons.UpsertAsync(person);
     }
 
     public Task<Person> GetById(int id)

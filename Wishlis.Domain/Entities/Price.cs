@@ -1,4 +1,6 @@
-﻿namespace Wishlis.Domain.Entities;
+﻿using Wishlis.Domain.Enums;
+
+namespace Wishlis.Domain.Entities;
 
 public class Price
 {

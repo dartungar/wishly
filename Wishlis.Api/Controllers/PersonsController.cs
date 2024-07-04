@@ -1,7 +1,7 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using Wishlis.Application.DTO;
-using Wishlis.Application.Services;
+using Wishlis.Domain.Entities;
+using Wishlis.Domain.Services;
 
 namespace Wishlis.Api.Controllers;
 
@@ -28,7 +28,7 @@ public class PersonsController : ControllerBase
     /// <param name="id">person's ID.</param>
     /// <returns>A person object.</returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<PersonDto>> GetById(int id)
+    public async Task<ActionResult<Person>> GetById(int id)
     {
         return await _personService.GetById(id);
     }
@@ -39,9 +39,10 @@ public class PersonsController : ControllerBase
     /// <param name="model">The person's data.</param>
     /// <returns>Created person's ID.</returns>
     [HttpPost]
-    public async Task<ActionResult<int>> CreatePerson(PersonDto model)
+    public async Task<ActionResult<int>> CreatePerson(Person model)
     {
-        return await _personService.CreatePerson(model);
+        await model.Save();
+        return Ok(model.Id);
     }
 
     /// <summary>
@@ -50,9 +51,9 @@ public class PersonsController : ControllerBase
     /// <param name="model">Updated data.</param>
     /// <returns></returns>
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdatePerson(PersonDto model)
+    public async Task<IActionResult> UpdatePerson(Person model)
     {
-        await _personService.UpdatePerson(model);
+        await model.Save();
         return Ok();
     }
 
@@ -62,7 +63,7 @@ public class PersonsController : ControllerBase
     /// <param name="ownerPersonId">ID of the person.</param>
     /// <returns></returns>
     [HttpGet("{ownerPersonId}/favorite-persons")]
-    public async Task<ActionResult<IEnumerable<PersonDto>>> GetFavoritePersons(int ownerPersonId)
+    public async Task<ActionResult<IEnumerable<Person>>> GetFavoritePersons(int ownerPersonId)
     {
         var persons = await _personService.GetFavoritePersons(ownerPersonId);
         return Ok(persons);
@@ -87,7 +88,7 @@ public class PersonsController : ControllerBase
     /// <param name="personId">ID of the person.</param>
     /// <returns>List of items.</returns>
     [HttpGet("{personId}/items")]
-    public async Task<ActionResult<IEnumerable<WishlistItemDto>>> GetPersonWithlist(int personId)
+    public async Task<ActionResult<IEnumerable<WishlistItem>>> GetPersonWithlist(int personId)
     {
         var result = await _wishlistItemService.GetByPersonId(personId);
         return Ok(result);

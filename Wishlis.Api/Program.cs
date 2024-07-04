@@ -5,10 +5,9 @@ using Microsoft.AspNetCore.OData;
 using Microsoft.OData.ModelBuilder;
 using Microsoft.OpenApi.Models;
 using Wishlis.Api.Swagger;
-using Wishlis.Application.Mappers;
-using Wishlis.Application.Services;
 using Wishlis.Domain.Entities;
-using Wishlis.Domain.Repositories;
+using Wishlis.Domain.Interfaces;
+using Wishlis.Domain.Services;
 using Wishlis.Infrastructure.LiteDB;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +18,6 @@ builder.Services.AddControllers();
 builder.Services.AddAndConfigureSwagger();
 
 // services
-builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddTransient<IPersonService, PersonService>();
 builder.Services.AddTransient<IWishlistItemService, WishlistItemService>();
 

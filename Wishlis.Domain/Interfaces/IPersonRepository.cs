@@ -1,12 +1,10 @@
 ﻿using Wishlis.Domain.Entities;
 
-namespace Wishlis.Domain.Repositories;
+namespace Wishlis.Domain.Interfaces;
 
 public interface IPersonRepository
 {
-    public Task<int> Create(Person person);
-    
-    public Task Update(Person person);
+    public Task Save(Person person);
 
     public Task<Person> GetById(int id);
 

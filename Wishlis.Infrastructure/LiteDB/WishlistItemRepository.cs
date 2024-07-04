@@ -1,6 +1,6 @@
 ﻿using LiteDB.Async;
 using Wishlis.Domain.Entities;
-using Wishlis.Domain.Repositories;
+using Wishlis.Domain.Interfaces;
 
 namespace Wishlis.Infrastructure.LiteDB;
 
@@ -14,16 +14,10 @@ public class WishlistItemRepository : IWishlistItemRepository
     {
         _dbContext = dbContext;
     }
-
     
-    public async Task Create(WishlistItem item)
+    public async Task Save(WishlistItem item)
     {
-        await WishlistItems.InsertAsync(item);
-    }
-
-    public async Task Update(WishlistItem item)
-    {
-        await WishlistItems.UpdateAsync(item);
+        await WishlistItems.UpsertAsync(item);
     }
 
     public async Task Delete(int id)

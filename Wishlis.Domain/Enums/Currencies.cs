@@ -1,4 +1,4 @@
-﻿namespace Wishlis.Domain;
+﻿namespace Wishlis.Domain.Enums;
 
 public enum Currency
 {

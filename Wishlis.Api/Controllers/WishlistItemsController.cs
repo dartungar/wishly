@@ -1,7 +1,7 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using Wishlis.Application.DTO;
-using Wishlis.Application.Services;
+using Wishlis.Domain.Entities;
+using Wishlis.Domain.Services;
 
 namespace Wishlis.Api.Controllers;
 
@@ -27,9 +27,9 @@ public class WishlistItemsController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> Create(WishlistItemDto model)
+    public async Task<IActionResult> Create(WishlistItem model)
     {
-        await _wishlistItemService.Create(model);
+        await model.Save();
         return Created();
     }
     
@@ -43,11 +43,11 @@ public class WishlistItemsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> Update(int id, WishlistItemDto model)
+    public async Task<IActionResult> Update(int id, WishlistItem model)
     {
         if (id != model.Id)
             return BadRequest();
-        await _wishlistItemService.Update(model);
+        await model.Save();
         return Ok();
     }
     
