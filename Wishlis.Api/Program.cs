@@ -30,15 +30,6 @@ builder.Services.AddScoped<ILiteDbContext, LiteDbContext>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IWishlistItemRepository, WishlistItemRepository>();
 
-// odata
-var modelBuilder = new ODataConventionModelBuilder();
-modelBuilder.EntitySet<WishlistItem>("wishlist-items");
-
-builder.Services.AddControllers().AddOData(
-    options => options.Select().Filter().OrderBy().Expand().Count().SetMaxTop(null).AddRouteComponents(
-        "odata",
-        modelBuilder.GetEdmModel()));
-
 
 var app = builder.Build();
 
