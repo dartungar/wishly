@@ -1,13 +1,9 @@
-using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
-using Asp.Versioning.Conventions;
-using Microsoft.AspNetCore.OData;
-using Microsoft.OData.ModelBuilder;
-using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Wishlis.Api.Auth;
 using Wishlis.Api.Swagger;
 using Wishlis.Application.Mappers;
 using Wishlis.Application.Services;
-using Wishlis.Domain.Entities;
 using Wishlis.Domain.Repositories;
 using Wishlis.Infrastructure.LiteDB;
 
@@ -17,6 +13,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddControllers();
 builder.Services.AddAndConfigureSwagger();
+
+// auth
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer();
+builder.Services.AddAuthorization();
+builder.Services.ConfigureOptions<JwtBearerConfigureOptions>();
 
 // services
 builder.Services.AddAutoMapper(typeof(MappingProfile));
@@ -49,7 +51,9 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseEndpoints(x => x.MapControllers());
-app.Run();
+
+await app.RunAsync();

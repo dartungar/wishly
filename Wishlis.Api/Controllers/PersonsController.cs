@@ -1,7 +1,9 @@
 using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Wishlis.Application.DTO;
 using Wishlis.Application.Services;
+using Wishlis.Domain;
 
 namespace Wishlis.Api.Controllers;
 
@@ -39,9 +41,18 @@ public class PersonsController : ControllerBase
     /// <param name="model">The person's data.</param>
     /// <returns>Created person's ID.</returns>
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult<int>> CreatePerson(PersonDto model)
     {
         return await _personService.CreatePerson(model);
+    }
+    
+    [HttpDelete]
+    [Authorize(Roles = UserGroups.Admins)]
+    public async Task<IActionResult> DeletePerson(int id)
+    {
+        await _personService.DeletePerson(id);
+        return Ok();
     }
 
     /// <summary>
@@ -62,6 +73,7 @@ public class PersonsController : ControllerBase
     /// <param name="ownerPersonId">ID of the person.</param>
     /// <returns></returns>
     [HttpGet("{ownerPersonId}/favorite-persons")]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<PersonDto>>> GetFavoritePersons(int ownerPersonId)
     {
         var persons = await _personService.GetFavoritePersons(ownerPersonId);
@@ -75,6 +87,7 @@ public class PersonsController : ControllerBase
     /// <param name="ownerPersonId">ID of the person, to whom a favorite person will be added.</param>
     /// <returns></returns>
     [HttpPost("{ownerPersonId}/favorite-persons")]
+    [Authorize]
     public async Task<IActionResult> AddPersonToFavorites(int favoritePersonId, int ownerPersonId)
     {
         await _personService.AddPersonToFavorites(favoritePersonId, ownerPersonId);

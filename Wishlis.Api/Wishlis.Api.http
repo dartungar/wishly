@@ -1,6 +1,14 @@
 @Wishlis.Api_HostAddress = http://localhost:5121
 
-GET {{Wishlis.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+@AccessToken = 
 
+GET {{Wishlis.Api_HostAddress}}/v1/persons/1
+Accept: application/json
+Authorization: Bearer {{AccessToken}}
 ###
+
+DELETE {{Wishlis.Api_HostAddress}}/v1/persons?id=1
+Accept: application/json
+Authorization: Bearer {{AccessToken}}
+###
+
