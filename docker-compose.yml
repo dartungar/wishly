@@ -1,0 +1,22 @@
+﻿services:
+  wishlis.api:
+    build:
+      context: ./Wishlis.Api
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8080"
+    networks:
+      - wishlis-network
+  
+  wishlis.webapp:
+    build:
+      context: ./wishlis-webapp
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    container_name: wishlis_webapp
+    networks:
+      - wishlis-network
+        
+networks:
+  wishlis-network:
