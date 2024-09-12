@@ -43,4 +43,9 @@ public class PersonRepository : IPersonRepository
         var person = await Persons.FindByIdAsync(personId);
         return await Persons.Query().Where(x => person.FavoritePersonIds.Contains(x.Id)).ToEnumerableAsync();
     }
+
+    public async Task Delete(int id)
+    {
+        await Persons.DeleteAsync(id);
+    }
 }

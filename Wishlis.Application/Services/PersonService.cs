@@ -20,7 +20,12 @@ public class PersonService : IPersonService
     {
         return await _personRepository.Create(_mapper.Map<Person>(model));
     }
-    
+
+    public async Task DeletePerson(int id)
+    {
+        await _personRepository.Delete(id);
+    }
+
     public async Task UpdatePerson(PersonDto model)
     {
         await _personRepository.Update(_mapper.Map<Person>(model));

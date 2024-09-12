@@ -13,4 +13,6 @@ public interface IPersonRepository
     public Task AddPersonToFavorites(int favoritePersonId, int ownerPersonId);
     
     public Task<IEnumerable<Person>> GetFavoritePersons(int personId);
+    
+    Task Delete(int id);
 }
