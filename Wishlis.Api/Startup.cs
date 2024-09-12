@@ -1,4 +1,7 @@
 ﻿using Asp.Versioning.ApiExplorer;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Wishlis.Api.Auth;
 using Wishlis.Api.Swagger;
 using Wishlis.Application.Mappers;
 using Wishlis.Application.Services;
@@ -23,6 +26,12 @@ public class Startup
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddControllers();
         services.AddAndConfigureSwagger();
+        
+        // auth
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer();
+        services.AddAuthorization();
+        services.ConfigureOptions<JwtBearerConfigureOptions>();
 
         // services
         services.AddAutoMapper(typeof(MappingProfile));
