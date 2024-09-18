@@ -1,11 +1,11 @@
 <p>app works!</p>
-<amplify-authenticator [socialProviders]="['facebook', 'google']">
-    <ng-template
-            amplifySlot="authenticated"
-            let-user="user"
-            let-signOut="signOut"
-    >
-        <h1>Welcome {{ user.username }}!</h1>
-        <button (click)="signOut()">Sign Out</button>
-    </ng-template>
+<amplify-authenticator>
+  <ng-template
+    amplifySlot="authenticated"
+    let-user="user"
+    let-signOut="signOut"
+  >
+    <h2>Welcome, {{ user.username }}!</h2>
+    <button (click)="signOut()">Sign Out</button>
+  </ng-template>
 </amplify-authenticator>
