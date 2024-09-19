@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+
+/*TODO: create an application theme*/
+:root {
+  --amplify-colors-primary-10: hsl(30, 75%, 95%) !important;
+  --amplify-colors-primary-100: hsl(30, 100%, 15%)  !important;
+  --amplify-colors-primary-20: hsl(30, 75%, 85%) !important;
+  --amplify-colors-primary-40: hsl(30, 75%, 75%) !important;
+  --amplify-colors-primary-60: hsl(30, 50%, 50%) !important;
+  --amplify-colors-primary-80: hsl(30, 95%, 30%) !important;
+  --amplify-colors-primary-90: hsl(30, 100%, 20%) !important;
+}

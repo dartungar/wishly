@@ -1,13 +1,15 @@
 import { NgModule} from '@angular/core';
-import {AmplifyAuthenticatorModule, AuthenticatorComponent} from '@aws-amplify/ui-angular';
+import {AmplifyAuthenticatorModule } from '@aws-amplify/ui-angular';
 import {BrowserModule} from "@angular/platform-browser";
 import {AppComponent} from "./app.component";
-import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/compiler";
+import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
+import {AuthModule} from "../auth/auth.module";
 
 @NgModule({
-  declarations: [],
-  imports: [BrowserModule, AmplifyAuthenticatorModule, AppComponent],
+  declarations: [AppComponent],
+  imports: [BrowserModule, AmplifyAuthenticatorModule, AuthModule],
   providers: [],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
