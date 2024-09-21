@@ -1,1 +1,8 @@
-<p>navbar works!</p>
+<nav>
+  <a routerLink="/me" *ngIf="authService.isAuthenticated">My Wishlist</a>
+  <a routerLink="/search">Search Users</a>
+  <a routerLink="/auth/sign-in" *ngIf="!authService.isAuthenticated">Sign In</a>
+  <a routerLink="/auth/sign-up" *ngIf="!authService.isAuthenticated">Create Account</a>
+  <a routerLink="/settings" *ngIf="authService.isAuthenticated">Settings</a>
+  <a (click)="authService.signOut()" *ngIf="authService.isAuthenticated" href="/">Sign Out</a>
+</nav>
