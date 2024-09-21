@@ -5,7 +5,7 @@ import {AppComponent} from "./app.component";
 import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {AuthModule} from "../auth/auth.module";
 import {RouterOutlet} from "@angular/router";
-import {NavbarComponent} from "../navbar/navbar.component";
+import {NavbarComponent} from "../common/navbar/navbar.component";
 import {RoutingModule} from "./routing.module";
 
 @NgModule({

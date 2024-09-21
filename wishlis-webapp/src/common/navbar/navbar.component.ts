@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import {RoutingModule} from "../app/routing.module";
-import {AuthService} from "../auth/auth.service";
+import {Component} from '@angular/core';
+import {RoutingModule} from "../../app/routing.module";
+import {AuthService} from "../../auth/auth.service";
 import {Router} from "@angular/router";
 import {NgIf} from "@angular/common";
 
@@ -12,6 +12,6 @@ import {NgIf} from "@angular/common";
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-constructor(public authService: AuthService, public router: Router) {
-}
+  constructor(public authService: AuthService, public router: Router) {
+  }
 }
