@@ -13,6 +13,10 @@ export class AuthService {
     this.subscribeToAmplifyEvents();
   }
 
+  public signOut() {
+    this.authenticator.signOut();
+  }
+
   private subscribeToAmplifyEvents() {
     Hub.listen('auth', async ({ payload }) => {
       switch (payload.event) {

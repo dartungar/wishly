@@ -1,6 +1,4 @@
 import {Component} from '@angular/core';
-import {AuthWrapperComponent} from "../auth/auth-wrapper/auth-wrapper.component";
-
 
 
 @Component({
