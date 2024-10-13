@@ -7,7 +7,7 @@ import {fetchAuthSession} from "aws-amplify/auth";
   providedIn: 'root'
 })
 export class AuthService {
-  public isAuthenticated = false;
+  public isAuthenticated: boolean;
   public userName: string | undefined = undefined;
   public userToken: string | undefined = undefined;
 
@@ -17,6 +17,16 @@ export class AuthService {
 
   public signOut() {
     this.authenticator.signOut();
+  }
+
+  public getAuthenticatedUserId(): string | null {
+    console.log(this.isAuthenticated);
+    if (this.isAuthenticated) {
+      console.log(this.authenticator.user);
+      return this.authenticator.user.userId;
+    }
+
+    return null;
   }
 
   private subscribeToAmplifyEvents() {

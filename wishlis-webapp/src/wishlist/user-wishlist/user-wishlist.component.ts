@@ -4,6 +4,8 @@ import {WishlistItem} from "../wishlistItem";
 import {WishlistItemComponent} from "../wishlist-item/wishlist-item.component";
 import {AsyncPipe, NgForOf} from "@angular/common";
 import {Observable} from "rxjs";
+import {UserService} from "../../user/user.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-user-wishlist',
@@ -17,14 +19,20 @@ import {Observable} from "rxjs";
   styleUrl: './user-wishlist.component.css'
 })
 export class UserWishlistComponent implements OnInit {
-  @Input() userId: string | undefined;
+  private userId: string | null = null;
 
   items: Observable<WishlistItem[]>;
 
-  constructor(private wishlistItemService: WishlistItemsService) {
+  constructor(private wishlistItemService: WishlistItemsService, private userService: UserService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
+    this.userId = this.route.snapshot.paramMap.get('userId');
+    console.log("userId:",this.userId);
+    if (this.userId === "me") {
+      this.userId = this.userService.getAuthenticatedUserId();
+    }
+
     this.items = this.wishlistItemService.getItemsForUser(this.userId!);
   }
 }

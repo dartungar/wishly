@@ -11,7 +11,7 @@ export class WishlistItemsService {
   constructor(private http: HttpClient) { }
 
   public getItemsForUser(userId: string): Observable<WishlistItem[]> {
-    return this.http.get<WishlistItem[]>('/api/users/1/items');
+    return this.http.get<WishlistItem[]>(`/api/users/${userId}/items`);
   }
 
 }
