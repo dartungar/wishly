@@ -8,7 +8,7 @@ import {NotFoundComponent} from "../common/not-found/not-found.component";
 
 export const routes: Routes = [
   { path: 'search', component: SearchComponent },
-  { path: 'user/:id', component: UserWishlistComponent },
+  { path: 'users/:id', component: UserWishlistComponent },
   { path: 'me', component: UserWishlistComponent, canActivate: [authGuard] },
   { path: 'settings', component: SettingsComponent, canActivate: [authGuard]  },
   { path: 'auth', component: AuthFormComponent },

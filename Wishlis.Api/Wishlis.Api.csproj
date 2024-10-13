@@ -35,6 +35,10 @@
       <ProjectReference Include="..\Wishlis.Infrastructure\Wishlis.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Database.db" />
+    </ItemGroup>
+
     <PropertyGroup>
         <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
     </PropertyGroup>
