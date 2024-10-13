@@ -15,10 +15,10 @@ public class UserRepository : IUserRepository
         _dbContext = dbContext;
     }
     
-    public async Task<int> Create(User user)
+    public async Task<Guid> Create(User user)
     {
         var inserted = await Users.InsertAsync(user);
-        return BsonMapper.Global.Deserialize<int>(inserted);
+        return BsonMapper.Global.Deserialize<Guid>(inserted);
     }
 
     public Task Update(User user)
@@ -26,25 +26,25 @@ public class UserRepository : IUserRepository
         return Users.UpdateAsync(user);
     }
 
-    public Task<User> GetById(int id)
+    public Task<User> GetById(Guid id)
     {
         return Users.FindByIdAsync(id);
     }
 
-    public async Task AddUserToFavorites(int favoriteUserId, int ownerUserId)
+    public async Task AddUserToFavorites(Guid favoriteUserId, Guid ownerUserId)
     {
         var user = await Users.FindByIdAsync(ownerUserId);
         user.FavoriteUserIds.Add(favoriteUserId);
         await Users.UpdateAsync(user);
     }
 
-    public async Task<IEnumerable<User>> GetFavoriteUsers(int userId)
+    public async Task<IEnumerable<User>> GetFavoriteUsers(Guid userId)
     {
         var user = await Users.FindByIdAsync(userId);
         return await Users.Query().Where(x => user.FavoriteUserIds.Contains(x.Id)).ToEnumerableAsync();
     }
 
-    public async Task Delete(int id)
+    public async Task Delete(Guid id)
     {
         await Users.DeleteAsync(id);
     }

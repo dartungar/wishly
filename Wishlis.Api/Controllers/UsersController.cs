@@ -41,7 +41,7 @@ public class UsersController : ControllerBase
     /// <param name="id">user's ID.</param>
     /// <returns>A user object.</returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<UserDto>> GetById(int id)
+    public async Task<ActionResult<UserDto>> GetById(Guid id)
     {
         return Ok(await _userService.GetById(id));
     }
@@ -54,7 +54,7 @@ public class UsersController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [Authorize]
-    public async Task<ActionResult<int>> CreateUser(UserDto model)
+    public async Task<ActionResult<Guid>> CreateUser(UserDto model)
     {
         return Created("", await _userService.CreateUser(model));
     }
@@ -68,7 +68,7 @@ public class UsersController : ControllerBase
     [Authorize(Roles = UserGroups.Admins)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> DeleteUser(int id)
+    public async Task<IActionResult> DeleteUser(Guid id)
     {
         await _userService.DeleteUser(id);
         return NoContent();
@@ -95,7 +95,7 @@ public class UsersController : ControllerBase
     /// <returns></returns>
     [HttpGet("{ownerId}/favorite-users")]
     [Authorize]
-    public async Task<ActionResult<IEnumerable<UserDto>>> GetFavoriteUsers(int ownerId)
+    public async Task<ActionResult<IEnumerable<UserDto>>> GetFavoriteUsers(Guid ownerId)
     {
         var users = await _userService.GetFavoriteUsers(ownerId);
         return Ok(users);
@@ -111,7 +111,7 @@ public class UsersController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> AddUserToFavorites(int favoriteuserId, int owneruserId)
+    public async Task<IActionResult> AddUserToFavorites(Guid favoriteuserId, Guid owneruserId)
     {
         await _userService.AddUserToFavorites(favoriteuserId, owneruserId);
         return NoContent();
