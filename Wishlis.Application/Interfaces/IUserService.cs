@@ -4,10 +4,10 @@ namespace Wishlis.Application.Interfaces;
 
 public interface IUserService
 {
-    Task<int> CreateUser(UserDto model);
-    Task DeleteUser(int id);
+    Task<Guid> CreateUser(UserDto model);
+    Task DeleteUser(Guid id);
     Task UpdateUser(UserDto model);
-    Task<UserDto> GetById(int id);
-    Task<IEnumerable<UserDto>> GetFavoriteUsers(int ownerId);
-    Task AddUserToFavorites(int favoriteUserId, int ownerId);
+    Task<UserDto> GetById(Guid id);
+    Task<IEnumerable<UserDto>> GetFavoriteUsers(Guid ownerId);
+    Task AddUserToFavorites(Guid favoriteUserId, Guid ownerId);
 }

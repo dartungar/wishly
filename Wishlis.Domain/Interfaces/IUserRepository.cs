@@ -4,15 +4,15 @@ namespace Wishlis.Domain.Repositories;
 
 public interface IUserRepository
 {
-    public Task<int> Create(User user);
+    public Task<Guid> Create(User user);
     
     public Task Update(User user);
 
-    public Task<User> GetById(int id);
+    public Task<User> GetById(Guid id);
 
-    public Task AddUserToFavorites(int favoriteUserId, int ownerUserId);
+    public Task AddUserToFavorites(Guid favoriteUserId, Guid ownerUserId);
     
-    public Task<IEnumerable<User>> GetFavoriteUsers(int userId);
+    public Task<IEnumerable<User>> GetFavoriteUsers(Guid userId);
     
-    Task Delete(int id);
+    Task Delete(Guid id);
 }
