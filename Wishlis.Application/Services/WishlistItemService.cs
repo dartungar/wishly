@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Wishlis.Application.DTO;
+using Wishlis.Application.Interfaces;
 using Wishlis.Domain.Entities;
 using Wishlis.Domain.Repositories;
 
@@ -37,9 +38,9 @@ public class WishlistItemService : IWishlistItemService
         return _mapper.Map<IEnumerable<WishlistItemDto>>(items);
     }
 
-    public async Task<IEnumerable<WishlistItemDto>> GetByPersonId(int personId)
+    public async Task<IEnumerable<WishlistItemDto>> GetByUserId(int userId)
     {
-        var items = await _wishlistItemRepository.GetByPersonId(personId);
+        var items = await _wishlistItemRepository.GetByUserId(userId);
         return _mapper.Map<IEnumerable<WishlistItemDto>>(items);
     }
 }
