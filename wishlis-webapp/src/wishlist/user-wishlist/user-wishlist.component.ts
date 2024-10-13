@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {WishlistItemsService} from "../wishlist-items.service";
 import {WishlistItem} from "../wishlistItem";
 import {WishlistItemComponent} from "../wishlist-item/wishlist-item.component";
@@ -15,13 +15,15 @@ import {NgForOf} from "@angular/common";
   styleUrl: './user-wishlist.component.css'
 })
 export class UserWishlistComponent implements OnInit {
+  @Input() userId: string | undefined;
+
   items: WishlistItem[] = [];
 
   constructor(private wishlistItemService: WishlistItemsService) {
   }
 
   ngOnInit() {
-    this.wishlistItemService.getItemsForUser("1").subscribe((items: WishlistItem[]) => {
+    this.wishlistItemService.getItemsForUser(this.userId!).subscribe((items: WishlistItem[]) => {
       this.items = items;
     })
   }
