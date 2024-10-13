@@ -12,7 +12,7 @@ namespace Wishlis.Api.Controllers;
 /// 
 /// </summary>
 [ApiVersion(1)]
-[Route("v{version:apiVersion}/[controller]")]
+[Route("/api/v{version:apiVersion}/[controller]")]
 [ApiController]
 public class PersonsController : ControllerBase
 {
@@ -122,7 +122,7 @@ public class PersonsController : ControllerBase
     /// <param name="personId">ID of the person.</param>
     /// <returns>List of items.</returns>
     [HttpGet("{personId}/items")]
-    public async Task<ActionResult<IEnumerable<WishlistItemDto>>> GetPersonWithlist(int personId)
+    public async Task<ActionResult<IEnumerable<WishlistItemDto>>> GetPersonWishlist(int personId)
     {
         var result = await _wishlistItemService.GetByPersonId(personId);
         return Ok(result);

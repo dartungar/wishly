@@ -1,22 +1,17 @@
 import { Injectable } from '@angular/core';
 import {Observable, of} from "rxjs";
 import {WishlistItem} from "./wishlistItem";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class WishlistItemsService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   public getItemsForUser(userId: string): Observable<WishlistItem[]> {
-    return of([
-      {
-        name: "test",
-        userId: "123",
-        url: "https://google.com"
-      }
-    ])
+    return this.http.get<WishlistItem[]>('/api/persons/1/items');
   }
 
 }
