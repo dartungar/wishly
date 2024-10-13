@@ -6,18 +6,7 @@ import {SearchComponent} from "../search/search.component";
 import {AuthFormComponent} from "../auth/auth-form/auth-form.component";
 import {authGuard} from "../auth/auth.guard";
 import {NotFoundComponent} from "../common/not-found/not-found.component";
-
-const routes: Routes = [
-  { path: 'search', component: SearchComponent },
-  { path: 'user/:id', component: UserWishlistComponent },
-  { path: 'me', component: UserWishlistComponent, canActivate: [authGuard] },
-  { path: 'settings', component: SettingsComponent, canActivate: [authGuard]  },
-  { path: 'auth', component: AuthFormComponent },
-  { path: 'auth/sign-in', component: AuthFormComponent },
-  { path: 'auth/sign-up', component: AuthFormComponent },
-  { path: '', redirectTo: "/search", pathMatch: 'full' },
-  { path: '**', component: NotFoundComponent },
-];
+import {routes} from "./app.routes";
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -21,7 +21,7 @@ export class UserWishlistComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.wishlistItemService.getItemsForUser("123").subscribe((items: WishlistItem[]) => {
+    this.wishlistItemService.getItemsForUser("1").subscribe((items: WishlistItem[]) => {
       this.items = items;
     })
   }
