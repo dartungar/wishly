@@ -1,1 +1,1 @@
-<app-wishlist-item *ngFor="let item of items" [item]="item"></app-wishlist-item>
+<app-wishlist-item *ngFor="let item of items | async" [item]="item"></app-wishlist-item>
