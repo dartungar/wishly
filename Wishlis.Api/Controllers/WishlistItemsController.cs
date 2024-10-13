@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Wishlis.Application.DTO;
+using Wishlis.Application.Interfaces;
 using Wishlis.Application.Services;
 
 namespace Wishlis.Api.Controllers;

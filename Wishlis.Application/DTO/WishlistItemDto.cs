@@ -1,3 +1,3 @@
 ﻿namespace Wishlis.Application.DTO;
 
-public record WishlistItemDto(int? Id, int PersonId, string Name, string Url, bool IsGroupGift);
+public record WishlistItemDto(int? Id, int UserId, string Name, string Url, bool IsGroupGift);

@@ -1,6 +1,6 @@
 using Wishlis.Application.DTO;
 
-namespace Wishlis.Application.Services;
+namespace Wishlis.Application.Interfaces;
 
 public interface IWishlistItemService
 {
@@ -8,5 +8,5 @@ public interface IWishlistItemService
     Task Update(WishlistItemDto model);
     Task Delete(int id);
     Task<IEnumerable<WishlistItemDto>> Get();
-    Task<IEnumerable<WishlistItemDto>> GetByPersonId(int personId);
+    Task<IEnumerable<WishlistItemDto>> GetByUserId(int userId);
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Wishlis.Api.Auth;
 using Wishlis.Api.Swagger;
+using Wishlis.Application.Interfaces;
 using Wishlis.Application.Mappers;
 using Wishlis.Application.Services;
 using Wishlis.Domain.Repositories;
@@ -43,14 +44,14 @@ public class Startup
 
         // services
         services.AddAutoMapper(typeof(MappingProfile));
-        services.AddTransient<IPersonService, PersonService>();
+        services.AddTransient<IUserService, UserService>();
         services.AddTransient<IWishlistItemService, WishlistItemService>();
 
         // infrastructure
         var n = Configuration.GetChildren().ToList();
         services.Configure<LiteDbOptions>(Configuration.GetSection(nameof(LiteDbOptions)));
         services.AddScoped<ILiteDbContext, LiteDbContext>();
-        services.AddScoped<IPersonRepository, PersonRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IWishlistItemRepository, WishlistItemRepository>();
     }
 

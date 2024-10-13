@@ -1,6 +1,9 @@
 
 export interface WishlistItem {
-  name: string;
-  url: string;
   userId: string;
+  name: string;
+  price: number;
+  currency: string;
+  url: string;
+  isGroupGift: boolean;
 }

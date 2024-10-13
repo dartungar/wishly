@@ -2,12 +2,12 @@
 
 @AccessToken = 
 
-GET {{Wishlis.Api_HostAddress}}/v1/persons/1
+GET {{Wishlis.Api_HostAddress}}/v1/users/1
 Accept: application/json
 Authorization: Bearer {{AccessToken}}
 ###
 
-DELETE {{Wishlis.Api_HostAddress}}/v1/persons?id=1
+DELETE {{Wishlis.Api_HostAddress}}/v1/users?id=1
 Accept: application/json
 Authorization: Bearer {{AccessToken}}
 ###
