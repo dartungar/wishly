@@ -9,7 +9,7 @@ import {NotFoundComponent} from "../common/not-found/not-found.component";
 import {routes} from "./app.routes";
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {bindToComponentInputs: true})],
   exports: [RouterModule]
 })
 export class RoutingModule { }
