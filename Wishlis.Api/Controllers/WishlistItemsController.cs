@@ -6,7 +6,7 @@ using Wishlis.Application.Services;
 namespace Wishlis.Api.Controllers;
 
 [ApiVersion(1)]
-[Route("v{version:apiVersion}/[controller]")]
+[Route("/api/v{version:apiVersion}/[controller]")]
 [ApiController]
 public class WishlistItemsController : ControllerBase
 {
