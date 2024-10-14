@@ -28,11 +28,9 @@ export class UserWishlistComponent implements OnInit {
 
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('userId');
-    console.log("userId:",this.userId);
     if (this.userId === "me") {
       this.userId = this.userService.getAuthenticatedUserId();
     }
-
     this.items = this.wishlistItemService.getItemsForUser(this.userId!);
   }
 }
