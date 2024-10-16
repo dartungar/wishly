@@ -1,0 +1,49 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.list-item {
+  border: 1px solid #000;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: 'Courier New', Courier, monospace;
+  width: 90%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+.list-item-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+}
+
+.item-name {
+  font-weight: bold;
+}
+
+.edit-button {
+  background-color: transparent;
+  border: none;
+  color: blue;
+  cursor: pointer;
+}
+
+.item-price,
+.item-link,
+.item-icon {
+  margin-right: 10px;
+}
+
+.item-link {
+  color: blue;
+  text-decoration: none;
+}
+
+.item-icon {
+  flex-shrink: 0;
+}
