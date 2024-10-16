@@ -8,5 +8,5 @@ public interface IWishlistItemService
     Task Update(WishlistItemDto model);
     Task Delete(int id);
     Task<IEnumerable<WishlistItemDto>> Get();
-    Task<IEnumerable<WishlistItemDto>> GetByUserId(int userId);
+    Task<IEnumerable<WishlistItemDto>> GetByUserId(Guid userId);
 }

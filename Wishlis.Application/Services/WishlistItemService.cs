@@ -38,7 +38,7 @@ public class WishlistItemService : IWishlistItemService
         return _mapper.Map<IEnumerable<WishlistItemDto>>(items);
     }
 
-    public async Task<IEnumerable<WishlistItemDto>> GetByUserId(int userId)
+    public async Task<IEnumerable<WishlistItemDto>> GetByUserId(Guid userId)
     {
         var items = await _wishlistItemRepository.GetByUserId(userId);
         return _mapper.Map<IEnumerable<WishlistItemDto>>(items);
