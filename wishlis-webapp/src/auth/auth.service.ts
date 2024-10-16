@@ -16,7 +16,7 @@ export class AuthService {
   }
 
   public async signOut() {
-    console.log("signing out out...");
+    console.log("signing out...");
     this.authenticator.signOut();
 
     this.isAuthenticated = false;

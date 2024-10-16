@@ -123,7 +123,7 @@ public class UsersController : ControllerBase
     /// <param name="userId">ID of the user.</param>
     /// <returns>List of items.</returns>
     [HttpGet("{userId}/items")]
-    public async Task<ActionResult<IEnumerable<WishlistItemDto>>> GetuserWishlist(int userId)
+    public async Task<ActionResult<IEnumerable<WishlistItemDto>>> GetuserWishlist(Guid userId)
     {
         var result = await _wishlistItemService.GetByUserId(userId);
         return Ok(result);
