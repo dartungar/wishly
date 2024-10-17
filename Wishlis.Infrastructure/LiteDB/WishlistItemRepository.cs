@@ -21,9 +21,9 @@ public class WishlistItemRepository : IWishlistItemRepository
         await WishlistItems.InsertAsync(item);
     }
 
-    public async Task Update(WishlistItem item)
+    public async Task Save(WishlistItem item)
     {
-        await WishlistItems.UpdateAsync(item);
+        await WishlistItems.UpsertAsync(item);
     }
 
     public async Task Delete(int id)

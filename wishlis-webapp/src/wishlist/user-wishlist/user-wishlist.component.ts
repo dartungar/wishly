@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {WishlistItemsService} from "../wishlist-items.service";
-import {WishlistItem} from "../wishlistItem";
+import {createDefaultWishlistItem, WishlistItem} from "../wishlistItem";
 import {WishlistItemComponent} from "../wishlist-item/wishlist-item.component";
 import {AsyncPipe, NgForOf} from "@angular/common";
 import {Observable} from "rxjs";
@@ -22,7 +22,7 @@ export class UserWishlistComponent implements OnInit {
   private userId: string | null = null;
   public authenticatedUserId: string | null = null;
 
-  items: Observable<WishlistItem[]>;
+  items: WishlistItem[] = [];
 
   constructor(private wishlistItemService: WishlistItemsService, private userService: UserService, private route: ActivatedRoute) {
   }
@@ -33,6 +33,14 @@ export class UserWishlistComponent implements OnInit {
     if (this.userId === "me") {
       this.userId = this.authenticatedUserId;
     }
-    this.items = this.wishlistItemService.getItemsForUser(this.userId!);
+    this.wishlistItemService.getItemsForUser(this.userId!).subscribe(items => {
+      this.items = items;
+    });
+  }
+
+  addItem(): void {
+    if (this.authenticatedUserId !== null) {
+      this.items.push(createDefaultWishlistItem(this.authenticatedUserId));
+    }
   }
 }

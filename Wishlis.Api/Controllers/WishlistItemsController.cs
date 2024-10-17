@@ -35,7 +35,7 @@ public class WishlistItemsController : ControllerBase
     }
     
     /// <summary>
-    /// Update an existing wishlist item.
+    /// Create or update an existing wishlist item.
     /// </summary>
     /// <param name="id">Item ID.</param>
     /// <param name="model">Item's updated data.</param>
@@ -44,11 +44,11 @@ public class WishlistItemsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> Update(Guid id, WishlistItemDto model)
+    public async Task<IActionResult> Save(Guid id, WishlistItemDto model)
     {
         if (id != model.Id)
             return BadRequest();
-        await _wishlistItemService.Update(model);
+        await _wishlistItemService.Save(model);
         return Ok();
     }
     

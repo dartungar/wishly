@@ -22,9 +22,9 @@ public class WishlistItemService : IWishlistItemService
         await _wishlistItemRepository.Create(_mapper.Map<WishlistItem>(model));
     }
     
-    public async Task Update(WishlistItemDto model)
+    public async Task Save(WishlistItemDto model)
     {
-        await _wishlistItemRepository.Update(_mapper.Map<WishlistItem>(model));
+        await _wishlistItemRepository.Save(_mapper.Map<WishlistItem>(model));
     }
     
     public async Task Delete(int id)
