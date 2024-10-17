@@ -1,3 +1,5 @@
-﻿namespace Wishlis.Application.DTO;
+﻿using Wishlis.Domain;
 
-public record WishlistItemDto(int? Id, Guid userId, string Name, string Url, bool IsGroupGift);
+namespace Wishlis.Application.DTO;
+
+public record WishlistItemDto(Guid Id, Guid UserId, string Name, double Price, Currency Currency,  string Url, bool IsGroupGift);

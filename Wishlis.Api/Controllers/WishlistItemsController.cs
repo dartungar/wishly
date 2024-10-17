@@ -44,7 +44,7 @@ public class WishlistItemsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> Update(int id, WishlistItemDto model)
+    public async Task<IActionResult> Update(Guid id, WishlistItemDto model)
     {
         if (id != model.Id)
             return BadRequest();

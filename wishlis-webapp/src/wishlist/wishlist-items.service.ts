@@ -14,4 +14,8 @@ export class WishlistItemsService {
     return this.http.get<WishlistItem[]>(`/api/users/${userId}/items`);
   }
 
+  public saveItem(item: WishlistItem): Observable<WishlistItem> {
+    return this.http.put<WishlistItem>(`/api/WishlistItems/${item.id}`, item);
+  }
+
 }

@@ -20,6 +20,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class UserWishlistComponent implements OnInit {
   private userId: string | null = null;
+  public authenticatedUserId: string | null = null;
 
   items: Observable<WishlistItem[]>;
 
@@ -28,8 +29,9 @@ export class UserWishlistComponent implements OnInit {
 
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('userId');
+    this.authenticatedUserId = this.userService.getAuthenticatedUserId();
     if (this.userId === "me") {
-      this.userId = this.userService.getAuthenticatedUserId();
+      this.userId = this.authenticatedUserId;
     }
     this.items = this.wishlistItemService.getItemsForUser(this.userId!);
   }

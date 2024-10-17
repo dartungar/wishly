@@ -1,11 +1,15 @@
 <div class="list-item">
-  <div class="list-item-row">
-    <span class="item-name">{{item?.name}}</span>
-    <button class="edit-button">Edit</button>
+  <div *ngIf="!editing">
+    <h3>{{ item.name }}</h3>
+    <p>{{ item.price }}</p>
+    <a [href]="item.url" target="_blank">{{ item.url }}</a>
+    <button (click)="toggleEdit()" *ngIf="belongsToAuthenticatedUser">Edit</button>
   </div>
-  <div class="list-item-row">
-    <span class="item-price">5000$</span>
-    <a href="{{item?.url}}" class="item-link">{{item?.url}}</a>
-    <span class="item-icon">⭐️</span>
+
+  <div *ngIf="editing">
+    <input [(ngModel)]="item.name" placeholder="Title" />
+    <input [(ngModel)]="item.price" placeholder="Cost" />
+    <input [(ngModel)]="item.url" placeholder="URL" />
+    <button (click)="save()">Save</button>
   </div>
 </div>
