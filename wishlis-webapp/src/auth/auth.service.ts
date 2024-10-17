@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {AuthenticatorService} from "@aws-amplify/ui-angular";
 import {Hub} from "@aws-amplify/core";
 import {fetchAuthSession, signOut} from "aws-amplify/auth";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class AuthService {
   public userName: string | undefined = undefined;
   public userToken: string | undefined = undefined;
 
-  constructor(private authenticator: AuthenticatorService) {
+  constructor(private authenticator: AuthenticatorService, private router: Router) {
     this.subscribeToAmplifyEvents();
   }
 
@@ -55,10 +56,12 @@ export class AuthService {
           // TODO: this should be unnecessary
           await fetchAuthSession();
           this.isAuthenticated = true;
+          await this.router.navigate(["/"]);
           break;
         case 'signedOut':
           console.log('user have been signedOut successfully.');
           this.isAuthenticated = false;
+          await this.router.navigate(["/"]);
           break;
         case 'tokenRefresh':
           console.log('auth tokens have been refreshed.');
