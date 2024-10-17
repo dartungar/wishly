@@ -58,7 +58,7 @@ public class WishlistItemsController : ControllerBase
     /// <param name="id">Item's ID.</param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(Guid id)
     {
         await _wishlistItemService.Delete(id);
         return Ok();

@@ -4,6 +4,7 @@
     <p>{{ item.price }}</p>
     <a [href]="item.url" target="_blank">{{ item.url }}</a>
     <button (click)="toggleEdit()" *ngIf="belongsToAuthenticatedUser">Edit</button>
+    <button (click)="delete()" *ngIf="belongsToAuthenticatedUser">Delete</button>
   </div>
 
   <div *ngIf="editing">

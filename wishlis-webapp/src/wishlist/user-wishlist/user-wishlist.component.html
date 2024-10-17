@@ -1,3 +1,8 @@
 <button (click)="addItem()">Add New</button>
-<app-wishlist-item *ngFor="let item of items" [item]="item" [authenticatedUserId]="authenticatedUserId">
+<app-wishlist-item
+  *ngFor="let item of items"
+  [item]="item"
+  [authenticatedUserId]="authenticatedUserId"
+  (deleteEvent)="removeItem(item.id)"
+>
 </app-wishlist-item>

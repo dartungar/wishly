@@ -43,4 +43,8 @@ export class UserWishlistComponent implements OnInit {
       this.items.push(createDefaultWishlistItem(this.authenticatedUserId));
     }
   }
+
+  removeItem(itemId: string): void {
+    this.items = this.items.filter(item => item.id !== itemId);
+  }
 }

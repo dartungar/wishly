@@ -26,7 +26,7 @@ public class WishlistItemRepository : IWishlistItemRepository
         await WishlistItems.UpsertAsync(item);
     }
 
-    public async Task Delete(int id)
+    public async Task Delete(Guid id)
     {
         await WishlistItems.DeleteAsync(id);
     }

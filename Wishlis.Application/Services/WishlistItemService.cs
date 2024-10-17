@@ -27,7 +27,7 @@ public class WishlistItemService : IWishlistItemService
         await _wishlistItemRepository.Save(_mapper.Map<WishlistItem>(model));
     }
     
-    public async Task Delete(int id)
+    public async Task Delete(Guid id)
     {
         await _wishlistItemRepository.Delete(id);
     }
