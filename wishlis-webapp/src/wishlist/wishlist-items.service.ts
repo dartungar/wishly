@@ -18,4 +18,8 @@ export class WishlistItemsService {
     return this.http.put<WishlistItem>(`/api/WishlistItems/${item.id}`, item);
   }
 
+  public deleteItem(itemId: string): Observable<void> {
+    return this.http.delete<void>(`/api/WishlistItems/${itemId}`);
+  }
+
 }

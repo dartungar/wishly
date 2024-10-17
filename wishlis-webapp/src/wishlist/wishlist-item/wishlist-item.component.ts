@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {createDefaultWishlistItem, WishlistItem} from "../wishlistItem";
 import {NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
@@ -18,6 +18,7 @@ import {UserService} from "../../user/user.service";
 export class WishlistItemComponent implements OnInit {
   @Input() authenticatedUserId: string | null;
   @Input() item: WishlistItem;
+  @Output() deleteEvent = new EventEmitter<void>();
   editing: boolean = false;
   belongsToAuthenticatedUser = false;
 
@@ -37,9 +38,11 @@ export class WishlistItemComponent implements OnInit {
 
   save(): void {
     this.toggleEdit();
-    this.itemsService.saveItem(this.item).subscribe(x => {
-      console.log("Item saved", x);
-    })
-    // TODO: save via items service
+    this.itemsService.saveItem(this.item).subscribe();
+  }
+
+  delete(): void {
+    this.itemsService.deleteItem(this.item.id).subscribe();
+    this.deleteEvent.emit();
   }
 }

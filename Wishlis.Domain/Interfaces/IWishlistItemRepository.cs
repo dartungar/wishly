@@ -8,7 +8,7 @@ public interface IWishlistItemRepository
     
     public Task Save(WishlistItem item);
     
-    public Task Delete(int id);
+    public Task Delete(Guid id);
 
     public Task<IEnumerable<WishlistItem>> Get();
     public Task<IEnumerable<WishlistItem>> GetByUserId(Guid userId);
