@@ -4,7 +4,7 @@ export interface WishlistItem {
   userId: string;
   name: string;
   price: number;
-  currency: string;
+  currencyCode: string;
   url: string;
   isGroupGift: boolean;
 }
@@ -16,7 +16,7 @@ export const createDefaultWishlistItem = (userId: string): WishlistItem => {
     name: "New Item",
     url: "",
     price: 0,
-    currency: "",
+    currencyCode: "",
     isGroupGift: false
   }
 }

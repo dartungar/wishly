@@ -6,7 +6,7 @@ public interface IWishlistItemRepository
 {
     public Task Create(WishlistItem item);
     
-    public Task Update(WishlistItem item);
+    public Task Save(WishlistItem item);
     
     public Task Delete(int id);
 
