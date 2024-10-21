@@ -1,8 +1,22 @@
-<button (click)="addItem()">Add New</button>
-<app-wishlist-item
-  *ngFor="let item of items"
-  [item]="item"
-  [authenticatedUserId]="authenticatedUserId"
-  (deleteEvent)="removeItem(item.id)"
->
-</app-wishlist-item>
+<app-wishlist-item *ngFor="let item of items" [item]="item"></app-wishlist-item>
+
+<p-orderList
+  [value]="items"
+  [listStyle]="{ height: '25rem'  }"
+  [dragdrop]="true"
+  header="Wishlist Items">
+  <ng-template let-item pTemplate="item">
+    <div class="flex flex-wrap p-2 align-items-center gap-3">
+      <div class="flex-1 flex flex-column gap-2">
+        <span class="font-bold">{{ item.name }}</span>
+        <div class="flex align-items-center gap-2">
+          <i class="pi pi-tag text-sm"></i>
+          <span>{{ item.category }}</span>
+        </div>
+      </div>
+      <span class="font-bold text-900">
+                    {{ '$' + item.price }}
+                </span>
+    </div>
+  </ng-template>
+</p-orderList>
