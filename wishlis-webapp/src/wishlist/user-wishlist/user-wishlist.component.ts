@@ -1,11 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {WishlistItemsService} from "../wishlist-items.service";
 import {createDefaultWishlistItem, WishlistItem} from "../wishlistItem";
 import {WishlistItemComponent} from "../wishlist-item/wishlist-item.component";
 import {AsyncPipe, NgForOf} from "@angular/common";
-import {Observable} from "rxjs";
 import {UserService} from "../../user/user.service";
 import {ActivatedRoute} from "@angular/router";
+import {OrderListModule} from "primeng/orderlist";
+import {Button} from "primeng/button";
 
 @Component({
   selector: 'app-user-wishlist',
@@ -13,7 +14,9 @@ import {ActivatedRoute} from "@angular/router";
   imports: [
     WishlistItemComponent,
     NgForOf,
-    AsyncPipe
+    AsyncPipe,
+    OrderListModule,
+    Button
   ],
   templateUrl: './user-wishlist.component.html',
   styleUrl: './user-wishlist.component.css'
@@ -40,7 +43,7 @@ export class UserWishlistComponent implements OnInit {
 
   addItem(): void {
     if (this.authenticatedUserId !== null) {
-      this.items.push(createDefaultWishlistItem(this.authenticatedUserId));
+      this.items = this.items.concat(createDefaultWishlistItem(this.authenticatedUserId));
     }
   }
 

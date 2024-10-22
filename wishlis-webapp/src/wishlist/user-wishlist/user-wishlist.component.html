@@ -1,21 +1,20 @@
-<app-wishlist-item *ngFor="let item of items" [item]="item"></app-wishlist-item>
-
+<p-button icon="pi pi-plus-circle" label="Add New" (click)="addItem()"/>
 <p-orderList
   [value]="items"
   [listStyle]="{ height: '25rem'  }"
   [dragdrop]="true"
   header="Wishlist Items">
-  <ng-template let-item pTemplate="item">
+  <ng-template let-WishlistItem pTemplate="WishlistItem">
     <div class="flex flex-wrap p-2 align-items-center gap-3">
       <div class="flex-1 flex flex-column gap-2">
-        <span class="font-bold">{{ item.name }}</span>
+        <span class="font-bold">{{ WishlistItem.name }}</span>
         <div class="flex align-items-center gap-2">
           <i class="pi pi-tag text-sm"></i>
-          <span>{{ item.category }}</span>
+          <span>{{ WishlistItem.category }}</span>
         </div>
       </div>
       <span class="font-bold text-900">
-                    {{ '$' + item.price }}
+                    {{ '$' + WishlistItem.price }}
                 </span>
     </div>
   </ng-template>
