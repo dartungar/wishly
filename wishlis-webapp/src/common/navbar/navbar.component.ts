@@ -35,34 +35,34 @@ export class NavbarComponent implements OnInit {
       {
         icon: "pi pi-home",
         label: "Home",
-        routerLink: "/me",
+        route: "/me",
         visible: this.isAuthenticated
       },
       {
-        icon: "pi pi-home",
+        icon: "pi pi-search",
         label: "Search Users",
-        routerLink: "/search"
+        route: "/search"
       },
       {
-        icon: "pi pi-home",
+        icon: "pi-sign-in",
         label: "Sign In",
-        routerLink: "/auth/sign-in",
+        route: "/auth/sign-in",
         visible: !this.isAuthenticated
       },
       {
-        icon: "pi pi-home",
+        icon: "pi-user-plus",
         label: "Create Account",
-        routerLink: "/auth/sign-up",
+        route: "/auth/sign-up",
         visible: !this.isAuthenticated
       },
       {
-        icon: "pi pi-home",
+        icon: "pi pi-cog",
         label: "Settings",
-        routerLink: "/settings",
+        route: "/settings",
         visible: this.isAuthenticated
       },
       {
-        icon: "pi pi-home",
+        icon: "pi pi-sign-out",
         label: "Sign Out",
         visible: this.isAuthenticated,
         command: async () => {

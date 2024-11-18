@@ -1,6 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+@import "primeflex/primeflex.css";
+
 
 /*TODO: create an application theme*/
 :root {
@@ -11,4 +14,14 @@
   --amplify-colors-primary-60: hsl(30, 50%, 50%) !important;
   --amplify-colors-primary-80: hsl(30, 95%, 30%) !important;
   --amplify-colors-primary-90: hsl(30, 100%, 20%) !important;
+}
+
+.app-container {
+  margin-left: auto;
+  margin-right: auto;
+  width: clamp(45ch, 80ch, 100%);
+}
+
+.p-menubar-start {
+  flex: auto;
 }
