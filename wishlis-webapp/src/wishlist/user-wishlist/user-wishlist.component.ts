@@ -5,8 +5,7 @@ import {WishlistItemComponent} from "../wishlist-item/wishlist-item.component";
 import {AsyncPipe, NgForOf} from "@angular/common";
 import {UserService} from "../../user/user.service";
 import {ActivatedRoute} from "@angular/router";
-import {OrderListModule} from "primeng/orderlist";
-import {Button} from "primeng/button";
+import { DataViewModule } from 'primeng/dataview';import {Button} from "primeng/button";
 
 @Component({
   selector: 'app-user-wishlist',
@@ -15,11 +14,11 @@ import {Button} from "primeng/button";
     WishlistItemComponent,
     NgForOf,
     AsyncPipe,
-    OrderListModule,
+    DataViewModule,
     Button
   ],
   templateUrl: './user-wishlist.component.html',
-  styleUrl: './user-wishlist.component.css'
+  styleUrls: ['./user-wishlist.component.css']
 })
 export class UserWishlistComponent implements OnInit {
   private userId: string | null = null;
