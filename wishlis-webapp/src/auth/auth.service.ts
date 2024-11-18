@@ -3,12 +3,14 @@ import {AuthenticatorService} from "@aws-amplify/ui-angular";
 import {Hub} from "@aws-amplify/core";
 import {fetchAuthSession, signOut} from "aws-amplify/auth";
 import {Router} from "@angular/router";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  public isAuthenticated: boolean;
+  private authenticated = new BehaviorSubject<boolean>(false);
+  isAuthenticated$ = this.authenticated.asObservable();
   public userName: string | undefined = undefined;
   public userToken: string | undefined = undefined;
 
@@ -20,7 +22,7 @@ export class AuthService {
     console.log("signing out...");
     this.authenticator.signOut();
 
-    this.isAuthenticated = false;
+    this.authenticated.next(false);
     this.userName = undefined;
   }
 
@@ -32,7 +34,7 @@ export class AuthService {
     let session = await fetchAuthSession();
     if (!this.authenticator.user)
       return;
-    this.isAuthenticated = true;
+    this.authenticated.next(true);
     this.userName = this.authenticator.username;
 
     this.userToken = session.tokens?.accessToken.toString()
@@ -40,7 +42,7 @@ export class AuthService {
 
   public getAuthenticatedUserId(): string | null {
     //console.log(this.isAuthenticated);
-    if (this.isAuthenticated) {
+    if (this.authenticated.value) {
       //console.log(this.authenticator.user);
       return this.authenticator.user.userId;
     }
@@ -55,12 +57,12 @@ export class AuthService {
           await this.setAuthenticatedUserInfo();
           // TODO: this should be unnecessary
           await fetchAuthSession();
-          this.isAuthenticated = true;
+          this.authenticated.next(true);
           await this.router.navigate(["/"]);
           break;
         case 'signedOut':
           console.log('user have been signedOut successfully.');
-          this.isAuthenticated = false;
+          this.authenticated.next(false);
           await this.router.navigate(["/"]);
           break;
         case 'tokenRefresh':
