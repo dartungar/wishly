@@ -1,16 +1,35 @@
-<div class="list-item">
+<p-card>
   <div *ngIf="!editing">
     <h3>{{ item.name }}</h3>
     <p>{{ item.price }}</p>
     <a [href]="item.url" target="_blank">{{ item.url }}</a>
-    <button (click)="toggleEdit()" *ngIf="belongsToAuthenticatedUser">Edit</button>
-    <button (click)="delete()" *ngIf="belongsToAuthenticatedUser">Delete</button>
+    <p-button icon="pi pi-pencil" [text]="true" severity="secondary" (click)="toggleEdit()"
+              *ngIf="belongsToAuthenticatedUser"/>
+    <p-button icon="pi pi-trash" [text]="true" severity="danger" (click)="delete()" *ngIf="belongsToAuthenticatedUser"/>
   </div>
 
   <div *ngIf="editing">
-    <input [(ngModel)]="item.name" placeholder="Title" />
-    <input [(ngModel)]="item.price" placeholder="Cost" />
-    <input [(ngModel)]="item.url" placeholder="URL" />
-    <button (click)="save()">Save</button>
+    <p-inputGroup>
+      <p-inputGroupAddon>
+        <label for="name">Title</label>
+      </p-inputGroupAddon>
+      <input id="name" type="text" pInputText [(ngModel)]="item.name" />
+    </p-inputGroup>
+    <p-inputGroup>
+      <p-inputGroupAddon>
+        <label for="cost">Cost</label>
+      </p-inputGroupAddon>
+      <p-inputNumber id="cost" [(ngModel)]="item.price" [currency]="item.currencyCode" placeholder="Cost"/>
+    </p-inputGroup>
+    <p-inputGroup>
+      <p-inputGroupAddon>
+        <label for="url">Shop Link</label>
+      </p-inputGroupAddon>
+      <input id="url" type="text" pInputText [(ngModel)]="item.url" />
+    </p-inputGroup>
+    <div>
+      <p-button icon="pi pi-check" [text]="true" (click)="save()"/>
+    </div>
+
   </div>
-</div>
+</p-card>
