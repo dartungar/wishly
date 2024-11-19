@@ -1,4 +1,4 @@
-<p-button icon="pi pi-plus-circle" label="Add New" (click)="addItem()"/>
+<p-button [text]="true" icon="pi pi-plus-circle" size="small" label="Add New" (click)="addItem()"/>
 <p-dataView #dv
   [value]="items" >
   <ng-template let-items pTemplate="list">

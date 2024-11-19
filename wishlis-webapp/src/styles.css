@@ -3,7 +3,7 @@
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
 @import "primeflex/primeflex.css";
-
+@import "primeng/resources/themes/lara-light-blue/theme.css";
 
 /*TODO: create an application theme*/
 :root {

@@ -4,13 +4,27 @@ import {NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {WishlistItemsService} from "../wishlist-items.service";
 import {UserService} from "../../user/user.service";
+import {CardModule} from "primeng/card";
+import {InputTextModule} from "primeng/inputtext";
+import {InputNumberModule} from "primeng/inputnumber";
+import {Button} from "primeng/button";
+import {FloatLabelModule} from "primeng/floatlabel";
+import {InputGroupModule} from "primeng/inputgroup";
+import {InputGroupAddonModule} from "primeng/inputgroupaddon";
 
 @Component({
   selector: 'app-wishlist-item',
   standalone: true,
   imports: [
     NgIf,
-    FormsModule
+    FormsModule,
+    CardModule,
+    InputTextModule,
+    InputNumberModule,
+    Button,
+    FloatLabelModule,
+    InputGroupModule,
+    InputGroupAddonModule
   ],
   templateUrl: './wishlist-item.component.html',
   styleUrl: './wishlist-item.component.css'
