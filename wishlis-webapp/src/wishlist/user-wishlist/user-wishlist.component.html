@@ -2,6 +2,6 @@
 <p-dataView #dv
   [value]="items" >
   <ng-template let-items pTemplate="list">
-    <app-wishlist-item *ngFor="let item of items" [item]="item" [authenticatedUserId]="authenticatedUserId"/>
+    <app-wishlist-item *ngFor="let item of items" [item]="item" [authenticatedUserId]="authenticatedUserId" (deleteEvent)="removeItem(item)"/>
   </ng-template>
 </p-dataView>
