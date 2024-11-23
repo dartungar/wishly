@@ -1,35 +1,47 @@
-<p-card>
-  <div *ngIf="!editing">
-    <h3>{{ item.name }}</h3>
-    <p>{{ item.price }}</p>
-    <a [href]="item.url" target="_blank">{{ item.url }}</a>
-    <p-button icon="pi pi-pencil" [text]="true" severity="secondary" (click)="toggleEdit()"
-              *ngIf="belongsToAuthenticatedUser"/>
-    <p-button icon="pi pi-trash" [text]="true" severity="danger" (click)="delete()" *ngIf="belongsToAuthenticatedUser"/>
+<div class="wishlist-item">
+<p-card header="{{item.name}}" >
+  <div *ngIf="!editing" class="m-0">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem;">
+      <p>{{ item.price | currency:item.currencyCode }}</p>
+      <a [href]="item.url" target="_blank" title="Visit the shop link">{{ item.url }}</a>
+      <p-checkbox label="Group Gift" [(ngModel)]="item.isGroupGift" binary="true" inputId="is-group-gift" [disabled]="true" title="This item is a group gift"/>
+      <div style="text-align: right;">
+        <p-button icon="pi pi-pencil" [text]="true" severity="secondary" (click)="toggleEdit()" *ngIf="belongsToAuthenticatedUser" title="Edit this item"/>
+        <p-button icon="pi pi-trash" [text]="true" severity="danger" (click)="delete()" *ngIf="belongsToAuthenticatedUser" title="Delete this item"/>
+      </div>
+    </div>
   </div>
 
   <div *ngIf="editing">
-    <p-inputGroup>
-      <p-inputGroupAddon>
-        <label for="name">Title</label>
-      </p-inputGroupAddon>
-      <input id="name" type="text" pInputText [(ngModel)]="item.name" />
-    </p-inputGroup>
-    <p-inputGroup>
-      <p-inputGroupAddon>
-        <label for="cost">Cost</label>
-      </p-inputGroupAddon>
-      <p-inputNumber id="cost" [(ngModel)]="item.price" [currency]="item.currencyCode" placeholder="Cost"/>
-    </p-inputGroup>
-    <p-inputGroup>
-      <p-inputGroupAddon>
-        <label for="url">Shop Link</label>
-      </p-inputGroupAddon>
-      <input id="url" type="text" pInputText [(ngModel)]="item.url" />
-    </p-inputGroup>
-    <div>
-      <p-button icon="pi pi-check" [text]="true" (click)="save()"/>
+    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+      <p-inputGroup>
+        <p-inputGroupAddon>
+          <label for="name" title="Enter the title of the item">Title</label>
+        </p-inputGroupAddon>
+        <input id="name" type="text" pInputText [(ngModel)]="item.name" title="Enter the title of the item"/>
+      </p-inputGroup>
+      <p-inputGroup>
+        <p-inputGroupAddon>
+          <label for="cost" title="Enter the cost of the item">Cost</label>
+        </p-inputGroupAddon>
+        <p-inputNumber mode id="cost" [(ngModel)]="item.price" [currency]="item.currencyCode" placeholder="Cost" title="Enter the cost of the item"/>
+      </p-inputGroup>
+      <p-inputGroup>
+        <p-inputGroupAddon>
+          <label for="url" title="Enter the shop link for the item">Shop Link</label>
+        </p-inputGroupAddon>
+        <input id="url" type="text" pInputText [(ngModel)]="item.url" title="Enter the shop link for the item"/>
+      </p-inputGroup>
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;">
+        <p-checkbox label="Group Gift" inputId="is-group-gift" binary="true" [(ngModel)]="item.isGroupGift" title="Mark this item as a group gift"/>
+        <div>
+          <p-button icon="pi pi-check" [text]="true" (click)="save()" label="Save" title="Save changes"/>
+          <p-button icon="pi pi-times" [text]="true" severity="secondary" (click)="toggleEdit()" label="Cancel" styleClass="p-button-outlined p-button-secondary" title="Cancel editing"/>
+        </div>
+      
+      </div>
     </div>
 
   </div>
 </p-card>
+</div>

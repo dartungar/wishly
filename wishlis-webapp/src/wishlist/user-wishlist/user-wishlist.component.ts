@@ -46,7 +46,7 @@ export class UserWishlistComponent implements OnInit {
     }
   }
 
-  removeItem(itemId: string): void {
-    this.items = this.items.filter(item => item.id !== itemId);
+  removeItem(itemToDelete: WishlistItem): void {
+    this.items = this.items.filter(item => item.id !== itemToDelete.id);
   }
 }

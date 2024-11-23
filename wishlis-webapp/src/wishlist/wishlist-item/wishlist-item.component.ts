@@ -11,6 +11,10 @@ import {Button} from "primeng/button";
 import {FloatLabelModule} from "primeng/floatlabel";
 import {InputGroupModule} from "primeng/inputgroup";
 import {InputGroupAddonModule} from "primeng/inputgroupaddon";
+import { CommonModule } from '@angular/common';
+import { CheckboxModule } from 'primeng/checkbox'; // Import PrimeNG CheckboxModule
+
+
 
 @Component({
   selector: 'app-wishlist-item',
@@ -24,7 +28,9 @@ import {InputGroupAddonModule} from "primeng/inputgroupaddon";
     Button,
     FloatLabelModule,
     InputGroupModule,
-    InputGroupAddonModule
+    InputGroupAddonModule,
+    CommonModule,
+    CheckboxModule
   ],
   templateUrl: './wishlist-item.component.html',
   styleUrl: './wishlist-item.component.css'
