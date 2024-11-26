@@ -1,9 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-@import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
 @import "primeflex/primeflex.css";
-@import "primeng/resources/themes/lara-light-amber/theme.css";
 
 /*PrimeNg scaling*/
 html {
@@ -36,3 +34,24 @@ html {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
+
+.dark-mode-toggle {
+
+  .p-inputswitch {
+    margin-top: 0.7rem; /* Lower the input a bit */
+
+    .p-inputswitch-slider::before {
+      background: transparent;
+      content: "🌞";
+      transform: translateY(-0.15rem); /* Make content a little bit higher */
+    }
+  }
+
+  .p-inputswitch-checked .p-inputswitch-slider::before {
+    content: "🌚";
+    transform: translateX(1rem) translateY(-0.15rem); /* Make content a little bit higher */
+  }
+}
+
+
+

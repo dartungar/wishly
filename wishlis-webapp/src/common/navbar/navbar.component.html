@@ -8,6 +8,9 @@
       <span class="ml-2">{{ item.label }}</span>
     </a>
   </ng-template>
+  <ng-template pTemplate="end">
+    <div><app-dark-mode-switch/></div>
+  </ng-template>
 </p-menubar>
 
 <!--<button routerLink="/me" *ngIf="authService.isAuthenticated">My Wishlist</button>-->
