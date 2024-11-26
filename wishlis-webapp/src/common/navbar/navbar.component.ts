@@ -5,12 +5,13 @@ import {Router} from "@angular/router";
 import {NgIf} from "@angular/common";
 import {MenuItem} from "primeng/api";
 import {MenubarModule} from "primeng/menubar";
+import {DarkModeSwitchComponent} from "../dark-mode-switch/dark-mode-switch.component";
 
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RoutingModule, NgIf, MenubarModule],
+  imports: [RoutingModule, NgIf, MenubarModule, DarkModeSwitchComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
