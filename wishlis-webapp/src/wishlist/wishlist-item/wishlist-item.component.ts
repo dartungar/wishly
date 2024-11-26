@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {createDefaultWishlistItem, WishlistItem} from "../wishlistItem";
 import {NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
@@ -39,6 +39,7 @@ export class WishlistItemComponent implements OnInit {
   @Input() authenticatedUserId: string | null;
   @Input() item: WishlistItem;
   @Output() deleteEvent = new EventEmitter<void>();
+  @ViewChild('titleInput') titleInput!: ElementRef;
   editing: boolean = false;
   belongsToAuthenticatedUser = false;
 
@@ -51,9 +52,11 @@ export class WishlistItemComponent implements OnInit {
     }
 
   toggleEdit(): void {
-    console.log("toggling edit from: ", this.editing);
     this.editing = !this.editing;
-    console.log("toggled edit to: ", this.editing);
+    if (this.editing) {
+      // Delay focus to ensure the view is fully updated
+      setTimeout(() => this.titleInput.nativeElement.focus(), 0);
+    }
   }
 
   save(): void {
