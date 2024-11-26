@@ -31,3 +31,8 @@ html {
 .p-menubar-start {
   flex: auto;
 }
+
+.p-inputgroup input {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
