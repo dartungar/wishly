@@ -18,13 +18,13 @@
         <p-inputGroupAddon>
           <label for="name" title="Enter the title of the item">Title</label>
         </p-inputGroupAddon>
-        <input id="name" type="text" pInputText [(ngModel)]="item.name" title="Enter the title of the item"/>
+        <input id="name" type="text" #titleInput pInputText [(ngModel)]="item.name" title="Enter the title of the item"/>
       </p-inputGroup>
       <p-inputGroup>
         <p-inputGroupAddon>
           <label for="cost" title="Enter the cost of the item">Cost</label>
         </p-inputGroupAddon>
-        <p-inputNumber mode id="cost" [(ngModel)]="item.price" [currency]="item.currencyCode" placeholder="Cost" title="Enter the cost of the item"/>
+        <p-inputNumber mode="currency" id="cost" [(ngModel)]="item.price" [currency]="'USD'" placeholder="Cost" title="Enter the cost of the item"/>
       </p-inputGroup>
       <p-inputGroup>
         <p-inputGroupAddon>

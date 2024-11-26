@@ -16,7 +16,7 @@ export const createDefaultWishlistItem = (userId: string): WishlistItem => {
     name: "New Item",
     url: "",
     price: 0,
-    currencyCode: "",
+    currencyCode: "USD", // TODO: set currency based on user's settings. Or better yet use the user's settings instead of item field
     isGroupGift: false
   }
 }
