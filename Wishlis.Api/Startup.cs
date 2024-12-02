@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Wishlis.Api.Auth;
 using Wishlis.Api.Swagger;
+using Wishlis.Api.Utils;
 using Wishlis.Application.Interfaces;
-using Wishlis.Application.Mappers;
 using Wishlis.Application.Services;
 using Wishlis.Domain.Repositories;
 using Wishlis.Infrastructure.LiteDB;
@@ -33,7 +33,10 @@ public class Startup
                     .AllowAnyMethod());
         });
         
-        services.AddControllers();
+        services.AddControllers().AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+        });;
         services.AddAndConfigureSwagger();
         
         // auth
@@ -43,7 +46,6 @@ public class Startup
         services.ConfigureOptions<JwtBearerConfigureOptions>();
 
         // services
-        services.AddAutoMapper(typeof(MappingProfile));
         services.AddTransient<IUserService, UserService>();
         services.AddTransient<IWishlistItemService, WishlistItemService>();
 
@@ -73,10 +75,14 @@ public class Startup
                         $"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant()); 
                 } 
             });
+            
+            app.UseDeveloperExceptionPage();
         }
 
         app.UseHttpsRedirection();
         app.UseRouting();
+        app.UseAuthentication();
+        app.UseAuthorization();
         app.UseEndpoints(x => x.MapControllers());
     }
 }

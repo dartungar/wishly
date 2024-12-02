@@ -6,6 +6,7 @@ import {AsyncPipe, NgForOf} from "@angular/common";
 import {UserService} from "../../user/user.service";
 import {ActivatedRoute} from "@angular/router";
 import { DataViewModule } from 'primeng/dataview';import {Button} from "primeng/button";
+import {AuthService} from "../../auth/auth.service";
 
 @Component({
   selector: 'app-user-wishlist',
@@ -26,12 +27,12 @@ export class UserWishlistComponent implements OnInit {
 
   items: WishlistItem[] = [];
 
-  constructor(private wishlistItemService: WishlistItemsService, private userService: UserService, private route: ActivatedRoute) {
+  constructor(private wishlistItemService: WishlistItemsService, private userService: UserService, private authService: AuthService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('userId');
-    this.authenticatedUserId = this.userService.getAuthenticatedUserId();
+    this.authenticatedUserId = this.authService.getAuthenticatedUserId();
     if (this.userId === "me") {
       this.userId = this.authenticatedUserId;
     }

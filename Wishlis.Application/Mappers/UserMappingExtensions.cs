@@ -6,7 +6,7 @@ namespace Wishlis.Application.Mappers;
 public static class UserMappingExtensions
 {
     public static UserDto ToUserDto(this User user)
-        => new UserDto(user.Id, user.Name, user.Birthday, user.CurrencyCode, user.IsProfileSearchable);
+        => new (user.Id, user.Name, user.Birthday, user.CurrencyCode, user.IsProfileSearchable);
 
     public static User ToUser(this UserDto userDto) => new User()
     {

@@ -12,8 +12,8 @@ export class AppComponent implements OnInit {
   constructor(public authService: AuthService) {
   }
 
-    async ngOnInit(): Promise<void> {
-        await this.authService.tryGetUserFromCognitoAuthenticatorCookies();
-    }
+  async ngOnInit(): Promise<void> {
+    await this.authService.tryGetUserFromCognitoAuthenticatorCookies();
+  }
 
 }
