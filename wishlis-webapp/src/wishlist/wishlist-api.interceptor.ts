@@ -8,7 +8,7 @@ export const wishlistApiInterceptor: HttpInterceptorFn = (req, next) => {
     return next(req);
   }
   const newReq = req.clone({
-    headers: req.headers.append('X-Authentication-Token', token),
+    headers: req.headers.append('Authorization', `Bearer ${token}`),
   });
   return next(newReq);
 };
