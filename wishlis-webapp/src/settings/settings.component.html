@@ -1,1 +1,23 @@
-<p>Settings for user {{userService.getAuthenticatedUserId()}}</p>
+<form (ngSubmit)="updateSettings()" class="p-fluid">
+  <div class="p-field">
+    <label for="birthday">Birthday:</label>
+    <p-calendar id="birthday"
+                [(ngModel)]="user.birthday"
+                name="birthday"
+                [iconDisplay]="'input'"
+                [showIcon]="true"></p-calendar>
+  </div>
+
+  <div class="p-field">
+    <label for="currencyCode">Currency Code:</label>
+    <input pInputText type="text" id="currencyCode" [(ngModel)]="user.currencyCode" name="currencyCode">
+  </div>
+
+  <div class="p-field-checkbox">
+    <p-checkbox id="isProfileSearchable" [(ngModel)]="user.isProfileSearchable" binary="true"
+                name="isProfileSearchable"></p-checkbox>
+    <label for="isProfileSearchable">Profile Searchable</label>
+  </div>
+
+  <button pButton type="submit" label="Save Changes"></button>
+</form>

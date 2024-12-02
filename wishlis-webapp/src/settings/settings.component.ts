@@ -1,14 +1,46 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from "../user/user.service";
+import {User} from "../user/user";
+import {FormsModule} from "@angular/forms";
+import {CheckboxModule} from "primeng/checkbox";
+import {CalendarModule} from "primeng/calendar";
+import {InputTextModule} from "primeng/inputtext";
+import {AuthService} from "../auth/auth.service";
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [],
+  imports: [
+    FormsModule,
+    CheckboxModule,
+    CalendarModule,
+    InputTextModule
+  ],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.css'
 })
-export class SettingsComponent {
-  constructor(public userService: UserService) {
+export class SettingsComponent implements OnInit {
+  user: User;
+
+  constructor(public userService: UserService, public authService: AuthService) {  }
+
+  ngOnInit() {
+    this.authService.authenticatedUser$.subscribe(user => {
+      console.log("user from auth service:", user)
+      if (user) {
+        this.user = user;
+      }
+    }
+  );
+    if (!this.user)
+      return; // todo: show error
+    // @ts-ignore
+    this.userService.getUser(userId).subscribe((user: User) => {
+      this.user = user;
+    });
+  }
+
+  updateSettings() {
+    this.userService.updateUser(this.user);
   }
 }

@@ -33,11 +33,9 @@ export class DarkModeSwitchComponent {
     ) as HTMLLinkElement;
 
     if (linkElement.href.includes('light')) {
-      console.log("changing mode to dark")
       linkElement.href = 'theme-dark.css';
       this.isDarkMode = true;
     } else {
-      console.log("changing mode to light")
       linkElement.href = 'theme-light.css';
       this.isDarkMode = false;
     }

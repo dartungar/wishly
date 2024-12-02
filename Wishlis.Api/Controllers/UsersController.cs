@@ -51,7 +51,6 @@ public class UsersController : ControllerBase
     /// <returns>Created user's ID.</returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [Authorize]
     public async Task<ActionResult<Guid>> CreateUser(UserDto model)
     {
         return Created("", await _userService.CreateUser(model));

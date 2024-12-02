@@ -29,10 +29,10 @@ public class UserService : IUserService
         await _userRepository.Update(model.ToUser());
     }
 
-    public async Task<UserDto> GetById(Guid id)
+    public async Task<UserDto?> GetById(Guid id)
     {
         var user = await _userRepository.GetById(id);
-        return user.ToUserDto();
+        return user?.ToUserDto();
     }
 
     public async Task<IEnumerable<UserDto>> GetFavoriteUsers(Guid ownerId)

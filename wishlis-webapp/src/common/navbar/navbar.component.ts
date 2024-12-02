@@ -26,7 +26,6 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.authService.isAuthenticated$.subscribe(isAuthenticated => {
       this.isAuthenticated = isAuthenticated;
-      console.log(this.isAuthenticated);
       this.updateMenuItems();
     });
   }
@@ -71,6 +70,5 @@ export class NavbarComponent implements OnInit {
         }
       },
     ];
-    console.log(this.items);
   }
 }
