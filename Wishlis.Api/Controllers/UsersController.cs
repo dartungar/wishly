@@ -2,9 +2,7 @@ using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Wishlis.Application.DTO;
-using Wishlis.Application.Services;
 using Wishlis.Domain;
-using Microsoft.AspNetCore.Http;
 using Wishlis.Application.Interfaces;
 
 namespace Wishlis.Api.Controllers;
@@ -60,7 +58,7 @@ public class UsersController : ControllerBase
     }
     
     /// <summary>
-    /// 
+    /// Delete user.
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -128,4 +126,6 @@ public class UsersController : ControllerBase
         var result = await _wishlistItemService.GetByUserId(userId);
         return Ok(result);
     }
+    
+    // TODO: get all searchable profiles for front-end search index
 }
