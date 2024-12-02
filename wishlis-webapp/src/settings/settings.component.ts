@@ -6,6 +6,8 @@ import {CheckboxModule} from "primeng/checkbox";
 import {CalendarModule} from "primeng/calendar";
 import {InputTextModule} from "primeng/inputtext";
 import {AuthService} from "../auth/auth.service";
+import {DropdownModule} from "primeng/dropdown";
+import {currencies} from "../common/currencies";
 
 @Component({
   selector: 'app-settings',
@@ -14,7 +16,8 @@ import {AuthService} from "../auth/auth.service";
     FormsModule,
     CheckboxModule,
     CalendarModule,
-    InputTextModule
+    InputTextModule,
+    DropdownModule
   ],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.css'
@@ -26,7 +29,6 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     this.authService.authenticatedUser$.subscribe(user => {
-      console.log("user from auth service:", user)
       if (user) {
         this.user = user;
       }
@@ -35,12 +37,14 @@ export class SettingsComponent implements OnInit {
     if (!this.user)
       return; // todo: show error
     // @ts-ignore
-    this.userService.getUser(userId).subscribe((user: User) => {
+    this.userService.getUser(this.user.id).subscribe((user: User) => {
       this.user = user;
     });
   }
 
   updateSettings() {
-    this.userService.updateUser(this.user);
+    this.userService.updateUser(this.user).subscribe();
   }
+
+  protected readonly currencies = currencies;
 }

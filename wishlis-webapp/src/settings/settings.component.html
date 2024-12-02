@@ -1,23 +1,50 @@
-<form (ngSubmit)="updateSettings()" class="p-fluid">
-  <div class="p-field">
-    <label for="birthday">Birthday:</label>
-    <p-calendar id="birthday"
-                [(ngModel)]="user.birthday"
-                name="birthday"
-                [iconDisplay]="'input'"
-                [showIcon]="true"></p-calendar>
-  </div>
+<h2>Settings</h2>
+<div class="settings-container">
+<div class="settings-field">
+  <label for="name">Name</label>
+  <input pInputText type="text" id="name" [(ngModel)]="user.name" name="currencyCode">
+</div>
+<div class="p-field">
+  <label for="birthday">Birthday</label>
+  <div>  <p-calendar id="birthday"
+                     [(ngModel)]="user.birthday"
+                     name="birthday"
+                     dateFormat="yy-mm-dd"
+                     [iconDisplay]="'input'"
+                     [showIcon]="true"></p-calendar></div>
 
-  <div class="p-field">
-    <label for="currencyCode">Currency Code:</label>
-    <input pInputText type="text" id="currencyCode" [(ngModel)]="user.currencyCode" name="currencyCode">
-  </div>
+</div>
 
-  <div class="p-field-checkbox">
-    <p-checkbox id="isProfileSearchable" [(ngModel)]="user.isProfileSearchable" binary="true"
-                name="isProfileSearchable"></p-checkbox>
-    <label for="isProfileSearchable">Profile Searchable</label>
-  </div>
+<div class="settings-field">
+  <label for="currencyCode">Currency</label>
+  <p-dropdown
+    id="currencyCode"
+    [options]="currencies"
+    [(ngModel)]="user.currencyCode"
+    optionLabel="name"
+    optionValue="code"
+    [filter]="true"
+    filterBy="name"
+    placeholder="Select a Currency">
+    <ng-template pTemplate="selectedItem" let-selectedOption>
+      <div class="flex align-items-center gap-2">
+        <div>{{selectedOption.symbol}} ({{ selectedOption.name }})</div>
+      </div>
+    </ng-template>
+    <ng-template let-currency pTemplate="item">
+      <div class="flex align-items-center gap-2">
+        <div>{{currency.symbol}} ({{ currency.name }})</div>
+      </div>
+    </ng-template>
+  </p-dropdown>
+</div>
 
-  <button pButton type="submit" label="Save Changes"></button>
-</form>
+<div class="settings-field">
+  <div>  <p-checkbox id="isProfileSearchable" [(ngModel)]="user.isProfileSearchable" binary="true"
+                     name="isProfileSearchable"></p-checkbox>
+    <label for="isProfileSearchable">Allow others to search my profile</label></div>
+
+</div>
+
+<button pButton (click)="updateSettings()" label="Save Changes"></button>
+</div>

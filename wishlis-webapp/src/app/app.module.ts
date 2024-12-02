@@ -9,11 +9,12 @@ import {NavbarComponent} from "../common/navbar/navbar.component";
 import {RoutingModule} from "./routing.module";
 import { provideHttpClient, withInterceptors } from "@angular/common/http";
 import {wishlistApiInterceptor} from "../wishlist/wishlist-api.interceptor";
+import {provideAnimations} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, AmplifyAuthenticatorModule, AuthModule, RoutingModule, RouterOutlet, NavbarComponent],
-  providers: [provideHttpClient(withInterceptors([wishlistApiInterceptor]))],
+  providers: [provideHttpClient(withInterceptors([wishlistApiInterceptor])), provideAnimations()],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
