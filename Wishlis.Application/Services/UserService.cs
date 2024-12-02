@@ -1,7 +1,6 @@
-﻿using AutoMapper;
-using Wishlis.Application.DTO;
+﻿using Wishlis.Application.DTO;
 using Wishlis.Application.Interfaces;
-using Wishlis.Domain.Entities;
+using Wishlis.Application.Mappers;
 using Wishlis.Domain.Repositories;
 
 namespace Wishlis.Application.Services;
@@ -9,17 +8,15 @@ namespace Wishlis.Application.Services;
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
-    private readonly IMapper _mapper;
 
-    public UserService(IUserRepository userRepository, IMapper mapper)
+    public UserService(IUserRepository userRepository)
     {
         _userRepository = userRepository;
-        _mapper = mapper;
     }
 
     public async Task<Guid> CreateUser(UserDto model)
     {
-        return await _userRepository.Create(_mapper.Map<User>(model));
+        return await _userRepository.Create(model.ToUser());
     }
 
     public async Task DeleteUser(Guid id)
@@ -29,19 +26,19 @@ public class UserService : IUserService
 
     public async Task UpdateUser(UserDto model)
     {
-        await _userRepository.Update(_mapper.Map<User>(model));
+        await _userRepository.Update(model.ToUser());
     }
 
     public async Task<UserDto> GetById(Guid id)
     {
         var user = await _userRepository.GetById(id);
-        return _mapper.Map<UserDto>(user);
+        return user.ToUserDto();
     }
 
     public async Task<IEnumerable<UserDto>> GetFavoriteUsers(Guid ownerId)
     {
         var favoriteUsers = await _userRepository.GetFavoriteUsers(ownerId);
-        return _mapper.Map<IEnumerable<UserDto>>(favoriteUsers);
+        return favoriteUsers.Select(u => u.ToUserDto()).ToList();
     }
 
     public async Task AddUserToFavorites(Guid favoriteUserId, Guid ownerId)

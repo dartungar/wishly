@@ -8,5 +8,5 @@ public record WishlistItemDto(
     string Name,
     double Price,
     string CurrencyCode,
-    string Url,
-    bool IsGroupGift);
+    string? Url,
+    bool? IsGroupGift);

@@ -1,7 +1,6 @@
-﻿using AutoMapper;
-using Wishlis.Application.DTO;
+﻿using Wishlis.Application.DTO;
 using Wishlis.Application.Interfaces;
-using Wishlis.Domain.Entities;
+using Wishlis.Application.Mappers;
 using Wishlis.Domain.Repositories;
 
 namespace Wishlis.Application.Services;
@@ -9,22 +8,20 @@ namespace Wishlis.Application.Services;
 public class WishlistItemService : IWishlistItemService
 {
     private readonly IWishlistItemRepository _wishlistItemRepository;
-    private readonly IMapper _mapper;
 
-    public WishlistItemService(IWishlistItemRepository wishlistItemRepository, IMapper mapper)
+    public WishlistItemService(IWishlistItemRepository wishlistItemRepository)
     {
         _wishlistItemRepository = wishlistItemRepository;
-        _mapper = mapper;
     }
 
     public async Task Create(WishlistItemDto model)
     {
-        await _wishlistItemRepository.Create(_mapper.Map<WishlistItem>(model));
+        await _wishlistItemRepository.Create(model.ToWishlistItem());
     }
     
     public async Task Save(WishlistItemDto model)
     {
-        await _wishlistItemRepository.Save(_mapper.Map<WishlistItem>(model));
+        await _wishlistItemRepository.Save(model.ToWishlistItem());
     }
     
     public async Task Delete(Guid id)
@@ -35,12 +32,12 @@ public class WishlistItemService : IWishlistItemService
     public async Task<IEnumerable<WishlistItemDto>> Get()
     {
         var items = await _wishlistItemRepository.Get();
-        return _mapper.Map<IEnumerable<WishlistItemDto>>(items);
+        return items.Select(x => x.ToWishlistItemDto());
     }
 
     public async Task<IEnumerable<WishlistItemDto>> GetByUserId(Guid userId)
     {
         var items = await _wishlistItemRepository.GetByUserId(userId);
-        return _mapper.Map<IEnumerable<WishlistItemDto>>(items);
+        return items.Select(x => x.ToWishlistItemDto());
     }
 }
