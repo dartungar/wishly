@@ -1,2 +1,5 @@
-<p>search works!</p>
-<button (click)="getItemsForUser('1')">Test Getting User Items</button>
+<p-inputGroup>
+  <input class="border-round-left" type="text" pInputText placeholder="Search Users..." />
+  <button type="button" pButton icon="pi pi-search"></button>
+</p-inputGroup>
+<app-search-result [user]="user"  *ngFor="let user of searchResults"/>
