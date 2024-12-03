@@ -48,10 +48,10 @@ public class UsersController : ControllerBase
     /// Create a new user.
     /// </summary>
     /// <param name="model">The user's data.</param>
-    /// <returns>Created user's ID.</returns>
+    /// <returns>Created user.</returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    public async Task<ActionResult<Guid>> CreateUser(UserDto model)
+    public async Task<ActionResult<UserDto>> CreateUser(UserDto model)
     {
         return Created("", await _userService.CreateUser(model));
     }
