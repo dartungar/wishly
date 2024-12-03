@@ -12,7 +12,7 @@ export const currencies = [
       "symbol": "€"
     },
     {
-      "name": "Russian Rouble",
+      "name": "Russian Ruble",
       "code": "RUB",
       "symbol": "₽"
     },
@@ -55,11 +55,6 @@ export const currencies = [
       "name": "Brazilian Real",
       "code": "BRL",
       "symbol": "R$"
-    },
-    {
-      "name": "Russian Ruble",
-      "code": "RUB",
-      "symbol": "₽"
     },
     {
       "name": "South African Rand",
