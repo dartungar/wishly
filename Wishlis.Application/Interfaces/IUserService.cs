@@ -4,7 +4,7 @@ namespace Wishlis.Application.Interfaces;
 
 public interface IUserService
 {
-    Task<Guid> CreateUser(UserDto model);
+    Task<UserDto> CreateUser(UserDto model);
     Task DeleteUser(Guid id);
     Task UpdateUser(UserDto model);
     Task<UserDto?> GetById(Guid id);

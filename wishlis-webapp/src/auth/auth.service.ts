@@ -34,6 +34,10 @@ export class AuthService {
     await this.onSignIn();
   }
 
+  public updateAuthenticatedUserInfoWithoutRequest(user: User) {
+    this.authenticatedUser.next(user);
+  }
+
   private async onSignIn(): Promise<void> {
     try {
       // Wait for auth session
@@ -94,10 +98,6 @@ export class AuthService {
     this.authenticated.next(true);
 
     this.userToken = session.tokens?.accessToken.toString()
-  }
-
-  public getAuthenticatedUserId(): string | null {
-    return this.authenticator?.user?.userId;
   }
 
   private subscribeToAmplifyEvents() {
