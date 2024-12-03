@@ -8,6 +8,7 @@ import {InputTextModule} from "primeng/inputtext";
 import {AuthService} from "../auth/auth.service";
 import {DropdownModule} from "primeng/dropdown";
 import {currencies} from "../common/currencies";
+import {NotificationService} from "../common/notification.service";
 
 @Component({
   selector: 'app-settings',
@@ -25,7 +26,7 @@ import {currencies} from "../common/currencies";
 export class SettingsComponent implements OnInit {
   user: User;
 
-  constructor(public userService: UserService, public authService: AuthService) {  }
+  constructor(public userService: UserService, public authService: AuthService, private notificationService: NotificationService) {  }
 
   ngOnInit() {
     this.authService.authenticatedUser$.subscribe(user => {
@@ -34,8 +35,10 @@ export class SettingsComponent implements OnInit {
       }
     }
   );
-    if (!this.user)
-      return; // todo: show error
+    if (!this.user) {
+      this.notificationService.showError("Error loading settings", "Error loading user settings.");
+      return;
+    }
     // @ts-ignore
     this.userService.getUser(this.user.id).subscribe((user: User) => {
       this.user = user;
@@ -46,6 +49,7 @@ export class SettingsComponent implements OnInit {
     this.userService.updateUser(this.user).subscribe(
       _ => {
         this.authService.updateAuthenticatedUserInfoWithoutRequest(this.user);
+        this.notificationService.showSuccess("Settings updated", "Your settings has been updated.");
       });
   }
 

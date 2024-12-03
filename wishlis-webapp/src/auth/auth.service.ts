@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {BehaviorSubject, catchError, EMPTY, take} from "rxjs";
 import {UserService} from "../user/user.service";
 import {createDefaultUser, User} from "../user/user";
+import {NotificationService} from "../common/notification.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,10 @@ export class AuthService {
   public authenticatedUser$ = this.authenticatedUser.asObservable();
   public userToken: string | undefined = undefined;
 
-  constructor(private authenticator: AuthenticatorService, private router: Router, private userService: UserService) {
+  constructor(private authenticator: AuthenticatorService,
+              private router: Router,
+              private userService: UserService,
+              private notificationService: NotificationService) {
     this.subscribeToAmplifyEvents();
   }
 
@@ -27,6 +31,7 @@ export class AuthService {
 
     this.authenticated.next(false);
     this.authenticatedUser.next(undefined);
+    this.notificationService.showInfo("Signed out", "You have been signed out.");
   }
 
   public async tryGetUserFromCognitoAuthenticatorCookies() {
@@ -47,7 +52,8 @@ export class AuthService {
       const userId = currentUserFromAuth.userId;
 
       if (!userId) {
-        console.error("User ID not set after sign in!");
+        this.notificationService.showError("Could not get user data",
+          "There was an error while trying to get user data. Please try tro reload the page or sign out and sign in again");
         return;
       }
 
@@ -56,7 +62,8 @@ export class AuthService {
       this.userService.getUser(userId).pipe(
         take(1),
         catchError(error => {
-          console.error('Error fetching user:', error);
+          this.notificationService.showError("Could not get user data",
+            "There was an error while trying to get user data from the server");
           return EMPTY;
         })
       ).subscribe(user => {
@@ -64,6 +71,7 @@ export class AuthService {
           // User exists
           this.authenticatedUser.next(user);
           this.router.navigate(["/"]); // Don't use await in subscribe
+          this.notificationService.showSuccess("Sign in successful", "Welcome back!");
         } else {
           // User doesn't exist, create new user
           const newUser = createDefaultUser(
@@ -75,18 +83,22 @@ export class AuthService {
           this.userService.createUser(newUser).pipe(
             take(1),
             catchError(error => {
-              console.error('Error saving user:', error);
+              console.error('Error creating user:', error);
+              this.notificationService.showError("Sign-up error",
+                "There was an error while trying to create a new user. Please try to sign out and sign in again.");
               return EMPTY;
             })
           ).subscribe(user => {
             this.authenticatedUser.next(user);
             this.router.navigate(["/settings"]); // Don't use await in subscribe
+            this.notificationService.showSuccess("Sign up successfull", "Welcome to Wishlist!");
           });
         }
 
         this.setAuthenticatedUserInfo(); // Don't use await in subscribe
       });
     } catch (error) {
+      this.notificationService.showError("Error during sign in", "There was an error while signing you in.");
       console.error('Error during sign in:', error);
     }
   }

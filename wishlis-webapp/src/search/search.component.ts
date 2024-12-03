@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import {WishlistItemsService} from "../wishlist/wishlist-items.service";
-import {Observable} from "rxjs";
-import {WishlistItem} from "../wishlist/wishlistItem";
 
 @Component({
   selector: 'app-search',
