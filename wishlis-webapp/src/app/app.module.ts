@@ -10,11 +10,13 @@ import {RoutingModule} from "./routing.module";
 import { provideHttpClient, withInterceptors } from "@angular/common/http";
 import {wishlistApiInterceptor} from "../wishlist/wishlist-api.interceptor";
 import {provideAnimations} from "@angular/platform-browser/animations";
+import {ToastModule} from "primeng/toast";
+import {MessageService} from "primeng/api";
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AmplifyAuthenticatorModule, AuthModule, RoutingModule, RouterOutlet, NavbarComponent],
-  providers: [provideHttpClient(withInterceptors([wishlistApiInterceptor])), provideAnimations()],
+    imports: [BrowserModule, AmplifyAuthenticatorModule, AuthModule, RoutingModule, RouterOutlet, NavbarComponent, ToastModule],
+  providers: [provideHttpClient(withInterceptors([wishlistApiInterceptor])), provideAnimations(), MessageService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })

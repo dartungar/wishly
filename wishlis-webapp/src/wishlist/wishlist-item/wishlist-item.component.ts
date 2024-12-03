@@ -13,7 +13,8 @@ import {InputGroupModule} from "primeng/inputgroup";
 import {InputGroupAddonModule} from "primeng/inputgroupaddon";
 import { CommonModule } from '@angular/common';
 import { CheckboxModule } from 'primeng/checkbox';
-import {User} from "../../user/user"; // Import PrimeNG CheckboxModule
+import {User} from "../../user/user";
+import {NotificationService} from "../../common/notification.service"; // Import PrimeNG CheckboxModule
 
 
 
@@ -44,7 +45,7 @@ export class WishlistItemComponent implements OnInit {
   editing: boolean = false;
   belongsToAuthenticatedUser = false;
 
-  constructor(private itemsService: WishlistItemsService) {
+  constructor(private itemsService: WishlistItemsService, private notificationService: NotificationService) {
   }
 
   ngOnInit(): void {
@@ -62,11 +63,11 @@ export class WishlistItemComponent implements OnInit {
 
   save(): void {
     this.toggleEdit();
-    this.itemsService.saveItem(this.item).subscribe();
+    this.itemsService.saveItem(this.item).subscribe(_ => this.notificationService.showSuccess("Item saved", "The item has been saved."));
   }
 
   delete(): void {
-    this.itemsService.deleteItem(this.item.id).subscribe();
+    this.itemsService.deleteItem(this.item.id).subscribe(_ => this.notificationService.showInfo("Item deleted", "The item has been deleted."));
     this.deleteEvent.emit();
   }
 }
