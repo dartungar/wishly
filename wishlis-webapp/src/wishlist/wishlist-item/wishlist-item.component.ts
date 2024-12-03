@@ -12,7 +12,8 @@ import {FloatLabelModule} from "primeng/floatlabel";
 import {InputGroupModule} from "primeng/inputgroup";
 import {InputGroupAddonModule} from "primeng/inputgroupaddon";
 import { CommonModule } from '@angular/common';
-import { CheckboxModule } from 'primeng/checkbox'; // Import PrimeNG CheckboxModule
+import { CheckboxModule } from 'primeng/checkbox';
+import {User} from "../../user/user"; // Import PrimeNG CheckboxModule
 
 
 
@@ -36,7 +37,7 @@ import { CheckboxModule } from 'primeng/checkbox'; // Import PrimeNG CheckboxMod
   styleUrl: './wishlist-item.component.css'
 })
 export class WishlistItemComponent implements OnInit {
-  @Input() authenticatedUserId: string | null;
+  @Input() authenticatedUser: User | undefined;
   @Input() item: WishlistItem;
   @Output() deleteEvent = new EventEmitter<void>();
   @ViewChild('titleInput') titleInput!: ElementRef;
@@ -47,8 +48,8 @@ export class WishlistItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-        this.belongsToAuthenticatedUser = (this.authenticatedUserId === this.item.userId);
-        this.item ??= createDefaultWishlistItem(this.authenticatedUserId ?? "");
+        this.belongsToAuthenticatedUser = (this.authenticatedUser?.id === this.item.userId);
+        this.item ??= createDefaultWishlistItem(this.authenticatedUser!.id, this.authenticatedUser?.currencyCode);
     }
 
   toggleEdit(): void {

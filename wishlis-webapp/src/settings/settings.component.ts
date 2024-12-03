@@ -43,7 +43,10 @@ export class SettingsComponent implements OnInit {
   }
 
   updateSettings() {
-    this.userService.updateUser(this.user).subscribe();
+    this.userService.updateUser(this.user).subscribe(
+      _ => {
+        this.authService.updateAuthenticatedUserInfoWithoutRequest(this.user);
+      });
   }
 
   protected readonly currencies = currencies;

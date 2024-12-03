@@ -16,8 +16,8 @@ export class UserService {
     return this.http.get<User>(`/api/users/${userId}`);
   }
 
-  public updateUser(user: User): Observable<User> {
-    return this.http.put<User>(`/api/users/${user.id}`, user);
+  public updateUser(user: User): Observable<null> {
+    return this.http.put<null>(`/api/users/${user.id}`, user);
   }
 
   public createUser(user: User): Observable<User> {

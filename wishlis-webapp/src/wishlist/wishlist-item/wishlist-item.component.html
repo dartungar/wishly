@@ -34,7 +34,7 @@
           <p-inputGroupAddon>
             <label for="cost" title="Enter the cost of the item">Cost</label>
           </p-inputGroupAddon>
-          <p-inputNumber mode="currency" id="cost" [(ngModel)]="item.price" [currency]="'USD'" placeholder="Cost"
+          <p-inputNumber mode="currency" id="cost" [(ngModel)]="item.price" [currency]="item.currencyCode" placeholder="Cost"
                          title="Enter the cost of the item"/>
         </p-inputGroup>
         <p-inputGroup>
