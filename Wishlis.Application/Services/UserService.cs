@@ -14,9 +14,11 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public async Task<Guid> CreateUser(UserDto model)
+    public async Task<UserDto> CreateUser(UserDto model)
     {
-        return await _userRepository.Create(model.ToUser());
+        var createdUserId = await _userRepository.Create(model.ToUser());
+        var createdUser = await _userRepository.GetById(createdUserId);
+        return createdUser.ToUserDto();
     }
 
     public async Task DeleteUser(Guid id)
