@@ -5,8 +5,8 @@ import {InputTextModule} from "primeng/inputtext";
 import {ButtonDirective} from "primeng/button";
 import {from, Observable} from "rxjs";
 import {User} from '../user/user';
-import {SearchResultComponent} from "./search-result/search-result.component";
 import {AsyncPipe, NgForOf} from "@angular/common";
+import {UserPreviewComponent} from "../common/user-preview/user-preview.component";
 
 @Component({
   selector: 'app-search',
@@ -15,9 +15,8 @@ import {AsyncPipe, NgForOf} from "@angular/common";
     InputGroupModule,
     InputTextModule,
     ButtonDirective,
-    SearchResultComponent,
     NgForOf,
-    AsyncPipe
+    UserPreviewComponent
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
