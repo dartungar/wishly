@@ -2,7 +2,10 @@
   <p-card header="{{user.name}}" class="mt-5">
     <div class="flex flex-row justify-content-between gap-2">
       <div>Birthday: {{ user.birthday | date }}</div>
-      <div><a [routerLink]="['/users', user.id]">View Wishlist</a></div></div>
+      <div><a [routerLink]="['/users', user.id]">View Wishlist</a></div>
+      <div><a>Add to Favorites</a></div>
+    </div>
+
 
 
   </p-card>
