@@ -33,11 +33,13 @@ export class AuthService {
   }
 
   public async tryGetUserFromCognitoAuthenticatorCookies() {
-    await this.setAuthenticationTrue();
-    await this.onSignIn();
+    await this.trySetAuthSessionFromCookies();
+
+    if (this.authenticated.value)
+      await this.fetchAndSetAuthenticatedUser();
   }
 
-  private async onSignIn(): Promise<void> {
+  private async fetchAndSetAuthenticatedUser(): Promise<void> {
     try {
       // Wait for auth session
       // Wait a bit for Amplify to fully process the sign-in
@@ -65,7 +67,6 @@ export class AuthService {
           // User exists
           this.userService.setAuthenticatedUser(user);
           this.router.navigate(["/"]); // Don't use await in subscribe
-          this.notificationService.showSuccess("Sign in successful", "Welcome back!");
         } else {
           // User doesn't exist, create new user
           const newUser = createDefaultUser(
@@ -89,20 +90,19 @@ export class AuthService {
           });
         }
 
-        this.setAuthenticationTrue();
+        this.trySetAuthSessionFromCookies();
       });
     } catch (error) {
-      this.notificationService.showError("Error during sign in", "There was an error while signing you in.");
-      console.error('Error during sign in:', error);
+      this.notificationService.showError("Error", "There was an error while fetching your data. Please try reloading the page or sign in again");
     }
   }
 
-  private async setAuthenticationTrue() {
+  private async trySetAuthSessionFromCookies() {
     let session = await fetchAuthSession();
     if (!this.authenticator.user)
       return;
-    this.authenticated.next(true);
 
+    this.authenticated.next(true);
     this.userToken = session.tokens?.accessToken.toString()
   }
 
@@ -111,8 +111,9 @@ export class AuthService {
       switch (payload.event) {
         case 'signedIn':
           console.log('user have been signedIn successfully.');
-          await this.onSignIn();
+          await this.fetchAndSetAuthenticatedUser();
           this.authenticated.next(true);
+          this.notificationService.showSuccess("Sign in successful", "Welcome back!");
           break;
         case 'signedOut':
           console.log('user have been signedOut successfully.');
@@ -121,7 +122,7 @@ export class AuthService {
           break;
         case 'tokenRefresh':
           console.log('auth tokens have been refreshed.');
-          await this.setAuthenticationTrue();
+          await this.trySetAuthSessionFromCookies();
           break;
         case 'tokenRefresh_failure':
           console.log('failure while refreshing auth tokens.');
