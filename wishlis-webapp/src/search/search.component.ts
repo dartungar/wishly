@@ -31,12 +31,19 @@ export class SearchComponent implements OnInit {
     // TODO: subscribe to search service
     this.searchResults =
       [{
-        id: "12345",
-        name: "Test Search Result",
+        id: "0408e448-a0d1-702a-9676-95c81e77f176",
+        name: "gmail user",
         currencyCode: "USD",
         birthday: new Date(),
         isProfileSearchable: true
-      }];
+      },
+        {
+          id: "d4d824c8-e011-70a6-f141-92558d66fd25",
+          name: "outlook user",
+          currencyCode: "USD",
+          birthday: new Date(),
+          isProfileSearchable: true
+        }];
   }
 
 }

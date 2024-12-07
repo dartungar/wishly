@@ -7,5 +7,5 @@ public class User
     public DateOnly? Birthday { get; set; }
     public string? CurrencyCode { get; set; } = "USD";
     public bool? IsProfileSearchable { get; set; } = true;
-    public HashSet<Guid> FavoriteUserIds { get; set; }
+    public HashSet<Guid> FavoriteUserIds { get; set; } = new();
 }

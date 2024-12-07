@@ -1,7 +1,7 @@
 ﻿using LiteDB;
 using LiteDB.Async;
 using Wishlis.Domain.Entities;
-using Wishlis.Domain.Repositories;
+using Wishlis.Domain.Interfaces;
 
 namespace Wishlis.Infrastructure.LiteDB;
 
@@ -31,17 +31,24 @@ public class UserRepository : IUserRepository
         return Users.FindByIdAsync(id);
     }
 
+    public async Task<IEnumerable<User>> GetFavoriteUsers(Guid userId)
+    {
+        var user = await Users.FindByIdAsync(userId);
+        return await Users.Query().Where(x => user.FavoriteUserIds.Contains(x.Id)).ToEnumerableAsync();
+    }
+
     public async Task AddUserToFavorites(Guid favoriteUserId, Guid ownerUserId)
     {
         var user = await Users.FindByIdAsync(ownerUserId);
         user.FavoriteUserIds.Add(favoriteUserId);
         await Users.UpdateAsync(user);
-    }
-
-    public async Task<IEnumerable<User>> GetFavoriteUsers(Guid userId)
+    }    
+    
+    public async Task RemoveUserFromFavorites(Guid favoriteUserId, Guid ownerUserId)
     {
-        var user = await Users.FindByIdAsync(userId);
-        return await Users.Query().Where(x => user.FavoriteUserIds.Contains(x.Id)).ToEnumerableAsync();
+        var user = await Users.FindByIdAsync(ownerUserId);
+        user.FavoriteUserIds.Remove(favoriteUserId);
+        await Users.UpdateAsync(user);
     }
 
     public async Task Delete(Guid id)

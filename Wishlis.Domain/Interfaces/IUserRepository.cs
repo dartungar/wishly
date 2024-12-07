@@ -1,6 +1,6 @@
 ﻿using Wishlis.Domain.Entities;
 
-namespace Wishlis.Domain.Repositories;
+namespace Wishlis.Domain.Interfaces;
 
 public interface IUserRepository
 {
@@ -10,9 +10,12 @@ public interface IUserRepository
 
     public Task<User> GetById(Guid id);
 
-    public Task AddUserToFavorites(Guid favoriteUserId, Guid ownerUserId);
-    
     public Task<IEnumerable<User>> GetFavoriteUsers(Guid userId);
     
+    public Task AddUserToFavorites(Guid favoriteUserId, Guid ownerUserId);
+    
+    public Task RemoveUserFromFavorites(Guid favoriteUserId, Guid ownerUserId);
+
+
     Task Delete(Guid id);
 }

@@ -14,8 +14,6 @@ import {NotificationService} from "../common/notification.service";
 export class AuthService {
   private authenticated = new BehaviorSubject<boolean>(false);
   isAuthenticated$ = this.authenticated.asObservable();
-  private authenticatedUser = new BehaviorSubject<User | undefined>(undefined);
-  public authenticatedUser$ = this.authenticatedUser.asObservable();
   public userToken: string | undefined = undefined;
 
   constructor(private authenticator: AuthenticatorService,
@@ -30,17 +28,13 @@ export class AuthService {
     this.authenticator.signOut();
 
     this.authenticated.next(false);
-    this.authenticatedUser.next(undefined);
+    this.userService.clearAuthenticatedUser();
     this.notificationService.showInfo("Signed out", "You have been signed out.");
   }
 
   public async tryGetUserFromCognitoAuthenticatorCookies() {
-    await this.setAuthenticatedUserInfo();
+    await this.setAuthenticationTrue();
     await this.onSignIn();
-  }
-
-  public updateAuthenticatedUserInfoWithoutRequest(user: User) {
-    this.authenticatedUser.next(user);
   }
 
   private async onSignIn(): Promise<void> {
@@ -69,7 +63,7 @@ export class AuthService {
       ).subscribe(user => {
         if (user) {
           // User exists
-          this.authenticatedUser.next(user);
+          this.userService.setAuthenticatedUser(user);
           this.router.navigate(["/"]); // Don't use await in subscribe
           this.notificationService.showSuccess("Sign in successful", "Welcome back!");
         } else {
@@ -89,13 +83,13 @@ export class AuthService {
               return EMPTY;
             })
           ).subscribe(user => {
-            this.authenticatedUser.next(user);
+            this.userService.setAuthenticatedUser(user);
             this.router.navigate(["/settings"]); // Don't use await in subscribe
             this.notificationService.showSuccess("Sign up successfull", "Welcome to Wishlist!");
           });
         }
 
-        this.setAuthenticatedUserInfo(); // Don't use await in subscribe
+        this.setAuthenticationTrue();
       });
     } catch (error) {
       this.notificationService.showError("Error during sign in", "There was an error while signing you in.");
@@ -103,7 +97,7 @@ export class AuthService {
     }
   }
 
-  private async setAuthenticatedUserInfo() {
+  private async setAuthenticationTrue() {
     let session = await fetchAuthSession();
     if (!this.authenticator.user)
       return;
@@ -127,7 +121,7 @@ export class AuthService {
           break;
         case 'tokenRefresh':
           console.log('auth tokens have been refreshed.');
-          await this.setAuthenticatedUserInfo();
+          await this.setAuthenticationTrue();
           break;
         case 'tokenRefresh_failure':
           console.log('failure while refreshing auth tokens.');

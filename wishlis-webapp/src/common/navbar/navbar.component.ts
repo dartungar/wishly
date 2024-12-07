@@ -44,6 +44,12 @@ export class NavbarComponent implements OnInit {
         route: "/search"
       },
       {
+        icon: "pi pi-star",
+        label: "Favorite Users",
+        route: "/favorite-users",
+        visible: this.isAuthenticated
+      },
+      {
         icon: "pi-sign-in",
         label: "Sign In",
         route: "/auth/sign-in",

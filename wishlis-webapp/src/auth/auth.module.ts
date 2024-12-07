@@ -26,7 +26,6 @@ Amplify.configure({
             userAttributes: {
                 email: { required: true },
                 email_verified: {required: true},
-                birthdate: { required: true },
                 sub: {required: true},
             },
             // allowGuestAccess: true,

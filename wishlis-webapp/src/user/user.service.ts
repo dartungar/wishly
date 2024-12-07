@@ -1,18 +1,32 @@
-import { Injectable } from '@angular/core';
-import {AuthService} from "../auth/auth.service";
-import {HttpClient} from "@angular/common/http";
-import {WishlistItem} from "../wishlist/wishlistItem";
-import {Observable} from "rxjs";
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {BehaviorSubject, Observable, switchMap, tap} from "rxjs";
 import {User} from "./user";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  private authenticatedUser = new BehaviorSubject<User | undefined>(undefined);
+  public authenticatedUser$ = this.authenticatedUser.asObservable();
+  private favoriteUsers = new BehaviorSubject<User[] | undefined>(undefined);
+  public favoriteUsers$: Observable<User[] | undefined> = this.favoriteUsers.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  public getUser(userId: string): Observable<User> | null {
+  public clearAuthenticatedUser(): void {
+    this.authenticatedUser.next(undefined);
+  }
+
+  public setAuthenticatedUser(user: User): void {
+    this.authenticatedUser.next(user);
+    this.getFavoriteUsers(user.id).subscribe(users => {
+      this.favoriteUsers.next(users);
+    })
+  }
+
+  public getUser(userId: string): Observable<User | null> {
     return this.http.get<User>(`/api/users/${userId}`);
   }
 
@@ -22,5 +36,31 @@ export class UserService {
 
   public createUser(user: User): Observable<User> {
     return this.http.post<User>(`/api/users`, user);
+  }
+
+  public getFavoriteUsers(currentUserId: string): Observable<User[]> {
+    return this.http.get<User[]>(`/api/users/${currentUserId}/favorite-users`);
+  }
+
+  public addUserToFavorites(currentUserId: string, userToAddId: string): Observable<User[]> {
+    return this.http.post<void>(`/api/users/${currentUserId}/favorite-users`, JSON.stringify(userToAddId), {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }).pipe(switchMap(_ => this.getFavoriteUsers(currentUserId).pipe(tap(users => this.favoriteUsers.next(users)))
+      )
+    );
+  }
+
+  public removeUserFromFavorites(currentUserId: string, userToRemoveId: string): Observable<void> {
+    return this.http.delete<void>(`/api/users/${currentUserId}/favorite-users/${userToRemoveId}`).pipe(
+      tap(() => {
+        const currentFavorites = this.favoriteUsers.getValue();
+        if (currentFavorites) {
+          const updatedFavorites = currentFavorites.filter(user => user.id !== userToRemoveId);
+          this.favoriteUsers.next(updatedFavorites);
+        }
+      }
+    ));
   }
 }

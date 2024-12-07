@@ -1,6 +1,6 @@
 ﻿using Wishlis.Domain.Entities;
 
-namespace Wishlis.Domain.Repositories;
+namespace Wishlis.Domain.Interfaces;
 
 public interface IWishlistItemRepository
 {

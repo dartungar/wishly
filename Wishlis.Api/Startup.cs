@@ -6,7 +6,7 @@ using Wishlis.Api.Swagger;
 using Wishlis.Api.Utils;
 using Wishlis.Application.Interfaces;
 using Wishlis.Application.Services;
-using Wishlis.Domain.Repositories;
+using Wishlis.Domain.Interfaces;
 using Wishlis.Infrastructure.LiteDB;
 
 namespace Wishlis.Api;

@@ -1,7 +1,7 @@
 ﻿using Wishlis.Application.DTO;
 using Wishlis.Application.Interfaces;
 using Wishlis.Application.Mappers;
-using Wishlis.Domain.Repositories;
+using Wishlis.Domain.Interfaces;
 
 namespace Wishlis.Application.Services;
 
@@ -46,5 +46,10 @@ public class UserService : IUserService
     public async Task AddUserToFavorites(Guid favoriteUserId, Guid ownerId)
     {
         await _userRepository.AddUserToFavorites(favoriteUserId, ownerId);
+    }
+    
+    public async Task RemoveUserFromFavorites(Guid favoriteUserId, Guid ownerId)
+    {
+        await _userRepository.RemoveUserFromFavorites(favoriteUserId, ownerId);
     }
 }

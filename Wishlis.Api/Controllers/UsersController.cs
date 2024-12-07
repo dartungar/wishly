@@ -108,9 +108,25 @@ public class UsersController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> AddUserToFavorites(Guid favoriteuserId, Guid owneruserId)
+    public async Task<IActionResult> AddUserToFavorites([FromRoute]Guid owneruserId, [FromBody]Guid favoriteuserId)
     {
         await _userService.AddUserToFavorites(favoriteuserId, owneruserId);
+        return NoContent();
+    }
+    
+    /// <summary>
+    /// Remove user from favorites.
+    /// </summary>
+    /// <param name="favoriteuserId">ID of the user that will be added as a favorite.</param>
+    /// <param name="owneruserId">ID of the user, to whom a favorite user will be added.</param>
+    /// <returns></returns>
+    [HttpDelete("{owneruserId}/favorite-users/{favoriteuserId}")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesDefaultResponseType]
+    public async Task<IActionResult> RemoveUserFromFavorites(Guid favoriteuserId, Guid owneruserId)
+    {
+        await _userService.RemoveUserFromFavorites(favoriteuserId, owneruserId);
         return NoContent();
     }
 
