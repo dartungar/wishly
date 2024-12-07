@@ -2,12 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {WishlistItemsService} from "../wishlist-items.service";
 import {createDefaultWishlistItem, WishlistItem} from "../wishlistItem";
 import {WishlistItemComponent} from "../wishlist-item/wishlist-item.component";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
 import {DataViewModule} from 'primeng/dataview';
 import {Button} from "primeng/button";
-import {AuthService} from "../../auth/auth.service";
 import {User} from "../../user/user";
+import {NotificationService} from "../../common/notification.service";
+import {UserService} from "../../user/user.service";
+import {FavoriteButtonComponent} from "../../favorite-users/favorite-button/favorite-button.component";
 
 @Component({
   selector: 'app-user-wishlist',
@@ -16,46 +18,84 @@ import {User} from "../../user/user";
     WishlistItemComponent,
     NgForOf,
     DataViewModule,
-    Button
+    Button,
+    FavoriteButtonComponent,
+    NgIf
   ],
   templateUrl: './user-wishlist.component.html',
   styleUrls: ['./user-wishlist.component.css']
 })
 export class UserWishlistComponent implements OnInit {
-  private userId: string | null = null;
+  public user: User | undefined = undefined;
   public authenticatedUser: User | undefined;
+  public isFavorite: boolean;
 
   items: WishlistItem[] = [];
 
-  constructor(private wishlistItemService: WishlistItemsService, private authService: AuthService, private route: ActivatedRoute) {
+  constructor(private wishlistItemService: WishlistItemsService,
+              private route: ActivatedRoute,
+              private notificationService: NotificationService,
+              private userService: UserService) {
   }
 
   ngOnInit() {
-    this.userId = this.route.snapshot.paramMap.get('userId');
+    const userId = this.route.snapshot.paramMap.get('userId');
+    console.log("opening wishlist for userId", userId);
 
-    if (!this.userId) {
-      // TODO: show error
+    if (!userId) {
+      this.notificationService.showError("Error", "Invalid user id.")
       return;
     }
 
-    if (this.userId === "me") {
-      this.authService.authenticatedUser$.subscribe(user => {
-        if (!user) {
-          // TODO: show error or prevent to get to /me for unauthenticated users
+
+    this.userService.authenticatedUser$.subscribe(user => {
+      if (!user && userId === "me") {
+        this.notificationService.showWarning("Please sign in", "To view your wishlist, please sign in or sign up.")
+        return;
+      }
+
+      if (user) {
+        if (user.id === userId || userId === "me") {
+          this.authenticatedUser = user;
+          this.user = this.authenticatedUser;
+          this.subscribeToUserItems(user!.id);
           return;
         }
-        this.authenticatedUser = user;
-        this.subscribeToUserItems(user!.id);
-      });
-    } else {
-      this.subscribeToUserItems(this.userId);
-    }
+      }
+
+      this.subscribeToUserInfo(userId);
+      this.subscribeToUserItems(userId);
+    });
+
   }
 
   private subscribeToUserItems(userId: string) {
     this.wishlistItemService.getItemsForUser(userId).subscribe(items => {
       this.items = items;
     });
+  }
+
+  private subscribeToUserInfo(userId: string) {
+    this.userService.getUser(userId).subscribe(user => {
+      if (!user) {
+        this.notificationService.showError("Error", "There was a problem getting user's information. Please try to refresh the page.")
+      }
+      this.user = user!;
+      if (this.user?.id === this.authenticatedUser?.id) {
+        return;
+      }
+      this.userService.favoriteUsers$.subscribe(favoriteUsers => {
+        this.isFavorite = (favoriteUsers && favoriteUsers?.map(u => u.id).includes(this.user!.id)) ?? false;
+      })
+    });
+  }
+
+  isWishlistOwnedByCurrentUser(): boolean {
+    if (!this.authenticatedUser)
+      return false;
+    if (!this.user)
+      return false;
+    return this.user.id === this.authenticatedUser.id;
   }
 
   addItem(): void {

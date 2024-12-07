@@ -1,0 +1,6 @@
+<p-button
+  *ngIf="currentUserId"
+  [icon]="isFavorite ? 'pi pi-star-fill' : 'pi pi-star'"
+          [text]="true" severity="secondary"
+          (click)="toggleFavorite()"
+          [title]="isFavorite ? 'Remove from favorite users' : 'Add to favorite users'"/>

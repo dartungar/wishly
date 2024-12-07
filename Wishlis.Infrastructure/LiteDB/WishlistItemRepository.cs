@@ -1,6 +1,6 @@
 ﻿using LiteDB.Async;
 using Wishlis.Domain.Entities;
-using Wishlis.Domain.Repositories;
+using Wishlis.Domain.Interfaces;
 
 namespace Wishlis.Infrastructure.LiteDB;
 

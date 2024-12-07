@@ -1,4 +1,8 @@
-<p-button [text]="true" icon="pi pi-plus-circle" size="small" label="Add New" (click)="addItem()"/>
+<div class="flex flex-row gap-3 align-items-center">
+  <h3>{{this.user?.name}}'s wishlist</h3>
+  <app-favorite-button *ngIf="user && !isWishlistOwnedByCurrentUser()" [isFavorite]="isFavorite" [userId]="user.id"/>
+</div>
+<p-button [text]="true" *ngIf="isWishlistOwnedByCurrentUser()" icon="pi pi-plus-circle" size="small" label="Add New" (click)="addItem()"/>
 <p-dataView #dv
   [value]="items" >
   <ng-template let-items pTemplate="list">

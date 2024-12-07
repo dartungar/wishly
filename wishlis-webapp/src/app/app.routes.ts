@@ -5,11 +5,13 @@ import {authGuard} from "../auth/auth.guard";
 import {SettingsComponent} from "../settings/settings.component";
 import {AuthFormComponent} from "../auth/auth-form/auth-form.component";
 import {NotFoundComponent} from "../common/not-found/not-found.component";
+import {FavoriteUsersComponent} from "../favorite-users/favorite-users.component";
 
 export const routes: Routes = [
   { path: 'search', component: SearchComponent },
   { path: 'users/:userId', component: UserWishlistComponent },
   { path: 'me', redirectTo: "users/me" },
+  { path: 'favorite-users', component: FavoriteUsersComponent },
   { path: 'settings', component: SettingsComponent, canActivate: [authGuard]  },
   { path: 'auth', component: AuthFormComponent },
   { path: 'auth/sign-in', component: AuthFormComponent },

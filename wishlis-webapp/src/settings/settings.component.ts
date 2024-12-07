@@ -26,10 +26,10 @@ import {NotificationService} from "../common/notification.service";
 export class SettingsComponent implements OnInit {
   user: User;
 
-  constructor(public userService: UserService, public authService: AuthService, private notificationService: NotificationService) {  }
+  constructor(public userService: UserService, private notificationService: NotificationService) {  }
 
   ngOnInit() {
-    this.authService.authenticatedUser$.subscribe(user => {
+    this.userService.authenticatedUser$.subscribe(user => {
       if (user) {
         this.user = user;
       }
@@ -48,7 +48,7 @@ export class SettingsComponent implements OnInit {
   updateSettings() {
     this.userService.updateUser(this.user).subscribe(
       _ => {
-        this.authService.updateAuthenticatedUserInfoWithoutRequest(this.user);
+        // TODO: update settings
         this.notificationService.showSuccess("Settings updated", "Your settings has been updated.");
       });
   }
