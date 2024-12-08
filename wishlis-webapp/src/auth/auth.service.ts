@@ -66,7 +66,6 @@ export class AuthService {
         if (user) {
           // User exists
           this.userService.setAuthenticatedUser(user);
-          this.router.navigate(["/"]); // Don't use await in subscribe
         } else {
           // User doesn't exist, create new user
           const newUser = createDefaultUser(
@@ -114,6 +113,7 @@ export class AuthService {
           await this.fetchAndSetAuthenticatedUser();
           this.authenticated.next(true);
           this.notificationService.showSuccess("Sign in successful", "Welcome back!");
+          await this.router.navigate(["/"]); // Don't use await in subscribe
           break;
         case 'signedOut':
           console.log('user have been signedOut successfully.');
