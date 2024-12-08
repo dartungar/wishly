@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {BehaviorSubject, Observable, switchMap, tap} from "rxjs";
+import {BehaviorSubject, catchError, Observable, of, switchMap, tap} from "rxjs";
 import {User} from "./user";
 
 @Injectable({
@@ -26,8 +26,13 @@ export class UserService {
     })
   }
 
-  public getUser(userId: string): Observable<User | null> {
-    return this.http.get<User>(`/api/users/${userId}`);
+  public getUser(userId: string): Observable<User | undefined> {
+    return this.http.get<User>(`/api/users/${userId}`).pipe(
+      catchError(error => {
+        console.error('Error fetching user:', error);
+        return of(undefined);
+      })
+    );
   }
 
   public updateUser(user: User): Observable<void> {
