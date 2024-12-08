@@ -12,14 +12,8 @@ export const routes: Routes = [
     path: 'users',
     children: [
       {
-        path: 'me',
-        component: UserWishlistComponent,
-        canActivate: [authGuard]
-      },
-      {
         path: ':userId',
-        component: UserWishlistComponent,
-        runGuardsAndResolvers: 'always'
+        component: UserWishlistComponent
       }
     ]
   },
