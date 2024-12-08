@@ -35,7 +35,7 @@ export class NavbarComponent implements OnInit {
       {
         icon: "pi pi-home",
         label: "Home",
-        route: "/me",
+        route: "/users/me",
         visible: this.isAuthenticated
       },
       {
