@@ -8,16 +8,20 @@ html {
   font-size: 14px;
 }
 
-
-/*TODO: create an application theme*/
 :root {
-  --amplify-colors-primary-10: hsl(30, 75%, 95%) !important;
-  --amplify-colors-primary-100: hsl(30, 100%, 15%)  !important;
-  --amplify-colors-primary-20: hsl(30, 75%, 85%) !important;
-  --amplify-colors-primary-40: hsl(30, 75%, 75%) !important;
-  --amplify-colors-primary-60: hsl(30, 50%, 50%) !important;
-  --amplify-colors-primary-80: hsl(30, 95%, 30%) !important;
-  --amplify-colors-primary-90: hsl(30, 100%, 20%) !important;
+  --primary: hsl(43, 96%, 56%);
+  --amplify-colors-primary-10: var(--primary) !important;
+  --amplify-colors-primary-20: var(--primary) !important;
+  --amplify-colors-primary-40: var(--primary) !important;
+  --amplify-colors-primary-60: var(--primary) !important;
+  --amplify-colors-primary-80: var(--primary) !important;
+  --amplify-colors-primary-90: var(--primary) !important;
+  --amplify-colors-primary-100: var(--primary) !important;
+}
+
+/*override "forgot password?" button' style*/
+button.amplify-button.amplify-button--fullwidth.amplify-button--link.amplify-button--small:hover {
+  background-color: rgba(255, 255, 255, 0) !important;
 }
 
 .app-container {
