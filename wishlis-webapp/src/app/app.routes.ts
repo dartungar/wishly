@@ -8,14 +8,27 @@ import {NotFoundComponent} from "../common/not-found/not-found.component";
 import {FavoriteUsersComponent} from "../favorite-users/favorite-users.component";
 
 export const routes: Routes = [
+  {
+    path: 'users',
+    children: [
+      {
+        path: 'me',
+        component: UserWishlistComponent,
+        canActivate: [authGuard]
+      },
+      {
+        path: ':userId',
+        component: UserWishlistComponent,
+        runGuardsAndResolvers: 'always'
+      }
+    ]
+  },
   { path: 'search', component: SearchComponent },
-  { path: 'users/:userId', component: UserWishlistComponent },
-  { path: 'me', redirectTo: "users/me" },
   { path: 'favorite-users', component: FavoriteUsersComponent },
-  { path: 'settings', component: SettingsComponent, canActivate: [authGuard]  },
+  { path: 'settings', component: SettingsComponent, canActivate: [authGuard] },
   { path: 'auth', component: AuthFormComponent },
   { path: 'auth/sign-in', component: AuthFormComponent },
   { path: 'auth/sign-up', component: AuthFormComponent },
-  { path: '', redirectTo: "/search", pathMatch: 'full' },
-  { path: '**', component: NotFoundComponent },
+  //{ path: '', redirectTo: 'search', pathMatch: 'full' },
+  { path: '**', component: NotFoundComponent }
 ];
