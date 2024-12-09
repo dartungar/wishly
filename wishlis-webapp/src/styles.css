@@ -12,7 +12,10 @@ body {
   margin: 0;
 }
 
+
+
 :root {
+  --font-family: 'Inter', sans-serif !important;
   --primary: hsl(43, 96%, 56%);
   --amplify-colors-primary-10: var(--primary) !important;
   --amplify-colors-primary-20: var(--primary) !important;
@@ -21,6 +24,14 @@ body {
   --amplify-colors-primary-80: var(--primary) !important;
   --amplify-colors-primary-90: var(--primary) !important;
   --amplify-colors-primary-100: var(--primary) !important;
+}
+
+* {
+  font-family: var(--font-family);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
 }
 
 /*override "forgot password?" button' style*/
@@ -51,18 +62,18 @@ button.amplify-button.amplify-button--fullwidth.amplify-button--link.amplify-but
 .dark-mode-toggle {
 
   .p-inputswitch {
-    margin-top: 0.7rem; /* Lower the input a bit */
+    margin-top: 0.5rem; /* Lower the input a bit */
 
     .p-inputswitch-slider::before {
       background: transparent;
       content: "🌞";
-      transform: translateY(-0.15rem); /* Make content a little bit higher */
+      transform: translateX(-0.1rem) translateY(-0.35rem); /* Make content a little bit higher */
     }
   }
 
   .p-inputswitch-checked .p-inputswitch-slider::before {
     content: "🌚";
-    transform: translateX(1rem) translateY(-0.15rem); /* Make content a little bit higher */
+    transform: translateX(0.7rem) translateY(-0.35rem); /* Make content a little bit higher */
   }
 }
 
