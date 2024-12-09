@@ -50,13 +50,13 @@ export class NavbarComponent implements OnInit {
         visible: this.isAuthenticated
       },
       {
-        icon: "pi-sign-in",
+        icon: "pi pi-sign-in",
         label: "Sign In",
         route: "/auth/sign-in",
         visible: !this.isAuthenticated
       },
       {
-        icon: "pi-user-plus",
+        icon: "pi pi-user-plus",
         label: "Create Account",
         route: "/auth/sign-up",
         visible: !this.isAuthenticated
