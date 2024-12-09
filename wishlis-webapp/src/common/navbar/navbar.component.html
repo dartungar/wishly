@@ -1,6 +1,6 @@
 <p-menubar [model]="items" class="w-full">
   <ng-template pTemplate="start">
-    <div><h3>Wishlis🦊</h3></div>
+    <div class="ml-4"><h1>🌠 wishly.app</h1></div>
   </ng-template>
   <ng-template pTemplate="item" let-item>
     <a [routerLink]="item.route" class="p-menuitem-link">
@@ -9,6 +9,6 @@
     </a>
   </ng-template>
   <ng-template pTemplate="end">
-    <div><app-dark-mode-switch/></div>
+    <div class="mr-4"><app-dark-mode-switch/></div>
   </ng-template>
 </p-menubar>

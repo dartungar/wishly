@@ -8,6 +8,10 @@ html {
   font-size: 14px;
 }
 
+body {
+  margin: 0;
+}
+
 :root {
   --primary: hsl(43, 96%, 56%);
   --amplify-colors-primary-10: var(--primary) !important;
@@ -28,6 +32,11 @@ button.amplify-button.amplify-button--fullwidth.amplify-button--link.amplify-but
   margin-left: auto;
   margin-right: auto;
   width: clamp(45ch, 80ch, 100%);
+}
+
+.p-menubar {
+  border: none;
+  border-radius: 0;
 }
 
 .p-menubar-start {
