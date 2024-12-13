@@ -6,6 +6,7 @@ import {SettingsComponent} from "../settings/settings.component";
 import {AuthFormComponent} from "../auth/auth-form/auth-form.component";
 import {NotFoundComponent} from "../common/not-found/not-found.component";
 import {FavoriteUsersComponent} from "../favorite-users/favorite-users.component";
+import {HomeComponent} from "../home/home.component";
 
 export const routes: Routes = [
   {
@@ -23,6 +24,6 @@ export const routes: Routes = [
   { path: 'auth', component: AuthFormComponent },
   { path: 'auth/sign-in', component: AuthFormComponent },
   { path: 'auth/sign-up', component: AuthFormComponent },
-  //{ path: '', redirectTo: 'search', pathMatch: 'full' },
+  { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: '**', component: NotFoundComponent }
 ];

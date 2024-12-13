@@ -30,11 +30,15 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  public async forwardToHome(): Promise<void> {
+    await this.router.navigate(['/']);
+  }
+
   private updateMenuItems() {
     this.items = [
       {
-        icon: "pi pi-home",
-        label: "Home",
+        icon: "pi pi-list",
+        label: "My Wishlist",
         route: "/users/me",
         visible: this.isAuthenticated
       },
