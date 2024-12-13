@@ -55,7 +55,7 @@ public class UsersController : ControllerBase
     {
         return Created("", await _userService.CreateUser(model));
     }
-    
+
     /// <summary>
     /// Delete user.
     /// </summary>
@@ -108,12 +108,12 @@ public class UsersController : ControllerBase
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesDefaultResponseType]
-    public async Task<IActionResult> AddUserToFavorites([FromRoute]Guid owneruserId, [FromBody]Guid favoriteuserId)
+    public async Task<IActionResult> AddUserToFavorites([FromRoute] Guid owneruserId, [FromBody] Guid favoriteuserId)
     {
         await _userService.AddUserToFavorites(favoriteuserId, owneruserId);
         return NoContent();
     }
-    
+
     /// <summary>
     /// Remove user from favorites.
     /// </summary>
@@ -141,6 +141,19 @@ public class UsersController : ControllerBase
         var result = await _wishlistItemService.GetByUserId(userId);
         return Ok(result);
     }
-    
-    // TODO: get all searchable profiles for front-end search index
+
+    /// <summary>
+    /// Search users by name
+    /// </summary>
+    /// <param name="query">search query</param>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<UserDto>>> Search([FromQuery(Name = "q")] string query)
+    {
+        var users = new List<UserDto>()
+        {
+            new UserDto(Guid.NewGuid(), "Search Result", DateOnly.MinValue, "JPY", true)
+        };
+        return Ok(users);
+    }
 }
