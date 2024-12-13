@@ -36,7 +36,17 @@ export class UserService {
   }
 
   public updateUser(user: User): Observable<void> {
-    return this.http.put<void>(`/api/users/${user.id}`, user);
+    return this.http.put<void>(`/api/users/${user.id}`, user).pipe(
+      tap(() => {
+        if (user.id === this.authenticatedUser.getValue()?.id) {
+          this.authenticatedUser.next(user);
+        }
+      }),
+      catchError(error => {
+        console.error('Error updating user:', error);
+        return of(undefined);
+      })
+    );
   }
 
   public createUser(user: User): Observable<User> {

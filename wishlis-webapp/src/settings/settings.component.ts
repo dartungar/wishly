@@ -46,11 +46,7 @@ export class SettingsComponent implements OnInit {
   }
 
   updateSettings() {
-    this.userService.updateUser(this.user).subscribe(
-      _ => {
-        // TODO: update settings
-        this.notificationService.showSuccess("Settings updated", "Your settings has been updated.");
-      });
+    this.userService.updateUser(this.user).subscribe();
   }
 
   protected readonly currencies = currencies;
