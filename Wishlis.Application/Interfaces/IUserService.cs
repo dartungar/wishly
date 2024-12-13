@@ -11,4 +11,5 @@ public interface IUserService
     Task<IEnumerable<UserDto>> GetFavoriteUsers(Guid ownerId);
     Task AddUserToFavorites(Guid favoriteUserId, Guid ownerId);
     Task RemoveUserFromFavorites(Guid favoriteUserId, Guid ownerId);
+    Task<IEnumerable<UserDto>> SearchUsers(string query);
 }

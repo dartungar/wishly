@@ -11,6 +11,7 @@ using Wishlis.Application.Services;
 using Wishlis.Domain.Interfaces;
 using Wishlis.Infrastructure.DynamoDB;
 using Wishlis.Infrastructure.LiteDB;
+using Wishlis.Infrastructure.SearchCache;
 using WishlistItemRepository = Wishlis.Infrastructure.LiteDB.WishlistItemRepository;
 
 namespace Wishlis.Api;
@@ -58,6 +59,7 @@ public class Startup
         services.AddScoped<ILiteDbContext, LiteDbContext>();
         services.AddScoped<IUserRepository, UserDynamoDbRepository>();
         services.AddScoped<IWishlistItemRepository, WishlistItemDynamoDbRepository>();
+        services.AddSingleton<ISearchCache, InMemorySearchCache>();
         
         // AWS
         services.AddDefaultAWSOptions(Configuration.GetAWSOptions());

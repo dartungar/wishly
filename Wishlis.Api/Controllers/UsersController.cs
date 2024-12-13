@@ -150,10 +150,7 @@ public class UsersController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<UserDto>>> Search([FromQuery(Name = "q")] string query)
     {
-        var users = new List<UserDto>()
-        {
-            new UserDto(Guid.NewGuid(), "Search Result", DateOnly.MinValue, "JPY", true)
-        };
+        var users = await _userService.SearchUsers(query);
         return Ok(users);
     }
 }
