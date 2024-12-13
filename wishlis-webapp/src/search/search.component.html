@@ -1,5 +1,5 @@
 <p-inputGroup>
-  <input class="border-round-left" type="text" pInputText placeholder="Search Users..." />
-  <button type="button" pButton icon="pi pi-search"></button>
+  <input class="border-round-left" [(ngModel)]="query" type="text" pInputText placeholder="Search Users..." (keyup.enter)="search()" />
+  <button type="button" pButton icon="pi pi-search" (click)="search()"></button>
 </p-inputGroup>
-<app-user-preview [user]="user"  *ngFor="let user of searchResults"/>
+<app-user-preview [user]="user"  *ngFor="let user of searchResults$ | async"/>

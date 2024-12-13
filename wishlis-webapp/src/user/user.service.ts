@@ -57,6 +57,20 @@ export class UserService {
     return this.http.get<User[]>(`/api/users/${currentUserId}/favorite-users`);
   }
 
+  public searchUsers(query: string): Observable<User[]> {
+    if (!query?.trim()) {
+      return of([]);
+    }
+
+    const encodedQuery = encodeURIComponent(query.trim());
+    return this.http.get<User[]>(`/api/users?q=${encodedQuery}`).pipe(
+      catchError(error => {
+        console.error('Error searching users:', error);
+        return of([]);
+      })
+    );
+  }
+
   public addUserToFavorites(currentUserId: string, userToAddId: string): Observable<User[]> {
     return this.http.post<void>(`/api/users/${currentUserId}/favorite-users`, JSON.stringify(userToAddId), {
       headers: new HttpHeaders({
