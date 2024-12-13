@@ -1,12 +1,12 @@
 <p-menubar [model]="items" class="w-full">
   <ng-template pTemplate="start">
-    <div class="ml-4"><h1>🌠 wishly.app</h1></div>
+    <div class="ml-4"><a routerLink="/" class="text-primary" style="text-decoration: none;"><h1>🌠 wishly.app</h1></a></div>
   </ng-template>
   <ng-template pTemplate="item" let-item>
-    <a [routerLink]="item.route" class="p-menuitem-link">
+    <div [routerLink]="item.route" class="p-menuitem-link">
       <span [class]="item.icon"></span>
       <span class="ml-2">{{ item.label }}</span>
-    </a>
+    </div>
   </ng-template>
   <ng-template pTemplate="end">
     <div class="mr-4"><app-dark-mode-switch/></div>
