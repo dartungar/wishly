@@ -5,7 +5,7 @@ import {InputTextModule} from "primeng/inputtext";
 import {ButtonDirective} from "primeng/button";
 import {distinctUntilChanged, from, Observable} from "rxjs";
 import {User} from '../user/user';
-import {AsyncPipe, NgForOf} from "@angular/common";
+import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {UserPreviewComponent} from "../common/user-preview/user-preview.component";
 import {UserService} from "../user/user.service";
 import {FormsModule} from "@angular/forms";
@@ -20,7 +20,8 @@ import {FormsModule} from "@angular/forms";
     NgForOf,
     UserPreviewComponent,
     FormsModule,
-    AsyncPipe
+    AsyncPipe,
+    NgIf
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
