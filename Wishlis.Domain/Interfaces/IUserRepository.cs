@@ -8,7 +8,7 @@ public interface IUserRepository
     
     public Task Update(User user);
 
-    public Task<User> GetById(Guid id);
+    public Task<User?> GetById(Guid id);
 
     public Task<IEnumerable<User>> GetFavoriteUsers(Guid userId);
     

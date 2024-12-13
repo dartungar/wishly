@@ -1,4 +1,6 @@
-﻿using Asp.Versioning.ApiExplorer;
+﻿using Amazon.DynamoDBv2;
+using Amazon.DynamoDBv2.DataModel;
+using Asp.Versioning.ApiExplorer;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Wishlis.Api.Auth;
@@ -7,7 +9,9 @@ using Wishlis.Api.Utils;
 using Wishlis.Application.Interfaces;
 using Wishlis.Application.Services;
 using Wishlis.Domain.Interfaces;
+using Wishlis.Infrastructure.DynamoDB;
 using Wishlis.Infrastructure.LiteDB;
+using WishlistItemRepository = Wishlis.Infrastructure.LiteDB.WishlistItemRepository;
 
 namespace Wishlis.Api;
 
@@ -50,11 +54,15 @@ public class Startup
         services.AddTransient<IWishlistItemService, WishlistItemService>();
 
         // infrastructure
-        var n = Configuration.GetChildren().ToList();
         services.Configure<LiteDbOptions>(Configuration.GetSection(nameof(LiteDbOptions)));
         services.AddScoped<ILiteDbContext, LiteDbContext>();
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IWishlistItemRepository, WishlistItemRepository>();
+        services.AddScoped<IUserRepository, UserDynamoDbRepository>();
+        services.AddScoped<IWishlistItemRepository, WishlistItemDynamoDbRepository>();
+        
+        // AWS
+        services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
+        services.AddAWSService<IAmazonDynamoDB>();
+        services.AddSingleton<IDynamoDBContext, DynamoDBContext>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
