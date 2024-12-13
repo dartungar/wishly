@@ -43,7 +43,8 @@ export class AuthService {
     try {
       // Wait for auth session
       // Wait a bit for Amplify to fully process the sign-in
-      //await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 500));
+      await this.trySetAuthSessionFromCookies();
       const currentUserFromAuth = await getCurrentUser();
       const userId = currentUserFromAuth.userId;
 
@@ -89,20 +90,21 @@ export class AuthService {
           });
         }
 
-        this.trySetAuthSessionFromCookies();
+
       });
     } catch (error) {
       this.notificationService.showError("Error", "There was an error while fetching your data. Please try reloading the page or sign in again");
     }
   }
 
-  private async trySetAuthSessionFromCookies() {
+  private async trySetAuthSessionFromCookies(): Promise<void> {
     let session = await fetchAuthSession();
-    if (!this.authenticator.user)
+    if (!session || !session.tokens || !session.tokens.accessToken) {
       return;
+    }
 
     this.authenticated.next(true);
-    this.userToken = session.tokens?.accessToken.toString()
+    this.userToken = session.tokens?.accessToken.toString();
   }
 
   private subscribeToAmplifyEvents() {
