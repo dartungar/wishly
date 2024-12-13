@@ -26,7 +26,7 @@ public class UserRepository : IUserRepository
         return Users.UpdateAsync(user);
     }
 
-    public Task<User> GetById(Guid id)
+    public Task<User?> GetById(Guid id)
     {
         return Users.FindByIdAsync(id);
     }
