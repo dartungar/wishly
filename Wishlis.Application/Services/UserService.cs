@@ -8,10 +8,12 @@ namespace Wishlis.Application.Services;
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
+    private readonly ISearchCache _searchCache;
 
-    public UserService(IUserRepository userRepository)
+    public UserService(IUserRepository userRepository, ISearchCache searchCache)
     {
         _userRepository = userRepository;
+        _searchCache = searchCache;
     }
 
     public async Task<UserDto> CreateUser(UserDto model)
@@ -51,5 +53,17 @@ public class UserService : IUserService
     public async Task RemoveUserFromFavorites(Guid favoriteUserId, Guid ownerId)
     {
         await _userRepository.RemoveUserFromFavorites(favoriteUserId, ownerId);
+    }
+
+    public async Task<IEnumerable<UserDto>> SearchUsers(string query)
+    {
+        if (string.IsNullOrWhiteSpace(query))
+            return new List<UserDto>();
+        
+        var results = await _searchCache.SearchUsers(query);
+        if (!results.Any())
+            return new List<UserDto>();
+
+        return results.Select(x => x.ToUserDto());
     }
 }
