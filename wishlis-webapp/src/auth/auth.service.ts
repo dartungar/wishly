@@ -34,9 +34,13 @@ export class AuthService {
 
   public async tryGetUserFromCognitoAuthenticatorCookies() {
     await this.trySetAuthSessionFromCookies();
+    console.log("trying to get session from cookies...", this.authenticated.value);
 
-    if (this.authenticated.value)
+    if (this.authenticated.value) {
       await this.fetchAndSetAuthenticatedUser();
+    } else {
+      this.userService.clearAuthenticatedUser();
+    }
   }
 
   private async fetchAndSetAuthenticatedUser(): Promise<void> {
@@ -100,6 +104,7 @@ export class AuthService {
   private async trySetAuthSessionFromCookies(): Promise<void> {
     let session = await fetchAuthSession();
     if (!session || !session.tokens || !session.tokens.accessToken) {
+      this.authenticated.next(false);
       return;
     }
 
@@ -112,9 +117,9 @@ export class AuthService {
       switch (payload.event) {
         case 'signedIn':
           console.log('user have been signedIn successfully.');
-          await this.fetchAndSetAuthenticatedUser();
-          this.authenticated.next(true);
+          await this.tryGetUserFromCognitoAuthenticatorCookies();
           this.notificationService.showSuccess("Sign in successful", "Welcome back!");
+          await new Promise(resolve => setTimeout(resolve, 500));
           await this.router.navigate(["/"]); // Don't use await in subscribe
           break;
         case 'signedOut':

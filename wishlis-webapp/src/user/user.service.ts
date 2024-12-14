@@ -7,7 +7,7 @@ import {User} from "./user";
   providedIn: 'root'
 })
 export class UserService {
-  private authenticatedUser = new BehaviorSubject<User | undefined>(undefined);
+  private authenticatedUser = new BehaviorSubject<User | undefined | null>(null);
   public authenticatedUser$ = this.authenticatedUser.asObservable();
   private favoriteUsers = new BehaviorSubject<User[] | undefined>(undefined);
   public favoriteUsers$: Observable<User[] | undefined> = this.favoriteUsers.asObservable();
