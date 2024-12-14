@@ -3,14 +3,16 @@ import {WishlistItemsService} from "../wishlist-items.service";
 import {createDefaultWishlistItem, WishlistItem} from "../wishlistItem";
 import {WishlistItemComponent} from "../wishlist-item/wishlist-item.component";
 import {NgForOf, NgIf} from "@angular/common";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {DataViewModule} from 'primeng/dataview';
 import {Button} from "primeng/button";
 import {User} from "../../user/user";
 import {NotificationService} from "../../common/notification.service";
 import {UserService} from "../../user/user.service";
 import {FavoriteButtonComponent} from "../../favorite-users/favorite-button/favorite-button.component";
-import {Subject, forkJoin, takeUntil, take} from 'rxjs';
+import {Subject, forkJoin, takeUntil, take, filter} from 'rxjs';
+import { ProgressBarModule } from 'primeng/progressbar';
+
 
 @Component({
   selector: 'app-user-wishlist',
@@ -21,7 +23,8 @@ import {Subject, forkJoin, takeUntil, take} from 'rxjs';
     DataViewModule,
     Button,
     FavoriteButtonComponent,
-    NgIf
+    NgIf,
+    ProgressBarModule
   ],
   templateUrl: './user-wishlist.component.html',
   styleUrls: ['./user-wishlist.component.css']
@@ -32,15 +35,15 @@ export class UserWishlistComponent implements OnInit, OnDestroy {
   public isFavorite: boolean;
   public items: WishlistItem[] = [];
   private destroy$ = new Subject<void>();
+  isLoading: boolean = true;
 
   constructor(
     private wishlistItemService: WishlistItemsService,
     private route: ActivatedRoute,
+    private router: Router,
     private notificationService: NotificationService,
     private userService: UserService
-  ) {
-
-  }
+  ) {  }
 
   ngOnInit() {
     const userId = this.route.snapshot.paramMap.get('userId');
@@ -52,9 +55,10 @@ export class UserWishlistComponent implements OnInit, OnDestroy {
 
     // Get authentication state first
     this.userService.authenticatedUser$.pipe(
+      filter(user => user !== null),
       take(1),
       takeUntil(this.destroy$)
-    ).subscribe(authenticatedUser => {
+    ).subscribe({next: authenticatedUser => {
       this.authenticatedUser = authenticatedUser;
 
       if (!authenticatedUser && userId === "me") {
@@ -62,6 +66,8 @@ export class UserWishlistComponent implements OnInit, OnDestroy {
           "Please sign in",
           "To view your wishlist, please sign in or sign up."
         );
+        this.router.navigate(["/"]);
+        this.isLoading = true;
         return;
       }
 
@@ -74,7 +80,8 @@ export class UserWishlistComponent implements OnInit, OnDestroy {
 
       // Handle other user's wishlist
       this.loadOtherUserData(userId);
-    });
+    },
+    complete: () => this.isLoading = false});
   }
 
   private loadItemsForUser(userId: string) {
@@ -90,6 +97,9 @@ export class UserWishlistComponent implements OnInit, OnDestroy {
           "Error",
           "Failed to load wishlist items"
         );
+      },
+      complete: () => {
+        this.isLoading = false;
       }
     });
   }
@@ -137,6 +147,13 @@ export class UserWishlistComponent implements OnInit, OnDestroy {
     return !!this.authenticatedUser &&
       !!this.user &&
       this.user.id === this.authenticatedUser.id;
+  }
+
+  getWishlistTitle(): string {
+    if (this.isWishlistOwnedByCurrentUser())
+      return "Your wishlist";
+
+    return `${this.user?.name}'s wishlist`;
   }
 
   addItem(): void {
