@@ -7,6 +7,7 @@ import {AuthFormComponent} from "../auth/auth-form/auth-form.component";
 import {NotFoundComponent} from "../common/not-found/not-found.component";
 import {FavoriteUsersComponent} from "../favorite-users/favorite-users.component";
 import {HomeComponent} from "../home/home.component";
+import {homepageGuard} from "../home/homepage.guard";
 
 export const routes: Routes = [
   {
@@ -19,11 +20,11 @@ export const routes: Routes = [
     ]
   },
   { path: 'search', component: SearchComponent },
-  { path: 'favorite-users', component: FavoriteUsersComponent },
+  { path: 'favorite-users', component: FavoriteUsersComponent, canActivate: [authGuard] },
   { path: 'settings', component: SettingsComponent, canActivate: [authGuard] },
   { path: 'auth', component: AuthFormComponent },
   { path: 'auth/sign-in', component: AuthFormComponent },
   { path: 'auth/sign-up', component: AuthFormComponent },
-  { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [homepageGuard] },
   { path: '**', component: NotFoundComponent }
 ];
