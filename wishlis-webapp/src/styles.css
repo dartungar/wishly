@@ -45,6 +45,10 @@ button.amplify-button.amplify-button--fullwidth.amplify-button--link.amplify-but
   width: clamp(45ch, 80ch, 100%);
 }
 
+.homepage-container {
+  min-width: 80ch;
+}
+
 .p-menubar {
   border: none;
   border-radius: 0;
