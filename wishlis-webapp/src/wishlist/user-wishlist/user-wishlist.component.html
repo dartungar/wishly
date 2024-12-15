@@ -7,7 +7,8 @@
   </div>
   <p-button [text]="true" *ngIf="isWishlistOwnedByCurrentUser()" icon="pi pi-plus-circle" size="small" label="Add New" (click)="addItem()"/>
   <p-dataView #dv
-              [value]="items" >
+              [value]="items"
+  emptyMessage="The wishlist is empty.">
     <ng-template let-items pTemplate="list">
       <app-wishlist-item *ngFor="let item of items" [item]="item" [authenticatedUser]="authenticatedUser" (deleteEvent)="removeItem(item)"/>
     </ng-template>
