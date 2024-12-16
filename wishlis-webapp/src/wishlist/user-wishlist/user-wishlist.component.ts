@@ -176,4 +176,14 @@ export class UserWishlistComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  async share() {
+    if (!navigator.share) {
+      this.notificationService.showWarning("Sharing not supported", "Sharing is not supported by your browser, but you can just copy the URL and send it as is!")
+    }
+
+    await navigator.share({
+      url: window.location.href,
+    })
+  }
 }

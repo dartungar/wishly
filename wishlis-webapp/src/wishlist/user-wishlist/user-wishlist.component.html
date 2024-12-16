@@ -1,9 +1,10 @@
 <p-progressBar *ngIf="isLoading" mode="indeterminate" [style]="{ height: '8px', marginTop: '3rem' }"/>
 
 <div *ngIf="!isLoading">
-  <div class="flex flex-row gap-3 align-items-center">
+  <div class="flex flex-row gap-3 align-items-center justify-content-between">
     <h3>{{getWishlistTitle()}}</h3>
     <app-favorite-button *ngIf="user && !isWishlistOwnedByCurrentUser()" [isFavorite]="isFavorite" [userId]="user.id"/>
+    <p-button *ngIf="isWishlistOwnedByCurrentUser()" icon="pi pi-share-alt" title="Share" ariaLabel="Share" [rounded]="true" [text]="true" (click)="share()"/>
   </div>
   <p-button [text]="true" *ngIf="isWishlistOwnedByCurrentUser()" icon="pi pi-plus-circle" size="small" label="Add New" (click)="addItem()"/>
   <p-dataView #dv
