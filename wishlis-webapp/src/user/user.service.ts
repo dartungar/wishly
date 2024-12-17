@@ -17,6 +17,7 @@ export class UserService {
 
   public clearAuthenticatedUser(): void {
     this.authenticatedUser.next(undefined);
+    this.favoriteUsers.next(undefined);
   }
 
   public setAuthenticatedUser(user: User): void {
