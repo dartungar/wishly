@@ -69,6 +69,7 @@ export class AuthService {
           // User exists
           this.userService.setAuthenticatedUser(user);
           this.router.navigate(["/users/me"]);
+          this.notificationService.showSuccess("Sign in successful", "Welcome back!");
         } else {
           // User doesn't exist, create new user
           const newUser = createDefaultUser(
@@ -117,7 +118,6 @@ export class AuthService {
         case 'signedIn':
           console.log('user have been signedIn successfully.');
           await this.tryGetUserFromCognitoAuthenticatorCookies();
-          this.notificationService.showSuccess("Sign in successful", "Welcome back!");
           break;
         case 'signedOut':
           console.log('user have been signedOut successfully.');
