@@ -46,43 +46,50 @@ export class UserWishlistComponent implements OnInit, OnDestroy {
   ) {  }
 
   ngOnInit() {
-    const userId = this.route.snapshot.paramMap.get('userId');
-    console.log("userId", userId);
+    this.route.paramMap.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(params => {
+      const userId = params.get('userId');
 
-    if (!userId) {
-      this.notificationService.showError("Error", "Invalid user id.");
-      return;
-    }
+      if (!userId) {
+        this.notificationService.showError("Error", "Invalid user id.");
+        return;
+      }
 
-    // Get authentication state first
+      this.loadUserData(userId);
+    });
+  }
+
+  private loadUserData(userId: string) {
+    this.isLoading = true;
+
     this.userService.authenticatedUser$.pipe(
       filter(user => user !== null),
       take(1),
       takeUntil(this.destroy$)
-    ).subscribe({next: authenticatedUser => {
-      this.authenticatedUser = authenticatedUser;
+    ).subscribe({
+      next: authenticatedUser => {
+        this.authenticatedUser = authenticatedUser;
 
-      if (!authenticatedUser && userId === "me") {
-        this.notificationService.showWarning(
-          "Please sign in",
-          "To view your wishlist, please sign in or sign up."
-        );
-        this.router.navigate(["/"]);
-        this.isLoading = true;
-        return;
-      }
+        if (!authenticatedUser && userId === "me") {
+          this.notificationService.showWarning(
+            "Please sign in",
+            "To view your wishlist, please sign in or sign up."
+          );
+          this.router.navigate(["/"]);
+          return;
+        }
 
-      // Handle authenticated user's own wishlist
-      if (authenticatedUser && (authenticatedUser.id === userId || userId === "me")) {
-        this.user = authenticatedUser;
-        this.loadItemsForUser(authenticatedUser.id);
-        return;
-      }
+        if (authenticatedUser && (authenticatedUser.id === userId || userId === "me")) {
+          this.user = authenticatedUser;
+          this.loadItemsForUser(authenticatedUser.id);
+          return;
+        }
 
-      // Handle other user's wishlist
-      this.loadOtherUserData(userId);
-    },
-    complete: () => this.isLoading = false});
+        this.loadOtherUserData(userId);
+      },
+      complete: () => this.isLoading = false
+    });
   }
 
   private loadItemsForUser(userId: string) {
