@@ -34,7 +34,6 @@ export class AuthService {
 
   public async tryGetUserFromCognitoAuthenticatorCookies() {
     await this.trySetAuthSessionFromCookies();
-    console.log("trying to get session from cookies...", this.authenticated.value);
 
     if (this.authenticated.value) {
       await this.fetchAndSetAuthenticatedUser();
@@ -58,8 +57,6 @@ export class AuthService {
         return;
       }
 
-      // Use firstValueFrom to handle the observable in an async way
-      // @ts-ignore
       this.userService.getUser(userId).pipe(
         take(1),
         catchError(error => {
@@ -71,6 +68,7 @@ export class AuthService {
         if (user) {
           // User exists
           this.userService.setAuthenticatedUser(user);
+          this.router.navigate(["/users/me"]);
         } else {
           // User doesn't exist, create new user
           const newUser = createDefaultUser(
@@ -89,7 +87,7 @@ export class AuthService {
             })
           ).subscribe(user => {
             this.userService.setAuthenticatedUser(user);
-            this.router.navigate(["/settings"]); // Don't use await in subscribe
+            this.router.navigate(["/onboarding"]);
             this.notificationService.showSuccess("Sign up successfull", "Welcome to Wishlist!");
           });
         }
@@ -103,6 +101,7 @@ export class AuthService {
 
   private async trySetAuthSessionFromCookies(): Promise<void> {
     let session = await fetchAuthSession();
+
     if (!session || !session.tokens || !session.tokens.accessToken) {
       this.authenticated.next(false);
       return;
@@ -119,8 +118,6 @@ export class AuthService {
           console.log('user have been signedIn successfully.');
           await this.tryGetUserFromCognitoAuthenticatorCookies();
           this.notificationService.showSuccess("Sign in successful", "Welcome back!");
-          await new Promise(resolve => setTimeout(resolve, 500));
-          await this.router.navigate(["/"]); // Don't use await in subscribe
           break;
         case 'signedOut':
           console.log('user have been signedOut successfully.');

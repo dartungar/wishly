@@ -47,6 +47,7 @@ export class UserWishlistComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const userId = this.route.snapshot.paramMap.get('userId');
+    console.log("userId", userId);
 
     if (!userId) {
       this.notificationService.showError("Error", "Invalid user id.");
