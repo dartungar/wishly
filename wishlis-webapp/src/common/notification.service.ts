@@ -17,7 +17,7 @@ export class NotificationService {
   }
 
   public showWarning(title: string, message: string): void {
-    this.messageService.add({ severity: 'warning', summary: title, detail: message })
+    this.messageService.add({ severity: 'warn', summary: title, detail: message })
   }
 
   public showError(title: string, message: string): void {
