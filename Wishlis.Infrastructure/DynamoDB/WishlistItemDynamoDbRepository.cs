@@ -23,9 +23,15 @@ public class WishlistItemDynamoDbRepository : IWishlistItemRepository
         await _context.SaveAsync(new WishlistItemDynamoDbModel(item));
     }
 
-    public async Task Delete(Guid id)
+    public async Task Delete(Guid userId, Guid itemId)
     {
-        await _context.DeleteAsync<WishlistItemDynamoDbModel>(id.ToString());
+        // need PK and SK specified for deletion
+        var item = new WishlistItemDynamoDbModel()
+        {
+            Id = itemId.ToString(),
+            UserId = userId.ToString(),
+        };
+        await _context.DeleteAsync(item);
     }
 
     public async Task<IEnumerable<WishlistItem>> Get()
