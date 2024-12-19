@@ -2,15 +2,16 @@ import {Component, OnInit} from '@angular/core';
 import {User} from "../user/user";
 import {UserPreviewComponent} from "../common/user-preview/user-preview.component";
 import {UserService} from "../user/user.service";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-favorite-users',
   standalone: true,
-  imports: [
-    UserPreviewComponent,
-    NgForOf
-  ],
+    imports: [
+        UserPreviewComponent,
+        NgForOf,
+        NgIf
+    ],
   templateUrl: './favorite-users.component.html',
   styleUrl: './favorite-users.component.css'
 })
