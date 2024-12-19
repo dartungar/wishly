@@ -3,11 +3,11 @@
   <button type="button" pButton icon="pi pi-search" (click)="search()"></button>
 </p-inputGroup>
 <app-user-preview [user]="user"  *ngFor="let user of searchResults$ | async"/>
-<div *ngIf="(searchResults$ | async)?.length === 0" class="mt-3 text-center text-gray-600">
+<div *ngIf="results?.length === 0" class="mt-3 text-center text-gray-600">
   <i class="pi pi-search" style="font-size: 2rem"></i>
   <p>No users found matching your search criteria</p>
 </div>
-<div *ngIf="!(searchResults$ | async)" class="mt-3 text-center text-gray-600">
+<div *ngIf="!results" class="mt-3 text-center text-gray-600">
   <i class="pi pi-question-circle" style="font-size: 2rem"></i>
   <p>Search users by typing part of their name in search box</p>
 </div>
