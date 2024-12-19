@@ -3,7 +3,7 @@ import {WishlistItemsService} from "../wishlist/wishlist-items.service";
 import {InputGroupModule} from "primeng/inputgroup";
 import {InputTextModule} from "primeng/inputtext";
 import {ButtonDirective} from "primeng/button";
-import {distinctUntilChanged, from, Observable} from "rxjs";
+import {distinctUntilChanged, from, Observable, share, tap} from "rxjs";
 import {User} from '../user/user';
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {UserPreviewComponent} from "../common/user-preview/user-preview.component";
@@ -27,11 +27,11 @@ import {FormsModule} from "@angular/forms";
   styleUrl: './search.component.css'
 })
 export class SearchComponent implements OnInit {
-  public searchResults$: Observable<User[]>;
+  public searchResults$: Observable<User[]> = new Observable<User[]>();
+  public results: User[] | null = null;
   public query: string;
 
   constructor(private userService: UserService) {
-    this.searchResults$ = new Observable<User[]>();
   }
 
   search(): void {
@@ -42,7 +42,10 @@ export class SearchComponent implements OnInit {
 
     this.searchResults$ = this.userService.searchUsers(this.query)
       .pipe(
-        distinctUntilChanged(),
+        // Store the results locally
+        tap(results => this.results = results),
+        // Share the subscription
+        share()
       );
   }
 
