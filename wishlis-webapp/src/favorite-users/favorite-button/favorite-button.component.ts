@@ -33,10 +33,12 @@ export class FavoriteButtonComponent implements OnInit {
       return;
     if (this.isFavorite) {
       this.userService.removeUserFromFavorites(this.currentUserId, this.userId).subscribe(_ => {
+        this.isFavorite = false;
         this.notificationService.showInfo("Removed from favorites", "Removed user from favorites.");
       });
     } else {
       this.userService.addUserToFavorites(this.currentUserId, this.userId).subscribe(_ => {
+        this.isFavorite = true;
         this.notificationService.showSuccess("Added to favorites", "Added user to favorites.");
       });
     }
