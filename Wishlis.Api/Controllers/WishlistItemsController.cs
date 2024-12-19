@@ -57,10 +57,10 @@ public class WishlistItemsController : ControllerBase
     /// </summary>
     /// <param name="id">Item's ID.</param>
     /// <returns></returns>
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(Guid id)
+    [HttpDelete("{userId}/{itemId}")]
+    public async Task<IActionResult> Delete(Guid userId, Guid itemId)
     {
-        await _wishlistItemService.Delete(id);
+        await _wishlistItemService.Delete(userId, itemId);
         return Ok();
     }
 }

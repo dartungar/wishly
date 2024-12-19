@@ -67,7 +67,7 @@ export class WishlistItemComponent implements OnInit {
   }
 
   delete(): void {
-    this.itemsService.deleteItem(this.item.id).subscribe(_ => this.notificationService.showInfo("Item deleted", "The item has been deleted."));
+    this.itemsService.deleteItem(this.item.userId, this.item.id).subscribe(_ => this.notificationService.showInfo("Item deleted", "The item has been deleted."));
     this.deleteEvent.emit();
   }
 }

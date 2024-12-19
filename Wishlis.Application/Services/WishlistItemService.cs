@@ -24,9 +24,9 @@ public class WishlistItemService : IWishlistItemService
         await _wishlistItemRepository.Save(model.ToWishlistItem());
     }
     
-    public async Task Delete(Guid id)
+    public async Task Delete(Guid userId, Guid itemId)
     {
-        await _wishlistItemRepository.Delete(id);
+        await _wishlistItemRepository.Delete(userId, itemId);
     }
 
     public async Task<IEnumerable<WishlistItemDto>> Get()
