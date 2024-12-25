@@ -36,7 +36,7 @@ export class UserService {
     );
   }
 
-  public updateUser(user: User): Observable<void> {
+  public updateUser(user: User): Observable<void | Error> {
     return this.http.put<void>(`/api/users/${user.id}`, user).pipe(
       tap(() => {
         if (user.id === this.authenticatedUser.getValue()?.id) {
@@ -44,8 +44,7 @@ export class UserService {
         }
       }),
       catchError(error => {
-        console.error('Error updating user:', error);
-        return of(undefined);
+        throw new Error(error);
       })
     );
   }
