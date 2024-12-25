@@ -20,17 +20,20 @@ public class UserService : IUserService
     {
         var createdUserId = await _userRepository.Create(model.ToUser());
         var createdUser = await _userRepository.GetById(createdUserId);
+        _searchCache.Invalidate();
         return createdUser.ToUserDto();
     }
 
     public async Task DeleteUser(Guid id)
     {
         await _userRepository.Delete(id);
+        _searchCache.Invalidate();
     }
 
     public async Task UpdateUser(UserDto model)
     {
         await _userRepository.Update(model.ToUser());
+        _searchCache.Invalidate();
     }
 
     public async Task<UserDto?> GetById(Guid id)
