@@ -24,6 +24,11 @@ public class InMemorySearchCache : ISearchCache
         return _cache!.Where(x => x.Name.Contains(query, StringComparison.InvariantCultureIgnoreCase));
     }
 
+    public void Invalidate()
+    {
+        _cacheExpirationTime = DateTime.UtcNow;
+    }
+
     private async Task EnsureUserCacheIsRelevant()
     {
         if (_cache.Any() && DateTimeOffset.Now < _cacheExpirationTime)
