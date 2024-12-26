@@ -80,20 +80,16 @@ export class AuthService {
         })
       ).subscribe(user => {
         if (user) {
-          // User exists
           this.userService.setAuthenticatedUser(user);
           this.router.navigate(["/users/me"]);
           this.notificationService.showSuccess("Sign in successful", "Welcome back!");
         } else {
           // User doesn't exist, create new user
-          // Try to get user details from social login
-          const username = currentUserFromAuth.username ||
-                          currentUserFromAuth.signInDetails?.loginId || null;
 
           const newUser = createDefaultUser(
             userId,
             null,
-            null  // email is not available from AuthUser type
+            null
           );
 
           this.userService.createUser(newUser).pipe(
