@@ -14,11 +14,11 @@ Amplify.configure({
             loginWith: {
                 email: true,
                 oauth: {
-                    domain: "https://wishlis.auth.us-east-1.amazoncognito.com",
-                    scopes: ['openid','email','phone','profile','aws.cognito.signin.user.admin'],
-                    redirectSignIn: ["https://localhost"],
-                    redirectSignOut: ["https://localhost"],
-                    responseType: 'token',
+                    domain: "wishlis.auth.us-east-1.amazoncognito.com",
+                    scopes: ['openid','email','profile'],
+                    redirectSignIn: ["http://localhost:4200"],
+                    redirectSignOut: [],
+                    responseType: 'code',
                     providers: ["Google", "Facebook"]
                 }
             },
