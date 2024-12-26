@@ -104,7 +104,7 @@ export class AuthService {
             })
           ).subscribe(user => {
             this.userService.setAuthenticatedUser(user);
-            this.router.navigate(["/settings"]);
+            this.router.navigate(["/settings"], { queryParams: { isNewUser: true } });
             this.notificationService.showSuccess("Welcome to Wishlist!", "Fill out your name and birthday to get started.");
           });
         }

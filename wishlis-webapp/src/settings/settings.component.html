@@ -1,50 +1,70 @@
 <h2>Settings</h2>
+<p-card *ngIf="showOnboardingMessage" styleClass="mb-4">
+  <div class="flex align-items-start justify-content-between">
+    <div><p>🌠 Welcome to Wishly! 🌠</p>
+      <p>Start by setting up your profile. </p>
+      <p>Add your display name, birthday, preferred currency, and choose if you want others to find your wishlist.</p>
+    </div>
+
+    <p-button icon="pi pi-times"
+              (click)="showOnboardingMessage = false"
+              [text]="true"
+              severity="secondary"
+              title="Close message">
+    </p-button>
+  </div>
+</p-card>
+
+
 <div class="settings-container">
-<div class="settings-field">
-  <label for="name">Display Name</label>
-  <input pInputText type="text" id="name" [(ngModel)]="user.name" name="currencyCode">
-</div>
-<div class="p-field">
-  <label for="birthday">Birthday</label>
-  <div>  <p-calendar id="birthday"
-                     [(ngModel)]="user.birthday"
-                     name="birthday"
-                     dateFormat="yy-mm-dd"
-                     [iconDisplay]="'input'"
-                     [showIcon]="true"></p-calendar></div>
+  <div class="settings-field">
+    <label for="name">Display Name</label>
+    <input pInputText type="text" id="name" [(ngModel)]="user.name" name="currencyCode">
+  </div>
+  <div class="p-field">
+    <label for="birthday">Birthday</label>
+    <div>
+      <p-calendar id="birthday"
+                  [(ngModel)]="user.birthday"
+                  name="birthday"
+                  dateFormat="yy-mm-dd"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"></p-calendar>
+    </div>
 
-</div>
+  </div>
 
-<div class="settings-field">
-  <label for="currencyCode">Currency</label>
-  <p-dropdown
-    id="currencyCode"
-    [options]="currencies"
-    [(ngModel)]="user.currencyCode"
-    optionLabel="name"
-    optionValue="code"
-    [filter]="true"
-    filterBy="name"
-    placeholder="Select a Currency">
-    <ng-template pTemplate="selectedItem" let-selectedOption>
-      <div class="flex align-items-center gap-2">
-        <div>{{selectedOption.symbol}} ({{ selectedOption.name }})</div>
-      </div>
-    </ng-template>
-    <ng-template let-currency pTemplate="item">
-      <div class="flex align-items-center gap-2">
-        <div>{{currency.symbol}} ({{ currency.name }})</div>
-      </div>
-    </ng-template>
-  </p-dropdown>
-</div>
+  <div class="settings-field">
+    <label for="currencyCode">Currency</label>
+    <p-dropdown
+      id="currencyCode"
+      [options]="currencies"
+      [(ngModel)]="user.currencyCode"
+      optionLabel="name"
+      optionValue="code"
+      [filter]="true"
+      filterBy="name"
+      placeholder="Select a Currency">
+      <ng-template pTemplate="selectedItem" let-selectedOption>
+        <div class="flex align-items-center gap-2">
+          <div>{{ selectedOption.symbol }} ({{ selectedOption.name }})</div>
+        </div>
+      </ng-template>
+      <ng-template let-currency pTemplate="item">
+        <div class="flex align-items-center gap-2">
+          <div>{{ currency.symbol }} ({{ currency.name }})</div>
+        </div>
+      </ng-template>
+    </p-dropdown>
+  </div>
 
-<div class="settings-field">
-  <div>  <p-checkbox id="isProfileSearchable" [(ngModel)]="user.isProfileSearchable" binary="true"
-                     name="isProfileSearchable"></p-checkbox>
-    <label for="isProfileSearchable">Allow others to search my profile</label></div>
+  <div class="settings-field">
+    <div>
+      <p-checkbox id="isProfileSearchable" [(ngModel)]="user.isProfileSearchable" binary="true"
+                  name="isProfileSearchable"></p-checkbox>
+      <label for="isProfileSearchable">Allow others to search my profile</label></div>
 
-</div>
+  </div>
 
-<button pButton (click)="updateSettings()" label="Save Changes"></button>
+  <button pButton (click)="updateSettings()" label="Save Changes"></button>
 </div>

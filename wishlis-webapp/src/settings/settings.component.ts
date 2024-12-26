@@ -9,6 +9,10 @@ import {DropdownModule} from "primeng/dropdown";
 import {currencies} from "../common/currencies";
 import {NotificationService} from "../common/notification.service";
 import {catchError, EMPTY, take} from "rxjs";
+import {NgIf} from "@angular/common";
+import {ActivatedRoute} from "@angular/router";
+import {MessageModule} from "primeng/message";
+import {CardModule} from "primeng/card";
 
 @Component({
   selector: 'app-settings',
@@ -18,18 +22,26 @@ import {catchError, EMPTY, take} from "rxjs";
     CheckboxModule,
     CalendarModule,
     InputTextModule,
-    DropdownModule
+    DropdownModule,
+    MessageModule,
+    NgIf,
+    CardModule,
   ],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.css'
 })
 export class SettingsComponent implements OnInit {
   user: User;
+  showOnboardingMessage: boolean = false;
 
-  constructor(public userService: UserService, private notificationService: NotificationService) {
-  }
+  constructor(public userService: UserService,
+              private notificationService: NotificationService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.showOnboardingMessage = this.route.snapshot.queryParams['isNewUser'] === 'true';
+    console.log(this.route.snapshot.queryParams, this.showOnboardingMessage);
+
     this.userService.authenticatedUser$.subscribe(user => {
         if (user) {
           this.user = user;
