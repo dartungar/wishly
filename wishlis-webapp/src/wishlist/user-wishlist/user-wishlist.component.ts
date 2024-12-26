@@ -12,6 +12,7 @@ import {UserService} from "../../user/user.service";
 import {FavoriteButtonComponent} from "../../favorite-users/favorite-button/favorite-button.component";
 import {Subject, forkJoin, takeUntil, take, filter} from 'rxjs';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { ConfirmationService } from 'primeng/api';
 
 
 @Component({
@@ -26,6 +27,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
     NgIf,
     ProgressBarModule
   ],
+  providers: [ConfirmationService],
   templateUrl: './user-wishlist.component.html',
   styleUrls: ['./user-wishlist.component.css']
 })
