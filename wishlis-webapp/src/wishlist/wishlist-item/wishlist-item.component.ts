@@ -3,7 +3,6 @@ import {createDefaultWishlistItem, WishlistItem} from "../wishlistItem";
 import {NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {WishlistItemsService} from "../wishlist-items.service";
-import {UserService} from "../../user/user.service";
 import {CardModule} from "primeng/card";
 import {InputTextModule} from "primeng/inputtext";
 import {InputNumberModule} from "primeng/inputnumber";
@@ -15,7 +14,8 @@ import { CommonModule } from '@angular/common';
 import { CheckboxModule } from 'primeng/checkbox';
 import {User} from "../../user/user";
 import {NotificationService} from "../../common/notification.service"; // Import PrimeNG CheckboxModule
-
+import { ConfirmationService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 @Component({
@@ -32,7 +32,8 @@ import {NotificationService} from "../../common/notification.service"; // Import
     InputGroupModule,
     InputGroupAddonModule,
     CommonModule,
-    CheckboxModule
+    CheckboxModule,
+    ConfirmDialogModule
   ],
   templateUrl: './wishlist-item.component.html',
   styleUrl: './wishlist-item.component.css'
@@ -45,7 +46,10 @@ export class WishlistItemComponent implements OnInit {
   editing: boolean = false;
   belongsToAuthenticatedUser = false;
 
-  constructor(private itemsService: WishlistItemsService, private notificationService: NotificationService) {
+  constructor(
+    private itemsService: WishlistItemsService,
+    private notificationService: NotificationService,
+    private confirmationService: ConfirmationService) {
   }
 
   ngOnInit(): void {
@@ -67,7 +71,16 @@ export class WishlistItemComponent implements OnInit {
   }
 
   delete(): void {
-    this.itemsService.deleteItem(this.item.userId, this.item.id).subscribe(_ => this.notificationService.showInfo("Item deleted", "The item has been deleted."));
-    this.deleteEvent.emit();
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete this item?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.itemsService.deleteItem(this.item.userId, this.item.id).subscribe(_ => {
+          this.notificationService.showInfo("Item deleted", "The item has been deleted.");
+          this.deleteEvent.emit();
+        });
+      }
+    });
   }
 }

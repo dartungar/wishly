@@ -24,6 +24,11 @@ body {
   --amplify-colors-primary-80: var(--primary) !important;
   --amplify-colors-primary-90: var(--primary) !important;
   --amplify-colors-primary-100: var(--primary) !important;
+
+  .p-confirm-dialog-reject {
+    background-color: hsla(0, 0%, 76%, 0.58) !important;
+    border-color: hsla(0, 0%, 76%, 0.58) !important;
+  }
 }
 
 * {
