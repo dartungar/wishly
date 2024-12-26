@@ -5,7 +5,7 @@ import {fetchAuthSession, getCurrentUser} from "aws-amplify/auth";
 import {Router} from "@angular/router";
 import {BehaviorSubject, catchError, EMPTY, take} from "rxjs";
 import {UserService} from "../user/user.service";
-import {createDefaultUser, User} from "../user/user";
+import {createDefaultUser} from "../user/user";
 import {NotificationService} from "../common/notification.service";
 
 @Injectable({
@@ -15,6 +15,7 @@ export class AuthService {
   private authenticated = new BehaviorSubject<boolean>(false);
   isAuthenticated$ = this.authenticated.asObservable();
   public userToken: string | undefined = undefined;
+  private isAuthenticating: boolean;
 
   constructor(private authenticator: AuthenticatorService,
               private router: Router,
@@ -32,13 +33,22 @@ export class AuthService {
     this.notificationService.showInfo("Signed out", "You have been signed out.");
   }
 
-  public async tryGetUserFromCognitoAuthenticatorCookies() {
-    await this.trySetAuthSessionFromCookies();
+  async tryGetUserFromCognitoAuthenticatorCookies() {
+    if (this.isAuthenticating) {
+      return;
+    }
 
-    if (this.authenticated.value) {
-      await this.fetchAndSetAuthenticatedUser();
-    } else {
-      this.userService.clearAuthenticatedUser();
+    try {
+      this.isAuthenticating = true;
+      await this.trySetAuthSessionFromCookies();
+
+      if (this.authenticated.value) {
+        await this.fetchAndSetAuthenticatedUser();
+      } else {
+        this.userService.clearAuthenticatedUser();
+      }
+    } finally {
+      this.isAuthenticating = false;
     }
   }
 
@@ -46,22 +56,26 @@ export class AuthService {
     try {
       // Wait for auth session
       // Wait a bit for Amplify to fully process the sign-in
-      await new Promise(resolve => setTimeout(resolve, 500));
-      await this.trySetAuthSessionFromCookies();
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
       const currentUserFromAuth = await getCurrentUser();
       const userId = currentUserFromAuth.userId;
 
       if (!userId) {
-        this.notificationService.showError("Could not get user data",
-          "There was an error while trying to get user data. Please try tro reload the page or sign out and sign in again");
+        this.notificationService.showError(
+          "Could not get user data",
+          "There was an error while trying to get user data. Please try to reload the page or sign out and sign in again"
+        );
         return;
       }
 
       this.userService.getUser(userId).pipe(
         take(1),
         catchError(error => {
-          this.notificationService.showError("Could not get user data",
-            "There was an error while trying to get user data from the server");
+          this.notificationService.showError(
+            "Could not get user data",
+            "There was an error while trying to get user data from the server"
+          );
           return EMPTY;
         })
       ).subscribe(user => {
@@ -72,31 +86,38 @@ export class AuthService {
           this.notificationService.showSuccess("Sign in successful", "Welcome back!");
         } else {
           // User doesn't exist, create new user
+          // Try to get user details from social login
+          const username = currentUserFromAuth.username ||
+                          currentUserFromAuth.signInDetails?.loginId || null;
+
           const newUser = createDefaultUser(
             userId,
-            null, // TODO: pass from authenticator data
-            null
+            null,
+            null  // email is not available from AuthUser type
           );
 
           this.userService.createUser(newUser).pipe(
             take(1),
             catchError(error => {
               console.error('Error creating user:', error);
-              this.notificationService.showError("Sign-up error",
-                "There was an error while trying to create a new user. Please try to sign out and sign in again.");
+              this.notificationService.showError(
+                "Sign-up error",
+                "There was an error while trying to create a new user. Please try to sign out and sign in again."
+              );
               return EMPTY;
             })
           ).subscribe(user => {
             this.userService.setAuthenticatedUser(user);
-            this.router.navigate(["/onboarding"]);
-            this.notificationService.showSuccess("Sign up successfull", "Welcome to Wishlist!");
+            this.router.navigate(["/settings"]);
+            this.notificationService.showSuccess("Welcome to Wishlist!", "Fill out your name and birthday to get started.");
           });
         }
-
-
       });
     } catch (error) {
-      this.notificationService.showError("Error", "There was an error while fetching your data. Please try reloading the page or sign in again");
+      this.notificationService.showError(
+        "Error",
+        "There was an error while fetching your data. Please try reloading the page or sign in again"
+      );
     }
   }
 
@@ -135,7 +156,7 @@ export class AuthService {
           console.log('signInWithRedirect API has successfully been resolved.');
           break;
         case 'signInWithRedirect_failure':
-          console.log('failure while trying to resolve signInWithRedirect API.');
+          this.notificationService.showError("Authentication error", "Failed to authenticate via social provider.");
           break;
         case 'customOAuthState':
           //logger.info('custom state returned from CognitoHosted UI');
