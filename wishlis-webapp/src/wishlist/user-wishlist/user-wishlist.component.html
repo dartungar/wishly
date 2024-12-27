@@ -6,7 +6,7 @@
     <app-favorite-button *ngIf="user && !isWishlistOwnedByCurrentUser()" [isFavorite]="isFavorite" [userId]="user.id"/>
     <p-button *ngIf="isWishlistOwnedByCurrentUser()" icon="pi pi-share-alt" title="Share" ariaLabel="Share" [rounded]="true" [text]="true" (click)="share()"/>
   </div>
-  <p-button [text]="true" *ngIf="isWishlistOwnedByCurrentUser()" icon="pi pi-plus-circle" size="small" label="Add New" (click)="addItem()"/>
+  <p-button [text]="true" *ngIf="isWishlistOwnedByCurrentUser()" icon="pi pi-plus-circle" size="small" label="New Item" (click)="addItem()"/>
   <p-dataView #dv
               [value]="items"
   emptyMessage="The wishlist is empty.">
