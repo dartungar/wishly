@@ -8,6 +8,8 @@ public interface IWishlistItemRepository
     
     public Task Save(WishlistItem item);
     
+    public Task BatchSave(IEnumerable<WishlistItem> items);
+    
     public Task Delete(Guid userId, Guid itemId);
 
     public Task<IEnumerable<WishlistItem>> Get();

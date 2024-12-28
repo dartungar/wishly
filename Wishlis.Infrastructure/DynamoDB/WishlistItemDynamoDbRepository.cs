@@ -23,6 +23,13 @@ public class WishlistItemDynamoDbRepository : IWishlistItemRepository
         await _context.SaveAsync(new WishlistItemDynamoDbModel(item));
     }
 
+    public async Task BatchSave(IEnumerable<WishlistItem> items)
+    {
+        var batchRequest = _context.CreateBatchWrite<WishlistItemDynamoDbModel>();
+        batchRequest.AddPutItems(items.Select(x => new WishlistItemDynamoDbModel(x)));
+        await batchRequest.ExecuteAsync();
+    }
+
     public async Task Delete(Guid userId, Guid itemId)
     {
         // need PK and SK specified for deletion

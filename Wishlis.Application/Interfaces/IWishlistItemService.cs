@@ -9,4 +9,5 @@ public interface IWishlistItemService
     Task Delete(Guid userId, Guid itemId);
     Task<IEnumerable<WishlistItemDto>> Get();
     Task<IEnumerable<WishlistItemDto>> GetByUserId(Guid userId);
+    Task UpdateCurrencyForAllUserItems(string currencyCode, Guid userId);
 }
