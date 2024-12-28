@@ -3,8 +3,8 @@
 services:
   wishlis-api:
     build:
-      context: ./Wishlis.Api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./Wishlis.Api/Dockerfile
     ports:
       - "8000:8080"
     networks:
