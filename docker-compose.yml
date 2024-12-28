@@ -1,5 +1,7 @@
-﻿services:
-  wishlis.api:
+﻿version: '3.8'
+
+services:
+  wishlis-api:
     build:
       context: ./Wishlis.Api
       dockerfile: Dockerfile
@@ -8,7 +10,7 @@
     networks:
       - wishlis-network
   
-  wishlis.webapp:
+  wishlis-webapp:
     build:
       context: ./wishlis-webapp
       dockerfile: Dockerfile
