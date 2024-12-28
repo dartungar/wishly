@@ -40,4 +40,16 @@ public class WishlistItemService : IWishlistItemService
         var items = await _wishlistItemRepository.GetByUserId(userId);
         return items.Select(x => x.ToWishlistItemDto());
     }
+
+    public async Task UpdateCurrencyForAllUserItems(string currencyCode, Guid userId)
+    {
+        var items = await _wishlistItemRepository.GetByUserId(userId);
+        var itemsList = items.ToList();
+        foreach (var wishlistItem in itemsList)
+        {
+            wishlistItem.CurrencyCode = currencyCode;
+        }
+
+        await _wishlistItemRepository.BatchSave(itemsList);
+    }
 }

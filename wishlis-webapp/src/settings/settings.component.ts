@@ -13,6 +13,9 @@ import {NgIf} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
 import {MessageModule} from "primeng/message";
 import {CardModule} from "primeng/card";
+import {ConfirmationService} from "primeng/api";
+import {WishlistItemsService} from "../wishlist/wishlist-items.service";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @Component({
   selector: 'app-settings',
@@ -26,25 +29,31 @@ import {CardModule} from "primeng/card";
     MessageModule,
     NgIf,
     CardModule,
+    ConfirmDialogModule,
   ],
+  providers: [ConfirmationService],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.css'
 })
 export class SettingsComponent implements OnInit {
+  currencyCodeBeforeChange: string;
   user: User;
   showOnboardingMessage: boolean = false;
 
   constructor(public userService: UserService,
+              private itemsService: WishlistItemsService,
               private notificationService: NotificationService,
-              private route: ActivatedRoute) { }
+              private confirmationService: ConfirmationService,
+              private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.showOnboardingMessage = this.route.snapshot.queryParams['isNewUser'] === 'true';
-    console.log(this.route.snapshot.queryParams, this.showOnboardingMessage);
 
-    this.userService.authenticatedUser$.subscribe(user => {
+    this.userService.authenticatedUser$.pipe(take(1)).subscribe(user => {
         if (user) {
           this.user = user;
+          this.currencyCodeBeforeChange = user.currencyCode;
         }
       }
     );
@@ -59,12 +68,32 @@ export class SettingsComponent implements OnInit {
   }
 
   updateSettings() {
+    console.log('Before update - Current:', this.user.currencyCode, 'Original:', this.currencyCodeBeforeChange);
     this.userService.updateUser(this.user)
-      .pipe(take(1),
+      .pipe(
+        take(1),
         catchError(e => {
-        this.notificationService.showError("Error", "Errow while trying save the settings.");
-        return EMPTY;}))
-      .subscribe(_ => this.notificationService.showSuccess("Success", "Settings saved successfully."));
+            this.notificationService.showError("Error", "Errow while trying save the settings.");
+            return EMPTY;
+          }
+        )
+      )
+      .subscribe(_ => {
+        this.notificationService.showSuccess("Success", "Settings saved successfully.");
+        console.log('After update - Current:', this.user.currencyCode, 'Original:', this.currencyCodeBeforeChange);
+        if (this.user.currencyCode !== this.currencyCodeBeforeChange) {
+          console.log("currency code has been changed...")
+          this.confirmationService.confirm({
+            message: 'You have changed your preferred currency. Do you want to set it to items in your wishlist?',
+            header: 'The currency has been changed',
+            icon: 'pi pi-dollar',
+            accept: () => {
+              this.itemsService.updateAllItemsCurrency(this.user.id, this.user.currencyCode).subscribe(_ =>
+                this.notificationService.showSuccess("Success", "Updated currency for items in the wishlist. Refresh the page if changes are not displayed."))
+            }
+          });
+        }
+      });
   }
 
   protected readonly currencies = currencies;

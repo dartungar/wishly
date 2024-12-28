@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Wishlis.Application.DTO;
 using Wishlis.Application.Interfaces;
@@ -28,6 +29,7 @@ public class WishlistItemsController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesDefaultResponseType]
+    [Authorize]
     public async Task<IActionResult> Create(WishlistItemDto model)
     {
         await _wishlistItemService.Create(model);
@@ -44,6 +46,7 @@ public class WishlistItemsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesDefaultResponseType]
+    [Authorize]
     public async Task<IActionResult> Save(Guid id, WishlistItemDto model)
     {
         if (id != model.Id)
@@ -51,16 +54,32 @@ public class WishlistItemsController : ControllerBase
         await _wishlistItemService.Save(model);
         return Ok();
     }
-    
+
     /// <summary>
     /// Delete a wishlist item.
     /// </summary>
-    /// <param name="id">Item's ID.</param>
+    /// <param name="userId"></param>
+    /// <param name="itemId"></param>
     /// <returns></returns>
     [HttpDelete("{userId}/{itemId}")]
+    [Authorize]
     public async Task<IActionResult> Delete(Guid userId, Guid itemId)
     {
         await _wishlistItemService.Delete(userId, itemId);
+        return Ok();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="newCurrencyCode"></param>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    [HttpPut("{userId}/update-currency")]
+    [Authorize]
+    public async Task<IActionResult> UpdateCurrencyForAllUserItems([FromBody] string newCurrencyCode, [FromRoute] Guid userId)
+    {
+        await _wishlistItemService.UpdateCurrencyForAllUserItems(newCurrencyCode, userId);
         return Ok();
     }
 }

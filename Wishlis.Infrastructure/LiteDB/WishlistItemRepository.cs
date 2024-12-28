@@ -26,6 +26,11 @@ public class WishlistItemRepository : IWishlistItemRepository
         await WishlistItems.UpsertAsync(item);
     }
 
+    public async Task BatchSave(IEnumerable<WishlistItem> items)
+    {
+        await WishlistItems.UpsertAsync(items);
+    }
+
     public async Task Delete(Guid userId, Guid itemId)
     {
         await WishlistItems.DeleteAsync(itemId);
