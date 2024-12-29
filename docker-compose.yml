@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: ./Wishlis.Api/Dockerfile
     ports:
-      - "8000:8080"
+      - "8989:8080"
     networks:
       - wishlis-network
   
