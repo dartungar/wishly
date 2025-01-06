@@ -1,7 +1,9 @@
-﻿using Amazon.DynamoDBv2;
+﻿using Amazon;
+using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
+using Amazon.Extensions.NETCore.Setup;
+using Amazon.Runtime;
 using Asp.Versioning.ApiExplorer;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Wishlis.Api.Auth;
 using Wishlis.Api.Swagger;
@@ -12,7 +14,6 @@ using Wishlis.Domain.Interfaces;
 using Wishlis.Infrastructure.DynamoDB;
 using Wishlis.Infrastructure.LiteDB;
 using Wishlis.Infrastructure.SearchCache;
-using WishlistItemRepository = Wishlis.Infrastructure.LiteDB.WishlistItemRepository;
 
 namespace Wishlis.Api;
 
@@ -62,7 +63,14 @@ public class Startup
         services.AddSingleton<ISearchCache, InMemorySearchCache>();
         
         // AWS
-        services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
+        services.AddDefaultAWSOptions(new AWSOptions
+        {
+            Credentials = new BasicAWSCredentials(
+                Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID"),
+                Environment.GetEnvironmentVariable("AWS_SECRET_ACCESS_KEY")
+            ),
+            Region = RegionEndpoint.GetBySystemName(Environment.GetEnvironmentVariable("AWS_REGION"))
+        });
         services.AddAWSService<IAmazonDynamoDB>();
         services.AddSingleton<IDynamoDBContext, DynamoDBContext>();
     }
