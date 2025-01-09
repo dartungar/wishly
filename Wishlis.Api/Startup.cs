@@ -66,10 +66,10 @@ public class Startup
         services.AddDefaultAWSOptions(new AWSOptions
         {
             Credentials = new BasicAWSCredentials(
-                Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID"),
-                Environment.GetEnvironmentVariable("AWS_SECRET_ACCESS_KEY")
+                Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID") ?? Configuration["AWS:AWS_ACCESS_KEY_ID"],
+                Environment.GetEnvironmentVariable("AWS_SECRET_ACCESS_KEY") ?? Configuration["AWS:AWS_SECRET_ACCESS_KEY"]
             ),
-            Region = RegionEndpoint.GetBySystemName(Environment.GetEnvironmentVariable("AWS_REGION"))
+            Region = RegionEndpoint.GetBySystemName(Environment.GetEnvironmentVariable("AWS_REGION") ?? Configuration["AWS:AWS_REGION"])  
         });
         services.AddAWSService<IAmazonDynamoDB>();
         services.AddSingleton<IDynamoDBContext, DynamoDBContext>();
