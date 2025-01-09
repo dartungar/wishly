@@ -16,7 +16,7 @@ Amplify.configure({
                 oauth: {
                     domain: "wishlis.auth.us-east-1.amazoncognito.com",
                     scopes: ['openid','email','profile'],
-                    redirectSignIn: ["http://localhost:4200"],
+                    redirectSignIn: ["http://localhost:4200", "https://wishly.dartungar.com", "https://wishly.site"],
                     redirectSignOut: [],
                     responseType: 'code',
                     providers: ["Google", "Facebook"]
