@@ -1,6 +1,5 @@
 .app-header {
-  width: 100vw;
-  display: flex;
+  width: max(45ch, 100vw);
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

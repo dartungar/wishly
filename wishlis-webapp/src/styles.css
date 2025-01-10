@@ -55,7 +55,7 @@ button.amplify-button.amplify-button--fullwidth.amplify-button--link.amplify-but
 .app-container {
   margin-left: auto;
   margin-right: auto;
-  width: clamp(45ch, 80ch, 100%);
+  width: clamp(45ch, 80ch, 100vw);
 }
 
 
