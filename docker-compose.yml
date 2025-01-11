@@ -6,12 +6,12 @@ services:
       context: .
       dockerfile: ./Wishlis.Api/Dockerfile
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
+      - 'ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}'
       - 'AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}'
       - 'AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}'
       - 'AWS_REGION=${AWS_REGION}'
     ports:
-      - "8989:8080"
+      - "${API_PORT}:8080"
     networks:
       - wishlis-network
   
@@ -20,7 +20,7 @@ services:
       context: ./wishlis-webapp
       dockerfile: Dockerfile
     ports:
-      - "4433:80"
+      - "${WEBAPP_PORT}:80"
     container_name: wishlis_webapp
     networks:
       - wishlis-network
