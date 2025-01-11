@@ -1,0 +1,20 @@
+﻿name: Deploy
+on:
+  push:
+    branches:
+      - master
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Production
+        if: github.ref == 'refs/heads/master'
+        run: |
+          curl --request GET '${{ secrets.COOLIFY_WEBHOOK_PROD }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
+
+      - name: Deploy to Development
+        if: github.ref == 'refs/heads/dev'
+        run: |
+          curl --request GET '${{ secrets.COOLIFY_WEBHOOK_DEV }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'
