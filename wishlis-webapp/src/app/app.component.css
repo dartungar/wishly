@@ -1,5 +1,6 @@
 .app-header {
   width: max(45ch, 100vw);
+  max-width: 100%;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
