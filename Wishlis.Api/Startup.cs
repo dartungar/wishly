@@ -5,6 +5,7 @@ using Amazon.Extensions.NETCore.Setup;
 using Amazon.Runtime;
 using Asp.Versioning.ApiExplorer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Wishlis.Api.Auth;
 using Wishlis.Api.Swagger;
 using Wishlis.Api.Utils;
@@ -44,6 +45,7 @@ public class Startup
             options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
         });;
         services.AddAndConfigureSwagger();
+        services.AddHealthChecks();
         
         // auth
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -102,5 +104,6 @@ public class Startup
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseEndpoints(x => x.MapControllers());
+        app.UseHealthChecks("/healthz");
     }
 }
