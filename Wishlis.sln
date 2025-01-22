@@ -14,6 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FA5379A7-B333-4D3D-9642-ECFD34824E5C}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
+		docker-compose.dev.yml = docker-compose.dev.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wishlis.Serverless.Api", "Wishlis.Serverless.Api\src\Wishlis.Serverless.Api\Wishlis.Serverless.Api.csproj", "{514C9C7E-9518-4ED7-88F6-259B1B631501}"
